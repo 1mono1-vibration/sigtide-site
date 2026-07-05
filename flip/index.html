@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Is crypto risk-on yet? Not yet. | SigTide</title>
+<meta name="description" content="Bitcoin has been risk-off for 231 days (since the death cross on 2025-11-16). Live 50/200 regime status, distance to the flip, early-warning layer, and the email that tells you the day it turns.">
+<link rel="canonical" href="https://sigtide.com/flip/">
+<meta property="og:title" content="Is crypto risk-on yet? Not yet.">
+<meta property="og:description" content="Bitcoin has been risk-off for 231 days (since the death cross on 2025-11-16). Live 50/200 regime status, distance to the flip, early-warning layer, and the email that tells you the day it turns.">
+<meta property="og:url" content="https://sigtide.com/flip/">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://sigtide.com/logo.png">
+<meta name="twitter:card" content="summary">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "Is crypto risk-on or risk-off right now?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "As of 2026-07-05, Bitcoin is RISK-OFF: its 50-day moving average is 10.5% below its 200-day moving average. The current regime began with the death cross on 2025-11-16, 231 days ago."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "What is the golden cross / death cross?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "A golden cross is when Bitcoin's 50-day moving average rises above its 200-day moving average, signalling a medium-term uptrend (risk-on). A death cross is the opposite, signalling a downtrend (risk-off). It is a slow, confirming signal that historically moves only about twice a year."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "How will I know when the regime flips?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "SigTide recomputes the cross from daily Bitcoin data every day and emails subscribers the day the flip confirms, together with the strongest-structure coins ranked and ready. Subscribing is free."
+   }
+  }
+ ]
+}
+</script>
+<style>
+  :root{
+    --bg:#0a0e27; --panel:rgba(20,26,58,0.88); --panel-2:rgba(28,35,80,0.78);
+    --border:#2d3868; --text:#ecedfd; --text-2:#b8bce0; --muted:#8088c0;
+    --accent:#a78bfa; --green-2:#10d9a0; --blue-2:#60a5fa; --amber:#fbbf24; --red-2:#f472b6;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; padding:0; min-height:100vh; color:var(--text); line-height:1.6;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+    background:
+      radial-gradient(ellipse at top left, rgba(167,139,250,0.18) 0%, transparent 55%),
+      radial-gradient(ellipse at bottom right, rgba(16,217,160,0.13) 0%, transparent 55%),
+      linear-gradient(180deg,#0a0e27 0%,#0d1339 100%);
+    background-attachment:fixed;
+  }
+  .wrap{max-width:920px; margin:0 auto; padding:0 22px;}
+  a{color:var(--accent); text-decoration:none;}
+  nav{display:flex; align-items:center; justify-content:space-between; padding:22px 0;}
+  .brand{font-weight:800; font-size:19px; letter-spacing:-0.01em; color:var(--text);}
+  .brand .dot{color:var(--green-2);}
+  .nav-back{font-size:13px; color:var(--muted);}
+  .nav-back a{color:var(--text-2);}
+
+  .hero{background:linear-gradient(135deg, rgba(167,139,250,0.22) 0%, rgba(16,217,160,0.13) 100%);
+    border:1px solid var(--border); border-radius:20px; padding:44px 44px 38px; margin:8px 0 26px;
+    backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); text-align:center;}
+  .badge{display:inline-block; padding:5px 13px; border-radius:14px;
+    background:rgba(167,139,250,0.20); color:var(--accent);
+    font-size:11px; font-weight:700; letter-spacing:0.09em; text-transform:uppercase; margin-bottom:14px;}
+  .hero h1{margin:0 0 6px; font-size:34px; line-height:1.12; letter-spacing:-0.02em; color:#fff;}
+  .answer{font-size:64px; font-weight:800; letter-spacing:-0.03em; margin:10px 0 4px; color:#f472b6;}
+  .daycount{font-family:ui-monospace,monospace; font-size:17px; color:var(--text-2); margin:0 0 6px;}
+  .daycount b{font-size:26px; color:#fff;}
+  .hero .lede{font-size:16px; color:var(--text-2); max-width:640px; margin:12px auto 24px;}
+  .bh-embed{max-width:520px; min-height:64px; margin:0 auto;}
+  .bh-embed iframe{width:100%!important; max-width:520px; border:0;}
+  .microcopy{font-size:12.5px; color:var(--muted); margin-top:12px;}
+  @media(max-width:620px){ .hero{padding:30px 20px;} .hero h1{font-size:24px;} .answer{font-size:46px;} }
+
+  .grid3{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin:0 0 8px;}
+  @media(max-width:760px){ .grid3{grid-template-columns:1fr;} }
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  @media(max-width:700px){ .grid2{grid-template-columns:1fr;} }
+  .card{background:var(--panel); border:1px solid var(--border); border-radius:14px;
+    padding:20px 22px; backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);}
+  .card h3{margin:0 0 8px; font-size:11px; text-transform:uppercase; letter-spacing:0.11em; color:var(--muted);}
+  .bignum{font-family:ui-monospace,monospace; font-size:26px; font-weight:800; color:#fff;}
+  .bignum small{font-size:13px; color:var(--muted); font-weight:600;}
+  .cap{font-size:13px; color:var(--text-2); margin-top:6px; line-height:1.55;}
+  .regime-pill{display:inline-block; padding:5px 13px; border-radius:10px; font-weight:800;
+    font-size:13px; letter-spacing:0.05em; margin:2px 0 8px;}
+  .regime-off{background:rgba(244,114,182,0.14); color:var(--red-2);}
+  .regime-on{background:rgba(16,217,160,0.14); color:var(--green-2);}
+  .live-dot{display:inline-block; width:7px; height:7px; border-radius:50%; background:var(--green-2);
+    margin-right:7px; box-shadow:0 0 0 0 rgba(16,217,160,.6); animation:pulse 2.2s infinite;}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(16,217,160,.5);}70%{box-shadow:0 0 0 7px rgba(16,217,160,0);}100%{box-shadow:0 0 0 0 rgba(16,217,160,0);}}
+
+  section{margin:40px 0;}
+  .sec-h{font-size:13px; text-transform:uppercase; letter-spacing:0.13em; color:var(--muted); margin:0 0 16px;}
+  .prose{font-size:15px; color:var(--text-2); line-height:1.7; max-width:760px;}
+  .prose b{color:#fff;}
+  .caveat{font-size:12.5px; color:var(--muted); margin-top:12px; font-style:italic;}
+
+  table{width:100%; border-collapse:collapse; font-size:13.5px; margin-top:10px;}
+  th{text-align:left; font-size:10.5px; text-transform:uppercase; letter-spacing:0.09em;
+    color:var(--muted); padding:8px 10px; border-bottom:1px solid var(--border);}
+  td{padding:9px 10px; border-bottom:1px solid rgba(45,56,104,0.5); color:var(--text-2);}
+  tr:last-child td{border-bottom:none;}
+  td.mono{font-family:ui-monospace,monospace; color:#fff;}
+  .x-pill{display:inline-block; padding:2px 9px; border-radius:8px; font-size:11px; font-weight:800; letter-spacing:0.04em;}
+  .x-death{background:rgba(244,114,182,0.14); color:var(--red-2);}
+  .x-golden{background:rgba(16,217,160,0.14); color:var(--green-2);}
+  .now-row td{color:#fff; font-weight:600;}
+
+  .ew-strip{margin:14px 0 0; padding:12px 16px; border-left:3px solid #64748b;
+    background:rgba(148,163,184,0.08); border-radius:8px; font-size:13.5px; line-height:1.6; color:var(--text-2);}
+  .ew-strip b{color:#fff;}
+
+  .final{background:linear-gradient(135deg, rgba(167,139,250,0.22) 0%, rgba(16,217,160,0.13) 100%);
+    border:1px solid var(--border); border-radius:20px; padding:38px 30px; text-align:center; margin:44px 0 0;}
+  .final h2{margin:0 0 8px; font-size:26px; color:#fff; letter-spacing:-0.01em;}
+  .final p{color:var(--text-2); font-size:15px; max-width:560px; margin:0 auto 22px;}
+
+  footer{border-top:1px solid var(--border); margin-top:50px; padding:26px 0 40px; color:var(--muted); font-size:12.5px;}
+  footer .disc{max-width:760px; margin-bottom:10px; line-height:1.6;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <nav>
+    <a class="brand" href="/">SigTide<span class="dot">.</span></a>
+    <span class="nav-back"><a href="/">&larr; the full daily read</a></span>
+  </nav>
+
+  <div class="hero">
+    <span class="badge"><span class="live-dot"></span>Live regime status &middot; updated daily</span>
+    <h1>Is crypto risk-on yet?</h1>
+    <div class="answer">Not yet.</div>
+    <div class="daycount"><b>231</b> days risk-off &middot; since the death cross on November 16, 2025</div>
+    <p class="lede">Bitcoin's medium-term trend is still pointed down &mdash; the 50-day average sits below the 200-day. In this regime, buying strength has had no validated edge, so we stand down and wait. This page is how you'll know the moment that changes.</p>
+    <div class="bh-embed"><script async src="https://subscribe-forms.beehiiv.com/v3/loader.js" data-beehiiv-form="30359b98-5d01-4752-97bc-1ee29bad5b76"></script></div>
+    <div class="microcopy">No spam. One email the day the regime flips &mdash; plus the daily read if you want it. Unsubscribe anytime.</div>
+  </div>
+
+  <div class="grid3">
+    <div class="card">
+      <h3>Confirmed regime (50/200)</h3>
+      <span class="regime-pill regime-off">RISK-OFF</span>
+      <div class="cap">Bitcoin's 50-day average is <b style="color:#fff">10.5% below</b> its 200-day average. The regime flips the day that gap closes.</div>
+    </div>
+    <div class="card">
+      <h3>The two averages today</h3>
+      <div class="bignum">$66,911 <small>50-day</small></div>
+      <div class="bignum">$74,781 <small>200-day</small></div>
+      <div class="cap">BTC last close $62,944.</div>
+    </div>
+    <div class="card">
+      <h3>Early warning (30/100)</h3>
+      <div class="bignum" style="font-size:20px;">Agrees &middot; no divergence</div>
+      <div class="cap">The faster 30/100 trend agrees with the confirmed regime (both risk-off). Nothing brewing yet.</div>
+    </div>
+  </div>
+
+  <section>
+    <h2 class="sec-h">How close is the flip?</h2>
+    <div class="grid2">
+      <div class="card">
+        <h3>If BTC holds today's price</h3>
+        <div class="bignum">~166 <small>days</small></div>
+        <div class="cap">Holding flat at $62,944, the 50-day average would catch the 200-day in about <b style='color:#fff'>166 days</b>.</div>
+      </div>
+      <div class="card">
+        <h3>For a flip within 30 days</h3>
+        <div class="bignum">~$80,739</div>
+        <div class="cap">BTC would need to hold roughly <b style='color:#fff'>$80,739</b> (+28% from here) starting today for the cross to flip within 30 days.</div>
+      </div>
+    </div>
+    <p class="caveat">Both framings assume BTC simply holds a flat price while the averages catch up &mdash; a modelling device to make the distance concrete, not a forecast of what price will do.</p>
+  </section>
+
+  <section>
+    <h2 class="sec-h">How long do risk-off stretches usually last?</h2>
+    <p class="prose">Across 9 years of BTC history there have been <b>8 completed risk-off stretches</b> before this one. The shortest ran <b>45 days</b>, the median <b>88</b>, the longest <b>389</b>. The current one is at <b>231 days</b> &mdash; already past the historical median.</p>
+    <div class="card" style="margin-top:14px;">
+      <h3>Every 50/200 cross on record</h3>
+      <table>
+        <thead><tr><th>Cross</th><th>Date</th><th>Regime that followed</th><th style="text-align:right">Lasted</th></tr></thead>
+        <tbody>
+<tr class="now-row"><td><span class="x-pill x-death">DEATH</span></td><td class="mono">2025-11-16</td><td>risk-off &middot; ongoing</td><td class="mono" style="text-align:right">231 d</td></tr>
+<tr><td><span class="x-pill x-golden">GOLDEN</span></td><td class="mono">2025-05-22</td><td>risk-on</td><td class="mono" style="text-align:right">178 d</td></tr>
+<tr><td><span class="x-pill x-death">DEATH</span></td><td class="mono">2025-04-07</td><td>risk-off</td><td class="mono" style="text-align:right">45 d</td></tr>
+<tr><td><span class="x-pill x-golden">GOLDEN</span></td><td class="mono">2024-10-28</td><td>risk-on</td><td class="mono" style="text-align:right">161 d</td></tr>
+<tr><td><span class="x-pill x-death">DEATH</span></td><td class="mono">2024-08-10</td><td>risk-off</td><td class="mono" style="text-align:right">79 d</td></tr>
+<tr><td><span class="x-pill x-golden">GOLDEN</span></td><td class="mono">2023-10-30</td><td>risk-on</td><td class="mono" style="text-align:right">285 d</td></tr>
+<tr><td><span class="x-pill x-death">DEATH</span></td><td class="mono">2023-09-12</td><td>risk-off</td><td class="mono" style="text-align:right">48 d</td></tr>
+<tr><td><span class="x-pill x-golden">GOLDEN</span></td><td class="mono">2023-02-07</td><td>risk-on</td><td class="mono" style="text-align:right">217 d</td></tr>
+<tr><td><span class="x-pill x-death">DEATH</span></td><td class="mono">2022-01-14</td><td>risk-off</td><td class="mono" style="text-align:right">389 d</td></tr>
+<tr><td><span class="x-pill x-golden">GOLDEN</span></td><td class="mono">2021-09-15</td><td>risk-on</td><td class="mono" style="text-align:right">121 d</td></tr>
+<tr><td><span class="x-pill x-death">DEATH</span></td><td class="mono">2021-06-19</td><td>risk-off</td><td class="mono" style="text-align:right">88 d</td></tr>
+<tr><td><span class="x-pill x-golden">GOLDEN</span></td><td class="mono">2020-05-21</td><td>risk-on</td><td class="mono" style="text-align:right">394 d</td></tr>
+<tr><td><span class="x-pill x-death">DEATH</span></td><td class="mono">2020-03-25</td><td>risk-off</td><td class="mono" style="text-align:right">57 d</td></tr>
+<tr><td><span class="x-pill x-golden">GOLDEN</span></td><td class="mono">2020-02-18</td><td>risk-on</td><td class="mono" style="text-align:right">36 d</td></tr>
+<tr><td><span class="x-pill x-death">DEATH</span></td><td class="mono">2019-10-26</td><td>risk-off</td><td class="mono" style="text-align:right">115 d</td></tr>
+<tr><td><span class="x-pill x-golden">GOLDEN</span></td><td class="mono">2019-04-24</td><td>risk-on</td><td class="mono" style="text-align:right">185 d</td></tr>
+<tr><td><span class="x-pill x-death">DEATH</span></td><td class="mono">2018-03-31</td><td>risk-off</td><td class="mono" style="text-align:right">389 d</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="sec-h">Why this one number decides everything</h2>
+    <p class="prose">We score 49 crypto majors on trend structure every day. When we split nine years of those scores by this single switch, the result was stark: <b>in risk-on, top-scoring coins beat bottom-scoring coins by about +12.5 percentage points over the next 30 days</b> (bootstrap confidence interval excludes zero &mdash; a real, validated edge). <b>In risk-off, the edge disappears entirely.</b></p>
+    <p class="prose" style="margin-top:12px;">We didn't stop there: we tested momentum rotation, oversold mean-reversion and weekly reversal strategies in risk-off, looking for any way to keep trading through the winter. <b>Nothing survived.</b> That's why the honest call in risk-off is to stand down &mdash; not caution, arithmetic. The <a href="/#scoreboard">stand-down scoreboard</a> shows what sitting out has been worth, and the <a href="/#track-record">live track record</a> logs every daily call we've made, append-only.</p>
+  </section>
+
+  <section>
+    <h2 class="sec-h">The early-warning layer</h2>
+    <p class="prose">The 50/200 cross is deliberately slow &mdash; it confirms a turn rather than predicting one. So this page also watches a faster pair, the <b>30/100-day averages</b>, which historically flip <b>~3 weeks before</b> the confirmed cross. Golden warnings confirmed 73% of the time within 90 days &mdash; and <b>100% (5 of 5)</b> when BTC was already above its 200-day average, versus only 50% below it. Exit warnings confirmed 91% of the time.</p>
+    <div class="ew-strip"><b>Right now: no divergence.</b> The faster 30/100 trend agrees with the confirmed 50/200 regime &mdash; both read risk-off. The 30/100 pair last flipped 25 days ago (2026-06-10). When the fast pair turns before the slow one, this strip lights up &mdash; and subscribers hear about it.</div>
+  </section>
+
+  <div class="final">
+    <h2>Get the email the day it flips</h2>
+    <p>This switch has moved only 17 times in 9 years. When it moves, you'll know the same day &mdash; with the leaders ranked and ready. Until then, we won't bother you.</p>
+    <div class="bh-embed"><script async src="https://subscribe-forms.beehiiv.com/v3/loader.js" data-beehiiv-form="30359b98-5d01-4752-97bc-1ee29bad5b76"></script></div>
+  </div>
+
+  <footer>
+    <div class="disc"><b>SigTide is educational, not financial advice.</b> We publish trend-structure readings and our full methodology, including the strategies we tested and rejected. Markets carry risk; nothing here is a recommendation to buy or sell.</div>
+    <div>Updated July 5, 2026 &middot; regenerated automatically from the daily scan &middot; <a href="/">SigTide home</a></div>
+  </footer>
+
+</div>
+</body>
+</html>

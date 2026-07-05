@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Negative results: we found no tradeable long edge in crypto risk-off | SigTide</title>
+<meta name="description" content="We tested four strategy families — trend-following, relative-strength rotation, short-horizon reversal and oversold mean-reversion — on 49 liquid crypto majors with pre-declared primaries and block-bootstrap confidence intervals. In risk-off, nothing survived. Full numbers, including our own strategy's failures.">
+<link rel="canonical" href="https://sigtide.com/research/no-edge-in-risk-off/">
+<meta property="og:title" content="Negative results: no tradeable long edge in crypto risk-off">
+<meta property="og:description" content="Four strategy families, pre-declared tests, block-bootstrap CIs. Everything we tried in bear regimes failed the gate — including the tempting stuff. Full numbers published.">
+<meta property="og:url" content="https://sigtide.com/research/no-edge-in-risk-off/">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary">
+<style>
+  :root{
+    --bg:#0a0e27; --panel:rgba(20,26,58,0.88); --border:#2d3868;
+    --text:#ecedfd; --text-2:#b8bce0; --muted:#8088c0;
+    --accent:#a78bfa; --green-2:#10d9a0; --red-2:#f472b6; --amber:#fbbf24;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; padding:0; min-height:100vh; color:var(--text); line-height:1.7;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+    background:linear-gradient(180deg,#0a0e27 0%,#0d1339 100%);}
+  .wrap{max-width:760px; margin:0 auto; padding:0 22px;}
+  a{color:var(--accent); text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  nav{display:flex; align-items:center; justify-content:space-between; padding:22px 0;}
+  .brand{font-weight:800; font-size:19px; color:var(--text);}
+  .brand .dot{color:var(--green-2);}
+  .nav-links{display:flex; gap:18px; font-size:13px;}
+  .nav-links a{color:var(--text-2);}
+  article{padding:20px 0 40px;}
+  h1{font-size:32px; line-height:1.2; letter-spacing:-0.01em; color:#fff; margin:10px 0 8px;}
+  .dateline{font-size:13.5px; color:var(--muted); margin-bottom:28px;}
+  h2{font-size:21px; color:#fff; margin:38px 0 10px; letter-spacing:-0.01em;}
+  p{font-size:16px; color:var(--text-2); margin:14px 0;}
+  b, strong{color:#fff;}
+  li{font-size:15.5px; color:var(--text-2); margin:6px 0;}
+  table{width:100%; border-collapse:collapse; font-size:13.5px; margin:16px 0;}
+  th{text-align:left; font-size:10.5px; text-transform:uppercase; letter-spacing:0.08em;
+    color:var(--muted); padding:8px 9px; border-bottom:1px solid var(--border);}
+  td{padding:8px 9px; border-bottom:1px solid rgba(45,56,104,0.5); color:var(--text-2);}
+  td.mono{font-family:ui-monospace,monospace;}
+  .verdict-no{color:var(--red-2); font-weight:700;}
+  .verdict-yes{color:var(--green-2); font-weight:700;}
+  .callout{background:var(--panel); border:1px solid var(--border); border-left:3px solid var(--accent);
+    border-radius:10px; padding:16px 20px; margin:22px 0; font-size:15px; color:var(--text-2);}
+  .tablewrap{overflow-x:auto;}
+  code{font-family:ui-monospace,monospace; font-size:14px; color:var(--amber); background:rgba(28,35,80,0.7);
+    padding:1px 6px; border-radius:5px;}
+  footer{border-top:1px solid var(--border); margin-top:40px; padding:24px 0 40px; color:var(--muted); font-size:13px;}
+  .end-note{background:var(--panel); border:1px solid var(--border); border-radius:12px;
+    padding:18px 22px; margin:34px 0 0; font-size:14.5px; color:var(--text-2);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <nav>
+    <a class="brand" href="/">SigTide<span class="dot">.</span></a>
+    <div class="nav-links">
+      <a href="/coins/">Coin scores</a>
+      <a href="/flip/">Flip status</a>
+      <a href="/">Daily read</a>
+    </div>
+  </nav>
+
+  <article>
+    <h1>Negative results: we found no tradeable long edge in crypto risk-off</h1>
+    <div class="dateline">Research note &middot; July 2026 &middot; ~8 minute read</div>
+
+    <p>We run a small quantitative service that scores 49 liquid crypto majors on daily
+    trend structure. Its one validated claim is regime-dependent: when Bitcoin's 50-day
+    moving average is above its 200-day (&ldquo;risk-on&rdquo;), coins our rubric ranks in the top tier
+    beat bottom-tier coins by about <b>+12.5 percentage points over the next 30 days</b>
+    (block-bootstrap 95% CI [+1.9, +25.3] &mdash; excludes zero). When Bitcoin is below that
+    line (&ldquo;risk-off&rdquo;), the edge vanishes, and the honest output of the system is:
+    <b>stand down, hold cash, wait.</b></p>
+
+    <p>That answer is commercially inconvenient. Bitcoin has now been risk-off for
+    <b>231 days</b>, which means our product has spent 231 days telling people not to buy
+    anything. So we had every incentive to find a strategy that works in bear regimes
+    &mdash; and we spent the quiet season genuinely trying. This note reports that
+    <b>everything we tried failed</b>, with the numbers, because negative results with
+    real confidence intervals seem underrepresented in a space that mostly publishes wins.</p>
+
+    <h2>The gate every strategy had to pass</h2>
+    <p>To keep ourselves honest we used the same pre-registration discipline for every test:</p>
+    <ul>
+      <li><b>Pre-declared primary.</b> The exact entry rule, holding period, portfolio
+      construction and metric were fixed <i>before</i> looking at any results. Variants were
+      labelled robustness checks, not escape hatches.</li>
+      <li><b>Same universe, same costs.</b> All tests ran on the same 49 liquid majors
+      (point-in-time liquidity gate: 20-day median dollar volume &ge; $20M), net of 15&nbsp;bps
+      per side.</li>
+      <li><b>Honest benchmark.</b> Performance is measured as excess over an equal-weight
+      basket of the <i>same</i> eligible universe with the same rebalance and costs &mdash; so
+      survivorship bias in today's coin list penalises the benchmark equally.</li>
+      <li><b>Block-bootstrap confidence intervals.</b> Crypto daily returns cluster
+      (crash days are correlated across coins and across time), so i.i.d. statistics are
+      wildly overconfident. We used circular block bootstrap (30-day blocks, B=1000) and
+      day-clustered event studies. <b>The gate: the 95% CI must exclude zero.</b></li>
+      <li>Window: Feb 2020 &rarr; Jul 2026 (2,329 days: 1,392 risk-on / 937 risk-off), daily bars.</li>
+    </ul>
+
+    <h2>Family 1: our own trend/structure score</h2>
+    <p>First, the thing we sell, held to the same standard. The rubric grades each coin
+    0&ndash;20 on ten components (price above rising 20/50-day averages, higher highs and
+    lows, weekly trend gate, RSI band, relative strength vs BTC, volume confirmation, etc.),
+    weights fitted on historical forward-return lift.</p>
+    <div class="tablewrap"><table>
+      <thead><tr><th>Scope</th><th>Top-tier minus bottom-tier, forward 30d</th><th>95% CI</th><th>Verdict</th></tr></thead>
+      <tbody>
+        <tr><td>Risk-on</td><td class="mono">+12.5pp</td><td class="mono">[+1.9, +25.3]</td><td class="verdict-yes">real</td></tr>
+        <tr><td>Risk-off</td><td class="mono">&minus;4.1pp</td><td class="mono">includes 0</td><td class="verdict-no">no edge</td></tr>
+      </tbody>
+    </table></div>
+    <p>So the product's edge is real but conditional &mdash; it only exists when the tide is
+    coming in. In risk-off the top of our own leaderboard is statistically
+    indistinguishable from the bottom. That result is what motivated everything below:
+    if ranking strength doesn't work in bear regimes, does <i>anything</i>?</p>
+
+    <h2>Family 2: relative-strength rotation</h2>
+    <p>The most tempting idea. Even in this bear regime, individual names ripped:
+    one made +127%, another +74%, while the median major lost a third of its value. A
+    rotation strategy that holds the leaders should capture that, right?</p>
+    <p><b>Primary (pre-declared):</b> rank by 90-day coin/BTC relative strength, hold the
+    top 5 equal-weight, rebalance weekly. Robustness grid: 30/60-day lookbacks, top-3,
+    USD momentum, dual-momentum (own-trend filter), 1-day execution lag.</p>
+    <div class="tablewrap"><table>
+      <thead><tr><th>Variant</th><th>Scope</th><th>CAGR</th><th>Max DD</th><th>Excess vs equal-weight (95% CI)</th><th>Verdict</th></tr></thead>
+      <tbody>
+        <tr><td>Primary, top-5 RS</td><td>All</td><td class="mono">+30.1%</td><td class="mono">&minus;87%</td><td class="mono">+7.5%/yr [&minus;20.3, +40.4]</td><td class="verdict-no">noise</td></tr>
+        <tr><td><b>Primary, top-5 RS</b></td><td><b>Risk-off</b></td><td class="mono"><b>&minus;2.7%</b></td><td class="mono"><b>&minus;78%</b></td><td class="mono">&minus;3.1%/yr [&minus;37.9, +32.7]</td><td class="verdict-no">noise, negative</td></tr>
+        <tr><td>Dual-momentum variant</td><td>Risk-off</td><td class="mono">+12.4%</td><td class="mono">&minus;59%</td><td class="mono">&minus;5.7%/yr [&minus;61.3, +53.9]</td><td class="verdict-no">noise</td></tr>
+        <tr><td>Benchmark: hold BTC</td><td>Risk-off</td><td class="mono">+10.3%</td><td class="mono">&minus;67%</td><td class="mono">&mdash;</td><td>&mdash;</td></tr>
+      </tbody>
+    </table></div>
+    <p>The punchline: in risk-off, systematically buying the strongest coins <b>lost money
+    with a &minus;78% drawdown while plain BTC-hold made +10%/yr</b>. The visible winners were
+    survivor-glare &mdash; buying every RS leader means buying every fakeout too. The only
+    variant with a decent drawdown was the one with an absolute trend filter, i.e. the
+    thing that mostly keeps you <i>out</i>. The filter added the value; the rotation didn't.</p>
+
+    <h2>Family 3: short-horizon reversal</h2>
+    <p>The rotation study surfaced one statistically real signal &mdash; pointing the other
+    way. In risk-on, 90-day RS leaders <i>underperform</i> over the following week (weekly
+    IC &minus;0.042, 95% CI [&minus;0.082, &minus;0.005]). Genuine short-horizon reversal.
+    We tried to trade it: bottom-5 portfolios were noise, inconsistent across lookbacks.
+    And having run ~6 IC tests, one hit at p&asymp;0.01 carries obvious multiple-comparisons
+    risk. We classified it as <b>a thread, not evidence</b>, and did not ship it. (If it's
+    real, out-of-sample forward data will show it; that's the only upgrade path we accept.)</p>
+
+    <h2>Family 4: oversold mean-reversion</h2>
+    <p>The last family standing: deep-oversold bounces. <b>Primary (pre-declared):</b>
+    enter at close when RSI(14) &lt; 30 on an eligible coin; metric = forward 5-day return
+    <i>minus the universe's equal-weight forward return</i> (market-adjusted &mdash; so
+    &ldquo;everything bounced together&rdquo; can't masquerade as coin alpha); events collapsed to
+    per-day means, then day-block-bootstrapped, because oversold events cluster violently
+    on crash days.</p>
+    <div class="tablewrap"><table>
+      <thead><tr><th>Entry / hold</th><th>Scope</th><th>Events</th><th>Adj. per event</th><th>95% CI</th><th>Verdict</th></tr></thead>
+      <tbody>
+        <tr><td><b>RSI&lt;30, 5d (primary)</b></td><td>Risk-off</td><td class="mono">714</td><td class="mono">+0.69%</td><td class="mono">[&minus;0.29, +3.41]</td><td class="verdict-no">noise</td></tr>
+        <tr><td>RSI&lt;25, 5d</td><td>Risk-off</td><td class="mono">192</td><td class="mono">+0.74%</td><td class="mono">[&minus;1.42, +7.46]</td><td class="verdict-no">noise</td></tr>
+        <tr><td>RSI&lt;30, 3d</td><td>Risk-off</td><td class="mono">716</td><td class="mono">+0.48%</td><td class="mono">[&minus;0.02, +2.90]</td><td class="verdict-no">noise (barely)</td></tr>
+        <tr><td>z-score&lt;&minus;2, 5d</td><td>Risk-off</td><td class="mono">709</td><td class="mono">&minus;0.26%</td><td class="mono">[&minus;1.15, +0.95]</td><td class="verdict-no">noise</td></tr>
+      </tbody>
+    </table></div>
+    <p>Three honest observations. First, the direction is consistent: every RSI variant
+    leans positive in risk-off and ~zero in risk-on &mdash; if oversold bounces are anything,
+    they're a bear-market phenomenon. Second, the raw (non-market-adjusted) numbers look
+    juicy (+1.7&ndash;2.4% per event) &mdash; that's the figure dip-buying threads post &mdash;
+    but two-thirds of it evaporates once you subtract the market's own bounce. Third, the
+    3-day hold missed the gate by two basis points of CI, and chasing that boundary after
+    seeing the data is precisely the overfitting the pre-declared gate exists to prevent.
+    A consistent lean is not an edge. It didn't ship.</p>
+
+    <h2>The scoreboard</h2>
+    <div class="tablewrap"><table>
+      <thead><tr><th>Strategy family</th><th>Verdict in risk-off</th></tr></thead>
+      <tbody>
+        <tr><td>Trend/structure ranking (our product)</td><td class="verdict-no">no edge (real in risk-on only)</td></tr>
+        <tr><td>Relative-strength rotation</td><td class="verdict-no">rejected &mdash; lost to the passive basket</td></tr>
+        <tr><td>Short-horizon reversal</td><td class="verdict-no">rejected &mdash; untradeable + multiplicity risk</td></tr>
+        <tr><td>Oversold mean-reversion</td><td class="verdict-no">rejected &mdash; lean, but CIs include zero</td></tr>
+      </tbody>
+    </table></div>
+
+    <div class="callout"><b>Conclusion: on daily bars of liquid crypto majors, we could not
+    validate any long strategy in risk-off.</b> Standing down in bear regimes isn't
+    cowardice or laziness &mdash; on our data it's arithmetic. The least-bad long in risk-off
+    was simply holding BTC, and even that drew down 67%.</div>
+
+    <h2>Caveats, because they matter more than conclusions</h2>
+    <ul>
+      <li><b>Survivorship:</b> our universe is today's curated list of 49 majors; coins that
+      died in 2021&ndash;22 are absent. The excess-vs-same-universe benchmark controls for
+      this in relative terms but doesn't eliminate it in absolute terms.</li>
+      <li><b>Data ceiling:</b> the regime gate has flipped only ~17 times in nine years of BTC
+      history. Wide confidence intervals are the honest cost of that &mdash; a real +10%/yr
+      edge could exist and still be undetectable in this sample. We don't trade
+      &ldquo;might&rdquo;.</li>
+      <li><b>Execution optimism:</b> signal-on-close, trade-on-close. The lag-1 robustness
+      variant was directionally similar but this still flatters fills slightly.</li>
+      <li><b>Scope:</b> daily bars, long-only, liquid majors. We make no claims about
+      intraday, derivatives, market-neutral or short strategies.</li>
+      <li><b>Absence of evidence:</b> failing our gate doesn't prove no edge exists &mdash;
+      it proves we couldn't validate one at 95% confidence with this method and sample.
+      That's the strongest claim the data permits, so it's the only claim we make.</li>
+    </ul>
+
+    <h2>Why publish this</h2>
+    <p>Two reasons. First, the file-drawer problem is worse in trading content than almost
+    anywhere else: strategies that fail quietly disappear, and what's left published is a
+    highlight reel that systematically overstates what's achievable. Negative results with
+    methodology attached are the correction. Second, our product's only real differentiator
+    is that it tells people <i>not</i> to trade for months at a time &mdash; a claim that's
+    easy to dismiss as marketing until you see the graveyard of alternatives we tested
+    against it.</p>
+    <p>Everything here accrues into a public, append-only <a href="/#track-record">forward
+    log</a> &mdash; every daily call, timestamped, never edited. If the mean-reversion lean is
+    real, the forward data will eventually say so out-of-sample, and we'll upgrade it from
+    lean to edge in public. Until then: the tide is out, and we wait. The live regime
+    status is at <a href="/flip/">sigtide.com/flip</a>.</p>
+
+    <div class="end-note"><b>Educational use only &mdash; not financial advice.</b> All
+    results are backtests with the limitations listed above. SigTide publishes a free daily
+    trend-structure read of 49 crypto majors and one email the day the Bitcoin regime
+    flips. No paid tier was harmed in the making of these negative results.</div>
+  </article>
+
+  <footer>
+    <div>SigTide &middot; <a href="/">home</a> &middot; <a href="/coins/">coin scores</a>
+    &middot; <a href="/flip/">flip status</a> &middot; <a href="/research/no-edge-in-risk-off/">this note</a></div>
+  </footer>
+
+</div>
+</body>
+</html>

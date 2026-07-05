@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SigTide — know the day the market turns</title>
+<meta name="description" content="Crypto majors, scored daily. We tell you when the odds are with you — and, just as importantly, when to stand down. The day the market flips risk-on, you get the email.">
+<style>
+  :root{
+    --bg:#0a0e27; --panel:rgba(20,26,58,0.88); --panel-2:rgba(28,35,80,0.78);
+    --border:#2d3868; --text:#ecedfd; --text-2:#b8bce0; --muted:#8088c0;
+    --accent:#a78bfa; --green-2:#10d9a0; --blue-2:#60a5fa; --amber:#fbbf24; --red-2:#f472b6;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; padding:0; min-height:100vh; color:var(--text); line-height:1.6;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+    background:
+      radial-gradient(ellipse at top left, rgba(167,139,250,0.18) 0%, transparent 55%),
+      radial-gradient(ellipse at bottom right, rgba(16,217,160,0.13) 0%, transparent 55%),
+      linear-gradient(180deg,#0a0e27 0%,#0d1339 100%);
+    background-attachment:fixed;
+  }
+  .wrap{max-width:1080px; margin:0 auto; padding:0 22px;}
+  a{color:var(--accent); text-decoration:none;}
+
+  /* nav */
+  nav{display:flex; align-items:center; justify-content:space-between; padding:22px 0;}
+  .brand{font-weight:800; font-size:19px; letter-spacing:-0.01em;}
+  .brand .dot{color:var(--green-2);}
+  .nav-tag{font-size:12px; color:var(--muted); letter-spacing:0.04em;}
+
+  /* hero */
+  .hero{
+    background:linear-gradient(135deg, rgba(167,139,250,0.22) 0%, rgba(16,217,160,0.13) 100%);
+    border:1px solid var(--border); border-radius:20px; padding:48px 44px; margin:8px 0 30px;
+    backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+  }
+  .badge{display:inline-block; padding:5px 13px; border-radius:14px;
+    background:rgba(167,139,250,0.20); color:var(--accent);
+    font-size:11px; font-weight:700; letter-spacing:0.09em; text-transform:uppercase; margin-bottom:16px;}
+  .hero h1{margin:0 0 14px; font-size:42px; line-height:1.12; letter-spacing:-0.02em; color:#fff;}
+  .hero h1 .hl{background:linear-gradient(90deg,var(--accent),var(--green-2));
+    -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;}
+  .hero .lede{font-size:18px; color:var(--text-2); max-width:680px; margin:0 0 26px;}
+  @media(max-width:620px){ .hero{padding:32px 22px;} .hero h1{font-size:30px;} .hero .lede{font-size:16px;} }
+
+  /* email form */
+  .signup{display:flex; gap:10px; flex-wrap:wrap; max-width:520px;}
+  .signup input[type=email]{
+    flex:1 1 260px; min-width:0; padding:15px 16px; font-size:15px;
+    background:rgba(10,14,39,0.7); border:1px solid var(--border); border-radius:11px;
+    color:var(--text); outline:none; transition:border-color .15s;}
+  .signup input[type=email]:focus{border-color:var(--accent);}
+  .signup button{
+    padding:15px 24px; font-size:15px; font-weight:700; cursor:pointer;
+    border:none; border-radius:11px; color:#0a0e27; white-space:nowrap;
+    background:linear-gradient(90deg,var(--accent),var(--green-2));
+    transition:transform .12s, filter .12s;}
+  .signup button:hover{transform:translateY(-1px); filter:brightness(1.06);}
+  .signup button:disabled{opacity:.6; cursor:default; transform:none;}
+  .hp{position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden;}
+  .microcopy{font-size:12.5px; color:var(--muted); margin-top:12px;}
+  .form-msg{margin-top:14px; font-size:14px; font-weight:600; min-height:20px;}
+  .form-msg.ok{color:var(--green-2);} .form-msg.err{color:var(--red-2);}
+  .demo-flag{font-size:11px; color:var(--amber); margin-top:6px;}
+  /* Beehiiv embed (official loader injects an iframe here) */
+  .bh-embed{max-width:520px; min-height:64px;}
+  .bh-embed iframe{width:100%!important; max-width:520px; border:0;}
+  .final .bh-embed{margin:0 auto;}
+
+  /* live proof */
+  .proof{display:grid; grid-template-columns:1.2fr 1fr; gap:18px; margin-bottom:30px;}
+  @media(max-width:760px){ .proof{grid-template-columns:1fr;} }
+  .card{background:var(--panel); border:1px solid var(--border); border-radius:14px;
+    padding:22px 24px; backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);}
+  .card h3{margin:0 0 4px; font-size:11px; text-transform:uppercase; letter-spacing:0.11em; color:var(--muted);}
+  .live-dot{display:inline-block; width:7px; height:7px; border-radius:50%; background:var(--green-2);
+    margin-right:7px; box-shadow:0 0 0 0 rgba(16,217,160,.6); animation:pulse 2.2s infinite;}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(16,217,160,.5);}70%{box-shadow:0 0 0 7px rgba(16,217,160,0);}100%{box-shadow:0 0 0 0 rgba(16,217,160,0);}}
+  .regime-pill{display:inline-block; padding:5px 13px; border-radius:10px; font-weight:800;
+    font-size:13px; letter-spacing:0.05em; margin:6px 0 10px;}
+  .regime-off{background:rgba(244,114,182,0.14); color:var(--red-2);}
+  .regime-on{background:rgba(16,217,160,0.14); color:var(--green-2);}
+  .regime-line{font-size:14px; color:var(--text-2);}
+  /* signal bar */
+  .sig-top{display:flex; align-items:baseline; justify-content:space-between; margin:10px 0 8px;}
+  .sig-val{font-family:ui-monospace,monospace; font-size:30px; font-weight:800;}
+  .sig-band{font-size:12px; font-weight:800; letter-spacing:0.08em;}
+  .sig-track{position:relative; height:12px; border-radius:7px;
+    background:linear-gradient(90deg,#f472b6 0%,#fbbf24 40%,#60a5fa 70%,#10d9a0 100%);}
+  .sig-marker{position:absolute; top:-4px; width:4px; height:20px; border-radius:2px;
+    background:#fff; box-shadow:0 0 6px rgba(0,0,0,.5); transform:translateX(-50%);}
+  .sig-ticks{display:flex; justify-content:space-between; font-size:10px; color:var(--muted);
+    margin-top:6px; letter-spacing:0.05em;}
+  .top-list{list-style:none; margin:6px 0 0; padding:0;}
+  .top-list li{display:flex; justify-content:space-between; align-items:center;
+    padding:8px 0; border-bottom:1px solid rgba(45,56,104,0.5);}
+  .top-list li:last-child{border-bottom:none;}
+  .top-list .tk{font-weight:700; font-size:15px;}
+  .top-list .sc{font-family:ui-monospace,monospace; font-weight:800; font-size:18px;}
+  .top-list .sc small{font-size:11px; color:var(--muted); font-weight:600;}
+  .minirow{display:flex; gap:18px; margin-top:14px; flex-wrap:wrap;}
+  .mini{font-size:12px; color:var(--muted);} .mini b{color:var(--text); font-size:15px; font-family:ui-monospace,monospace;}
+
+  /* sections */
+  section{margin:46px 0;}
+  .sec-h{font-size:13px; text-transform:uppercase; letter-spacing:0.13em; color:var(--muted); margin:0 0 20px;}
+  .three{display:grid; grid-template-columns:repeat(3,1fr); gap:18px;}
+  @media(max-width:760px){ .three{grid-template-columns:1fr;} }
+  .feat{background:var(--panel); border:1px solid var(--border); border-radius:14px; padding:24px;}
+  .feat .ic{font-size:24px; margin-bottom:10px;}
+  .feat h4{margin:0 0 8px; font-size:17px; color:#fff;}
+  .feat p{margin:0; font-size:14px; color:var(--text-2);}
+  .feat.headline{border:1px solid var(--accent); background:linear-gradient(135deg,rgba(167,139,250,0.16),rgba(16,217,160,0.08));}
+  .feat.headline .tagk{display:inline-block; font-size:10px; font-weight:800; letter-spacing:0.1em;
+    text-transform:uppercase; color:var(--accent); margin-bottom:8px;}
+
+  /* plans */
+  .plans{display:grid; grid-template-columns:repeat(3,1fr); gap:18px; align-items:start; margin-top:8px;}
+  @media(max-width:820px){ .plans{grid-template-columns:1fr;} }
+  .plan{position:relative; background:var(--panel); border:1px solid var(--border); border-radius:14px; padding:28px 24px 24px;}
+  .plan.pro{border-color:var(--accent); box-shadow:0 0 26px rgba(167,139,250,0.22);}
+  .plan.poseidon{border-color:#38bdf8; background:linear-gradient(180deg,rgba(56,189,248,0.10),rgba(20,26,58,0.88));}
+  .plan .pname{font-size:13px; font-weight:800; letter-spacing:0.06em; text-transform:uppercase; color:var(--muted);}
+  .plan.pro .pname{color:var(--accent);}
+  .plan.poseidon .pname{color:#7dd3fc;}
+  .plan .price{font-size:30px; font-weight:800; margin:8px 0 2px; font-family:ui-monospace,monospace;}
+  .plan .price small{font-size:14px; color:var(--muted); font-weight:600;}
+  .plan .ptag{font-size:12.5px; color:var(--muted); margin:2px 0 0;}
+  .plan .plain{font-size:13px; color:var(--text-2); line-height:1.55; margin:12px 0 0;
+    padding-top:12px; border-top:1px solid rgba(45,56,104,0.5);}
+  .plan .plain b{color:#fff;}
+  .plans-intro{font-size:15px; color:var(--text-2); line-height:1.65; max-width:780px; margin:-6px 0 22px;}
+  .plans-intro b{color:#fff;} .plans-intro .w{color:var(--accent);}
+  .plan ul{list-style:none; margin:14px 0 0; padding:0;}
+  .plan li{font-size:14px; color:var(--text-2); padding:6px 0 6px 24px; position:relative;}
+  .plan li::before{content:"✓"; position:absolute; left:0; color:var(--green-2); font-weight:800;}
+  .plan.poseidon li::before{color:#38bdf8;}
+  .pbadge{position:absolute; top:-11px; left:50%; transform:translateX(-50%); white-space:nowrap;
+    font-size:10px; font-weight:800; letter-spacing:0.07em; text-transform:uppercase; padding:4px 12px; border-radius:20px;}
+  .pbadge.pop{background:var(--accent); color:#0a0e27;}
+  .pbadge.early{background:linear-gradient(90deg,#38bdf8,#0ea5e9); color:#04121f;}
+  .pcta{display:block; margin-top:18px; text-align:center; text-decoration:none; cursor:pointer;
+    background:linear-gradient(90deg,#38bdf8,#0ea5e9); color:#04121f; font-weight:800; font-size:14px;
+    padding:12px 16px; border-radius:10px;}
+  .pcta:hover{filter:brightness(1.08);}
+  .soon{display:inline-block; font-size:10px; font-weight:800; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--amber); background:rgba(251,191,36,0.13); padding:3px 9px; border-radius:8px; margin-left:8px;}
+
+  /* final cta */
+  .final{background:linear-gradient(135deg,rgba(167,139,250,0.2),rgba(16,217,160,0.12));
+    border:1px solid var(--border); border-radius:20px; padding:44px; text-align:center;}
+  .final h2{margin:0 0 10px; font-size:28px; color:#fff;}
+  .final p{margin:0 0 24px; color:var(--text-2); font-size:16px;}
+  .final .signup{margin:0 auto; justify-content:center;}
+
+  footer{border-top:1px solid var(--border); margin-top:50px; padding:26px 0 40px; color:var(--muted); font-size:12.5px;}
+  footer .disc{max-width:760px; margin-bottom:10px; line-height:1.6;}
+
+  /* nav links */
+  .nav-links{display:flex; gap:20px; font-size:13px; align-items:center;}
+  .nav-links a{color:var(--text-2);}
+  .nav-links a:hover{color:var(--accent);}
+  @media(max-width:620px){ .nav-links{gap:12px; font-size:12px;} }
+
+  /* ===== stand-down scoreboard ===== */
+  .scoreboard{background:var(--panel-2); border:1px solid var(--border); border-radius:18px; padding:34px 32px; margin:30px 0;
+    backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);}
+  .scoreboard .eyebrow{font-size:11px; text-transform:uppercase; letter-spacing:0.12em; color:var(--red-2); font-weight:800; margin-bottom:7px;}
+  .scoreboard h2{margin:0 0 7px; font-size:26px; color:#fff; letter-spacing:-0.01em;}
+  .scoreboard .sub{font-size:14px; color:var(--text-2); margin:0 0 22px; max-width:700px;}
+  .sb-cards{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:26px;}
+  @media(max-width:680px){ .sb-cards{grid-template-columns:1fr;} }
+  .sb-card{background:rgba(10,14,39,0.5); border:1px solid var(--border); border-radius:12px; padding:18px;}
+  .sb-card .k{font-size:11px; text-transform:uppercase; letter-spacing:0.07em; color:var(--muted); margin-bottom:9px;}
+  .sb-card .v{font-size:27px; font-weight:800; font-family:ui-monospace,monospace; line-height:1;}
+  .sb-card .d{font-size:12.5px; color:var(--text-2); margin-top:8px;}
+  .sb-illo{background:rgba(10,14,39,0.4); border:1px solid var(--border); border-radius:12px; padding:22px 20px 18px;}
+  .sb-illo .ititle{font-size:12px; text-transform:uppercase; letter-spacing:0.08em; color:var(--muted); text-align:center; margin-bottom:18px;}
+  .sb-bars{display:flex; align-items:flex-end; justify-content:center; gap:26px;}
+  .sb-bar{display:flex; flex-direction:column; align-items:center; justify-content:flex-end; width:30%; max-width:140px;}
+  .sb-bar .bv{font-size:16px; font-weight:800; font-family:ui-monospace,monospace; margin-bottom:7px;}
+  .sb-bar .bcol{width:100%; border-radius:8px 8px 0 0; min-height:6px;}
+  .sb-bar .bl{font-size:12px; color:var(--text-2); margin-top:10px; text-align:center; line-height:1.35;}
+  .sb-illo-cap{font-size:11.5px; color:var(--muted); text-align:center; margin-top:16px;}
+  .sb-verdict{font-size:14.5px; color:var(--text); line-height:1.6; margin:22px 0 0; padding:15px 18px;
+    background:rgba(16,217,160,0.06); border-left:3px solid var(--green-2); border-radius:0 10px 10px 0;}
+  .sb-caveat{font-size:13px; color:var(--text-2); line-height:1.6; margin:12px 0 0; padding:14px 18px;
+    background:rgba(251,191,36,0.06); border-left:3px solid var(--amber); border-radius:0 10px 10px 0;}
+
+  /* ===== public track record ===== */
+  .track .intro{font-size:14px; color:var(--text-2); max-width:730px; margin:0 0 18px; line-height:1.6;}
+  .tr-summary{display:flex; gap:30px; flex-wrap:wrap; margin:0 0 18px; padding:16px 22px;
+    background:var(--panel); border:1px solid var(--border); border-radius:12px;}
+  .tr-summary .ts{font-size:12px; color:var(--muted);}
+  .tr-summary .ts b{display:block; font-size:21px; color:var(--text); font-family:ui-monospace,monospace; font-weight:800; margin-top:3px;}
+  .tr-wrap{overflow-x:auto; border:1px solid var(--border); border-radius:12px;}
+  table.tr{width:100%; border-collapse:collapse; font-size:13px; min-width:640px;}
+  table.tr th{text-align:left; padding:11px 14px; font-size:10.5px; text-transform:uppercase; letter-spacing:0.05em;
+    color:var(--muted); background:rgba(10,14,39,0.55); border-bottom:1px solid var(--border);}
+  table.tr td{padding:11px 14px; border-bottom:1px solid rgba(45,56,104,0.4); color:var(--text-2);}
+  table.tr tr:last-child td{border-bottom:none;}
+  table.tr td.dt{font-family:ui-monospace,monospace; color:var(--text); white-space:nowrap;}
+  table.tr td.sig{font-family:ui-monospace,monospace; font-weight:700;}
+  .rpill{display:inline-block; font-size:10px; font-weight:800; letter-spacing:0.03em; padding:3px 8px; border-radius:7px;}
+  .rpill.off{background:rgba(244,114,182,0.14); color:var(--red-2);}
+  .rpill.on{background:rgba(16,217,160,0.14); color:var(--green-2);}
+  table.tr .call{color:var(--amber); font-weight:700; white-space:nowrap;}
+  table.tr .lead{font-family:ui-monospace,monospace; font-size:12px; color:var(--text); white-space:nowrap;}
+  .tr-foot{font-size:12px; color:var(--muted); margin-top:12px; font-style:italic;}
+
+  /* ===== founding members ===== */
+  .founding{background:linear-gradient(135deg,rgba(56,189,248,0.13),rgba(167,139,250,0.10));
+    border:1px solid #38bdf8; border-radius:18px; padding:36px 34px; margin:30px 0;}
+  .founding .fbadge{display:inline-block; font-size:10px; font-weight:800; letter-spacing:0.1em; text-transform:uppercase;
+    color:#04121f; background:linear-gradient(90deg,#38bdf8,#0ea5e9); padding:4px 12px; border-radius:20px; margin-bottom:14px;}
+  .founding h2{margin:0 0 10px; font-size:26px; color:#fff; letter-spacing:-0.01em;}
+  .founding .lede{font-size:15px; color:var(--text-2); max-width:660px; margin:0 0 24px; line-height:1.6;}
+  .f-benes{display:grid; grid-template-columns:repeat(2,1fr); gap:18px; margin-bottom:26px;}
+  @media(max-width:620px){ .f-benes{grid-template-columns:1fr;} }
+  .f-bene{display:flex; gap:13px; align-items:flex-start;}
+  .f-bene .fic{font-size:21px; line-height:1.1;}
+  .f-bene h4{margin:0 0 4px; font-size:15px; color:#fff;}
+  .f-bene p{margin:0; font-size:13px; color:var(--text-2); line-height:1.55;}
+  .f-cta-row{display:flex; align-items:center; gap:20px; flex-wrap:wrap;}
+  .f-cta{display:inline-block; background:linear-gradient(90deg,#38bdf8,#0ea5e9); color:#04121f; font-weight:800;
+    font-size:15px; padding:14px 26px; border-radius:11px; text-decoration:none;}
+  .f-cta:hover{filter:brightness(1.08);}
+  .f-spots{font-size:13px; color:var(--text-2);}
+  .f-spots b{color:#7dd3fc; font-family:ui-monospace,monospace;}
+  .f-fine{font-size:12px; color:var(--muted); margin-top:16px; line-height:1.6; max-width:660px;}
+
+  /* ===== newcomer glossary (hover / tap) ===== */
+  .term{border-bottom:1px dashed rgba(167,139,250,0.7); cursor:help; -webkit-tap-highlight-color:transparent;}
+  .term:hover{border-bottom-color:var(--accent); color:#fff;}
+  .term:focus{outline:2px solid var(--accent); outline-offset:2px; border-radius:3px;}
+  .hint{display:flex; align-items:center; justify-content:center; gap:7px; font-size:12.5px;
+    color:var(--muted); margin:-12px 0 26px;}
+  .hint b{color:var(--text-2); font-weight:600;}
+  .hint .u{border-bottom:1px dashed rgba(167,139,250,0.7); color:var(--accent);}
+  #tipcard{position:fixed; z-index:9999; max-width:290px; padding:12px 14px;
+    background:#0d1235; border:1px solid var(--accent); border-radius:11px; color:var(--text);
+    font-size:13px; line-height:1.55; box-shadow:0 12px 34px rgba(0,0,0,0.55);
+    opacity:0; transform:translateY(4px); transition:opacity .12s, transform .12s; pointer-events:none;}
+  #tipcard.show{opacity:1; transform:translateY(0);}
+  #tipcard .tt{display:block; font-size:10.5px; text-transform:uppercase; letter-spacing:0.07em;
+    color:var(--accent); font-weight:800; margin-bottom:5px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <nav>
+    <div class="brand">SigTide<span class="dot">.</span></div>
+    <div class="nav-links">
+      <a href="/flip/">Flip status</a>
+      <a href="/coins/">Coin scores</a>
+      <a href="#scoreboard">Scoreboard</a>
+      <a href="#track-record">Track record</a>
+      <a href="#founding">Founding</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero">
+    <span class="badge">Free · join the waitlist</span>
+    <h1>Know the <span class="hl">exact day</span> the market turns risk-on.</h1>
+    <p class="lede">We score the major coins every day — and tell you plainly when the
+      odds are with you, and when to <strong><span class="term" tabindex="0" data-term="Stand down"
+      data-tip="Stay in cash and wait. Choosing not to trade is itself a decision — sitting out a falling market protects your money.">stand down</span></strong>.
+      Most days the honest answer is "do nothing." The day that changes, you get
+      <span class="term" tabindex="0" data-term="The flip email"
+      data-tip="The single email that matters: sent the day Bitcoin's trend flips back to risk-on — historically the better time to step back in.">the email</span>.</p>
+
+    <div class="bh-embed"><script async src="https://subscribe-forms.beehiiv.com/v3/loader.js" data-beehiiv-form="30359b98-5d01-4752-97bc-1ee29bad5b76"></script></div>
+    <div class="microcopy">No spam. One email when it matters, plus the daily read if you want it. Unsubscribe anytime.</div>
+  </header>
+
+  <div class="hint">💡 <b>New to this?</b> Hover or tap any <span class="u">underlined term</span> for a plain-English explanation.</div>
+
+  <!-- LIVE PROOF -->
+  <div class="proof">
+    <div class="card">
+      <h3><span class="live-dot"></span>Today's real read · July 5, 2026</h3>
+      <div class="regime-pill term regime-off" tabindex="0" data-term="RISK-OFF" data-tip="When Bitcoin's trend has turned down and most coins tend to fall together. The market is signalling caution — usually a time to wait, not buy." style="border-bottom:none">RISK-OFF</div>
+      <div class="regime-line">Risk-off for 231 days — since the death cross on 2025-11-16. The score stands down; capital stays dry.</div>
+      <div class="sig-top">
+        <span class="sig-val" style="color:#f472b6">3.3<small style="font-size:14px;color:var(--muted)">/10</small></span>
+        <span class="sig-band term" tabindex="0" data-term="Watchlist signal" data-tip="The average strength across all the coins we track, on a 0–10 dial — a quick read of how healthy the whole market looks today: AVOID, WAIT, WATCH or BUY." style="color:#f472b6; border-bottom:none">AVOID</span>
+      </div>
+      <div class="sig-track"><div class="sig-marker" style="left:32.7%"></div></div>
+      <div class="sig-ticks"><span>AVOID</span><span>WAIT</span><span>WATCH</span><span>BUY</span></div>
+      <div class="minirow">
+        <span class="mini"><span class="term" tabindex="0" data-term="Fear & Greed" data-tip="A 0–100 gauge of overall market mood. Low numbers mean fear (everyone's nervous); high numbers mean greed (everyone's euphoric).">Fear &amp; Greed</span> <b>23</b> Extreme Fear</span>
+        <span class="mini">Coins scanned <b>49</b></span>
+        <span class="mini"><span class="term" tabindex="0" data-term="Strong tier" data-tip="The coins scoring near the top of our 0–20 scale — the healthiest-looking trends on the board that day.">Strong-tier</span> <b>6</b></span>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Top of the watchlist today</h3>
+      <ul class="top-list">
+        <li><span class="tk">HYPE</span><span class="sc" style="color:#10d9a0">19<small>/20</small></span></li>
+<li><span class="tk">AAVE</span><span class="sc" style="color:#10d9a0">18<small>/20</small></span></li>
+<li><span class="tk">JST</span><span class="sc" style="color:#10d9a0">17<small>/20</small></span></li>
+      </ul>
+      <div class="microcopy" style="margin-top:14px">This panel is generated by the live pipeline — not a screenshot. It's the
+        same engine subscribers get, refreshed daily.</div>
+    </div>
+  </div>
+
+  <!-- STAND-DOWN SCOREBOARD -->
+  <section id="scoreboard" class="scoreboard">
+    <div class="eyebrow">The cost of not standing down</div>
+    <h2>What sitting out has been worth</h2>
+    <p class="sub">Since Bitcoin's <span class="term" tabindex="0" data-term="Death cross" data-tip="A widely-watched warning sign: Bitcoin's average price over the last ~50 days drops below its ~200-day average, suggesting the trend has turned down.">death cross</span> on 2025-11-16 — <strong>231 days</strong> ago — SigTide
+      has said the same thing every single day: <em><span class="term" tabindex="0" data-term="Stand down" data-tip="Stay in cash and wait. Choosing not to trade is itself a decision — sitting out a falling market protects your money.">stand down</span></em>. Here's what that call has been
+      worth versus chasing the market.</p>
+
+    <div class="sb-cards">
+      <div class="sb-card">
+        <div class="k">Bitcoin since the cross</div>
+        <div class="v" style="color:var(--red-2)">−33%</div>
+        <div class="d">Deepest <span class="term" tabindex="0" data-term="Drawdown" data-tip="How far something has fallen from its highest point. A −38% drawdown means it dropped 38% from the top before any recovery.">drawdown</span> −39% along the way.</div>
+      </div>
+      <div class="sb-card">
+        <div class="k">Watchlist majors down</div>
+        <div class="v">44<small style="font-size:15px;color:var(--muted)">/49</small></div>
+        <div class="d">Average −33% across the board — 90% in the red.</div>
+      </div>
+      <div class="sb-card">
+        <div class="k">Protected on a $10k stack</div>
+        <div class="v" style="color:var(--green-2)">+$3,320</div>
+        <div class="d">Cash today vs. holding through the fall.</div>
+      </div>
+    </div>
+
+    <div class="sb-illo">
+      <div class="ititle">$10,000 at the cross — where it stands today</div>
+      <div class="sb-bars"><div class="sb-bar"><div class="bv" style="color:var(--green-2)">$10,000</div><div class="bcol" style="height:132px;background:linear-gradient(180deg,#10d9a0,#0e9e78)"></div><div class="bl">Stood down<br>(cash)</div></div><div class="sb-bar"><div class="bv" style="color:var(--text)">$6,730</div><div class="bcol" style="height:89px;background:linear-gradient(180deg,#fbbf24,#b9851a)"></div><div class="bl">Held the<br>basket</div></div><div class="sb-bar"><div class="bv" style="color:var(--text)">$6,680</div><div class="bcol" style="height:88px;background:linear-gradient(180deg,#f472b6,#b03b78)"></div><div class="bl">Just held<br>Bitcoin</div></div></div>
+      <div class="sb-illo-cap">Cash kept its value; the <span class="term" tabindex="0" data-term="Equal-weight basket" data-tip="Imagine splitting your money evenly across every coin we track. This shows how that simple buy-everything approach would have done.">equal-weight basket</span> and Bitcoin both bled out.</div>
+    </div>
+
+    <div class="sb-verdict">Since the death cross on 2025-11-16 (231 days), BTC is -33% and 44 of 49 watchlist majors are down — average -33%. SigTide said stand down every one of those days. In a falling tape with no validated edge, sitting out was the trade.</div>
+    <div class="sb-caveat">Honest caveat: 5 names still rose (JST +156%, HYPE +82%, CC +24%). The score had no validated risk-off edge to call those, and chasing in a -33% market is how most people lost money. Standing aside dodged the 44 that fell at the cost of a few lottery tickets we couldn't honestly have picked.</div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section>
+    <h2 class="sec-h">How it works</h2>
+    <div class="three">
+      <div class="feat">
+        <div class="ic">📊</div>
+        <h4>Scored every day</h4>
+        <p>Every major coin gets a <span class="term" tabindex="0" data-term="Bullish-structure score" data-tip="We grade every coin from 0 to 20 on signs of a healthy uptrend — rising averages, higher highs, momentum. Higher means a stronger-looking setup.">0–20 bullish-structure score</span> — trend, momentum,
+          relative strength, the lot — translated into plain English. No charts to read.</p>
+      </div>
+      <div class="feat">
+        <div class="ic">🛡️</div>
+        <h4>Told when to stand down</h4>
+        <p>The edge only exists when Bitcoin is <span class="term" tabindex="0" data-term="Risk-on" data-tip="When Bitcoin's medium-term trend is up and coins tend to rise together. Historically the friendlier time to be holding crypto.">risk-on</span>. The rest of the time we say so —
+          loudly. Sitting out the bad regimes is most of the value.</p>
+      </div>
+      <div class="feat headline">
+        <span class="tagk">The whole point</span>
+        <div class="ic">🔔</div>
+        <h4>The flip email</h4>
+        <p>It happens about twice a year. When Bitcoin flips back to risk-on, you get
+          one email — the day it happens, with the coins already lining up.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PUBLIC TRACK RECORD -->
+  <section id="track-record" class="track">
+    <h2 class="sec-h">Live track record · nothing hidden</h2>
+    <p class="intro">A public, timestamped log of every daily call we've made. It's appended
+      automatically — one row the moment each scan runs — and we can't go back and rewrite a
+      call we got wrong. That's the whole point: an honest record you can check, not a
+      cherry-picked highlight reel.</p>
+
+    <div class="tr-summary">
+      <div class="ts">Days logged<b>19</b></div>
+      <div class="ts">Every call<b>Stand down</b></div>
+      <div class="ts">Bitcoin over the window<b style="color:var(--red-2)">−6%</b></div>
+      <div class="ts">Window<b style="font-size:15px">2026-06-15 → 2026-07-05</b></div>
+    </div>
+
+    <div class="tr-wrap">
+      <table class="tr">
+        <thead><tr>
+          <th>Date</th><th><span class="term" tabindex="0" data-term="Regime" data-tip="Whether Bitcoin was risk-on or risk-off that day — the biggest single factor in whether buying coins tended to pay off.">Regime</span></th><th><span class="term" tabindex="0" data-term="Signal" data-tip="That day's average watchlist strength on a 0–10 scale. Higher means more coins looked healthy.">Signal</span></th><th><span class="term" tabindex="0" data-term="Call" data-tip="What we told people to do that day. Stand down means wait in cash.">Call</span></th><th>Top of the board</th><th>BTC close</th>
+        </tr></thead>
+        <tbody>
+        <tr><td class="dt">2026-07-05</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">3.3<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">HYPE 19 · AAVE 18 · JST 17</td><td class="dt">$62,944</td></tr><tr><td class="dt">2026-07-04</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">3.4<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">JST 19 · HYPE 19 · AAVE 19</td><td class="dt">$62,490</td></tr><tr><td class="dt">2026-07-02</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">2.8<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">JST 19 · JUP 17 · AAVE 17</td><td class="dt">$61,694</td></tr><tr><td class="dt">2026-07-01</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">2.4<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">JST 19 · JUP 18 · AERO 16</td><td class="dt">$59,018</td></tr><tr><td class="dt">2026-06-30</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">2.7<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">CC 18 · HYPE 18 · JUP 17</td><td class="dt">$59,584</td></tr><tr><td class="dt">2026-06-29</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">2.8<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">CC 18 · JUP 18 · HYPE 18</td><td class="dt">$60,490</td></tr><tr><td class="dt">2026-06-28</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">2.3<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">CC 18 · HYPE 18 · JUP 17</td><td class="dt">$60,342</td></tr><tr><td class="dt">2026-06-26</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">2.6<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">CC 18 · HYPE 18 · JUP 17</td><td class="dt">$60,350</td></tr><tr><td class="dt">2026-06-25</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">2.6<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">CC 18 · HYPE 18 · JUP 17</td><td class="dt">$61,302</td></tr><tr><td class="dt">2026-06-24</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">2.6<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">CC 18 · HYPE 18 · JUP 17</td><td class="dt">$62,812</td></tr><tr><td class="dt">2026-06-23</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">2.5<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">CC 18 · HYPE 18 · JUP 17</td><td class="dt">$62,200</td></tr><tr><td class="dt">2026-06-22</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">2.7<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">CC 18 · HYPE 18 · JUP 17</td><td class="dt">$64,296</td></tr><tr><td class="dt">2026-06-21</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">2.7<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">CC 18 · HYPE 18 · JUP 17</td><td class="dt">$64,172</td></tr><tr><td class="dt">2026-06-20</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">2.7<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">CC 18 · HYPE 18 · KAS 12</td><td class="dt">$63,478</td></tr><tr><td class="dt">2026-06-19</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">2.6<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">CC 18 · HYPE 18 · KAS 12</td><td class="dt">$62,406</td></tr><tr><td class="dt">2026-06-18</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">2.9<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">CC 18 · HYPE 18 · ONDO 13</td><td class="dt">$63,921</td></tr><tr><td class="dt">2026-06-17</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">3.0<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">CC 18 · HYPE 18 · ONDO 16</td><td class="dt">$65,172</td></tr><tr><td class="dt">2026-06-16</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">3.1<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">CC 18 · HYPE 18 · ONDO 17</td><td class="dt">$66,581</td></tr><tr><td class="dt">2026-06-15</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">3.1<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">CC 18 · HYPE 18 · ONDO 15</td><td class="dt">$66,637</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="tr-foot">Newest first. Updated automatically every day the scan runs — most recent 2026-07-05.</p>
+  </section>
+
+  <!-- PLANS (3 tiers; Poseidon = price anchor + early-access waitlist) -->
+  <section>
+    <h2 class="sec-h">Three ways to ride the tide <span class="soon">early-bird pricing</span></h2>
+    <p class="plans-intro">The short version: <b>Free tells you <span class="w">when</span> to pay attention.
+      Current tells you <span class="w">what to do</span> about it. Poseidon does it in <span class="w">real time</span>.</b>
+      Same daily engine underneath — you're choosing how much detail and how fast you want it.</p>
+    <div class="plans">
+
+      <div class="plan">
+        <div class="pname">Ripple</div>
+        <div class="price">$0</div>
+        <p class="ptag">The alarm clock — free forever.</p>
+        <p class="plain"><b>The alarm.</b> You get the one email the day the market flips, plus
+          a quick daily one-liner. Enough if you just want to be told <b>when to look.</b></p>
+        <ul>
+          <li>The regime-flip alert — the day it turns</li>
+          <li>Today's one-line read</li>
+          <li>Weekly watchlist snapshot</li>
+        </ul>
+      </div>
+
+      <div class="plan pro">
+        <div class="pbadge pop">Most popular</div>
+        <div class="pname">Current</div>
+        <div class="price">~$12<small>/mo</small></div>
+        <p class="ptag">The playbook — for active traders.</p>
+        <p class="plain"><b>The playbook.</b> Every morning: all the coins ranked, with the exact
+          entry, stop and target for each — plus the full dashboard. For when you're actually
+          <b>trading it, not just watching.</b></p>
+        <ul>
+          <li>Everything in Ripple</li>
+          <li>The daily email with the full ranked watchlist</li>
+          <li>Per-coin breakdowns, levels &amp; the trade playbook</li>
+          <li>Full interactive dashboard access</li>
+          <li>Your own coins, your own alerts</li>
+        </ul>
+      </div>
+
+      <div class="plan poseidon">
+        <div class="pbadge early">Early access · limited spots</div>
+        <div class="pname">Poseidon</div>
+        <div class="price">~$99<small>/mo</small></div>
+        <p class="ptag">The war room — command the whole ocean.</p>
+        <p class="plain"><b>The war room.</b> Everything in Current, but <b>live</b> — instant alerts
+          the second a level hits, unlimited watchlists of your own coins, and raw data export.</p>
+        <ul>
+          <li>Everything in Current</li>
+          <li>Real-time alerts — instant push the moment a level hits</li>
+          <li>Unlimited custom coins &amp; watchlists</li>
+          <li>Multi-timeframe + short-side signals</li>
+          <li>API &amp; raw data export</li>
+          <li>Priority direct line</li>
+        </ul>
+        <a class="pcta" href="#join">Request early access →</a>
+      </div>
+
+    </div>
+    <div class="microcopy" style="margin-top:16px">Founding members lock in early-bird pricing for life. <strong>Poseidon</strong> opens to a limited first cohort — join the waitlist to claim a spot. Prices aren't final; the waitlist helps set them.</div>
+  </section>
+
+  <!-- FOUNDING MEMBERS -->
+  <section id="founding" class="founding">
+    <div class="fbadge">Founding members · before the flip</div>
+    <h2>Get in before the tide turns.</h2>
+    <p class="lede">The market hasn't flipped risk-on yet — and that's exactly why now is the moment.
+      Founding members claim their spot during the quiet, lock in the lowest price forever, and are
+      first in line the day it matters. You're not paying for hype; you're reserving your place before
+      the crowd shows up.</p>
+
+    <div class="f-benes"><div class="f-bene"><div class="fic">🔒</div><div><h4>Lifetime founding rate</h4><p>Lock in the lowest price SigTide will ever charge. When paid tiers open, founders keep their rate for life — even as the public price climbs.</p></div></div><div class="f-bene"><div class="fic">🔔</div><div><h4>The flip alert, guaranteed</h4><p>The whole product is catching the day Bitcoin turns risk-on. Founders get that email the moment it fires — never gated behind a higher tier.</p></div></div><div class="f-bene"><div class="fic">🗣️</div><div><h4>Shape what gets built</h4><p>A direct line to the roadmap. Founding members' requests jump the queue while the product is still taking shape.</p></div></div><div class="f-bene"><div class="fic">🏅</div><div><h4>Founding-member badge</h4><p>Permanent founding status. You were here before the flip — and the record shows it.</p></div></div></div>
+
+    <div class="f-cta-row">
+      <a class="f-cta" href="#join">Claim a founding spot →</a>
+      <div class="f-spots">First <b>100</b> founding spots · reserved through the waitlist</div>
+    </div>
+    <p class="f-fine">No charge today. Founding spots are held through the free waitlist — when paid
+      tiers open, we'll email you to claim yours before the public price goes live. Educational use
+      only; not financial advice.</p>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section id="join">
+    <div class="final">
+      <h2>Be on the list when it flips.</h2>
+      <p>Free to join. The next risk-on email could be the one that matters.</p>
+      <div class="bh-embed"><script async src="https://subscribe-forms.beehiiv.com/v3/loader.js" data-beehiiv-form="30359b98-5d01-4752-97bc-1ee29bad5b76"></script></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="disc"><strong>Educational use only.</strong> SigTide is not financial,
+      investment, or trading advice. Markets are risky and you can lose money. Nothing here
+      is a recommendation to buy or sell any asset. Do your own research.</div>
+    <div>© 2026 SigTide · Daily read as of July 5, 2026</div>
+  </footer>
+
+</div>
+
+<script>
+  // Wired by build_landing.py. Empty endpoint => DEMO mode (localStorage only).
+  var WAITLIST_ENDPOINT = "";
+  var FORM_FIELD = "email";
+  var DEMO = !WAITLIST_ENDPOINT;
+  var LS_KEY = "cryptoscan_waitlist_v1";
+
+  if (DEMO) { var df = document.getElementById("demoFlag"); if (df) df.hidden = false; }
+
+  function validEmail(e){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e); }
+
+  function handle(formId, inputId, btnId, msgId, hpId){
+    var form = document.getElementById(formId);
+    if (!form) return;
+    form.addEventListener("submit", function(ev){
+      ev.preventDefault();
+      var input = document.getElementById(inputId);
+      var btn   = document.getElementById(btnId);
+      var msg   = document.getElementById(msgId);
+      var hp    = document.getElementById(hpId);
+      var email = (input.value || "").trim();
+      msg.className = "form-msg";
+
+      if (hp && hp.value) { return; }            // honeypot tripped — silently drop
+      if (!validEmail(email)) {
+        msg.textContent = "Please enter a valid email address.";
+        msg.className = "form-msg err"; return;
+      }
+
+      function success(){
+        msg.textContent = "You're on the list — watch your inbox when it flips. 🎉";
+        msg.className = "form-msg ok";
+        input.value = ""; btn.disabled = true; btn.textContent = "Added ✓";
+      }
+      function fail(){
+        msg.textContent = "Something went wrong — please try again in a moment.";
+        msg.className = "form-msg err";
+        btn.disabled = false;
+      }
+
+      btn.disabled = true; btn.textContent = "Adding…";
+
+      if (DEMO) {
+        try {
+          var list = JSON.parse(localStorage.getItem(LS_KEY) || "[]");
+          if (list.indexOf(email) === -1) list.push(email);
+          localStorage.setItem(LS_KEY, JSON.stringify(list));
+        } catch(e){}
+        setTimeout(success, 350);
+        return;
+      }
+
+      var body = encodeURIComponent(FORM_FIELD) + "=" + encodeURIComponent(email);
+      fetch(WAITLIST_ENDPOINT, {
+        method: "POST",
+        headers: {"Content-Type": "application/x-www-form-urlencoded", "Accept": "application/json"},
+        body: body, mode: "cors"
+      }).then(function(r){
+        if (r.ok || r.status === 0) success(); else fail();
+      }).catch(function(){
+        // no-cors providers (e.g. some embeds) resolve opaque — treat as success
+        success();
+      });
+    });
+  }
+
+  handle("waitForm",  "emailInput",  "submitBtn",  "formMsg",  "hp_name");
+  handle("waitForm2", "emailInput2", "submitBtn2", "formMsg2", "hp_name2");
+
+  // ----- newcomer glossary: plain-English tooltips on hover / focus / tap -----
+  (function(){
+    var card = document.createElement("div");
+    card.id = "tipcard";
+    document.body.appendChild(card);
+    var cur = null;
+
+    function show(el){
+      var tip = el.getAttribute("data-tip"); if (!tip) return;
+      var label = el.getAttribute("data-term") || el.textContent.trim();
+      card.innerHTML = "";
+      var h = document.createElement("span"); h.className = "tt"; h.textContent = label;
+      card.appendChild(h);
+      card.appendChild(document.createTextNode(tip));
+      card.classList.add("show");
+      var r = el.getBoundingClientRect();
+      var cw = card.offsetWidth, ch = card.offsetHeight, m = 8;
+      var left = r.left + r.width/2 - cw/2;
+      left = Math.max(m, Math.min(left, window.innerWidth - cw - m));
+      var top = r.top - ch - 10;
+      if (top < m) top = r.bottom + 10;           // flip below if no room above
+      card.style.left = left + "px";
+      card.style.top  = top + "px";
+      cur = el;
+    }
+    function hide(){ card.classList.remove("show"); cur = null; }
+
+    document.querySelectorAll("[data-tip]").forEach(function(el){
+      el.addEventListener("mouseenter", function(){ show(el); });
+      el.addEventListener("mouseleave", hide);
+      el.addEventListener("focus", function(){ show(el); });
+      el.addEventListener("blur", hide);
+      el.addEventListener("click", function(e){      // tap on mobile = toggle
+        e.stopPropagation();
+        if (cur === el) hide(); else show(el);
+      });
+    });
+    document.addEventListener("click", hide);        // tap elsewhere dismisses
+    window.addEventListener("scroll", hide, true);
+    window.addEventListener("resize", hide);
+  })();
+</script>
+</body>
+</html>
