@@ -127,6 +127,10 @@
   .tile{background:var(--panel); border:1px solid var(--border); border-radius:10px; padding:11px 13px;}
   .tile .tv{font-size:19px; font-weight:800; font-family:ui-monospace,monospace; letter-spacing:-0.01em;}
   .tile .tl{font-size:10.5px; color:var(--muted); text-transform:uppercase; letter-spacing:0.07em; margin-top:3px; line-height:1.4;}
+  .ledger-wrap{max-height:340px; overflow-y:auto; overflow-x:auto; border-top:1px solid var(--border);
+    border-radius:0 0 14px 14px;}
+  .ledger-wrap th{position:sticky; top:0; background:#141a3a; z-index:2; padding:10px;}
+  .ledger-wrap td, .ledger-wrap th{white-space:nowrap;}
   .grid2{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
   @media(max-width:700px){ .grid2{grid-template-columns:1fr;} }
   ul.compact{margin:8px 0 0; padding-left:0; list-style:none;}
@@ -262,6 +266,20 @@
         <b style="color:#10d9a0">long</b> (since 2026-07-09).
         This is an educational backtest, not a strategy we sell — our product's regime gate
         works on the same principle, one deliberately slow pair, validated out of sample.</p>
+      </div>
+    </div>
+    
+    <div class="card" style="margin-top:16px; padding:0;">
+      <div style="padding:16px 22px 10px;">
+        <h3 style="margin:0 0 4px; font-size:12px; text-transform:uppercase; letter-spacing:0.1em; color:var(--muted);">Every trade the rule made — 8 round trips, newest first</h3>
+        <p class="cap" style="margin:0;">5 winners, 3 losers. Cross-close
+        to cross-close, before fees. The open row is the current position marked to the last close.</p>
+      </div>
+      <div class="ledger-wrap">
+        <table>
+          <thead><tr><th>Entered</th><th>Exited</th><th>In at</th><th>Out at</th><th>Return</th><th>Days</th></tr></thead>
+          <tbody><tr style="background:rgba(251,191,36,0.05)"><td class="mono">2026-07-09</td><td class="mono"><span style="color:var(--amber); font-weight:700">still open</span></td><td class="mono">$67.24</td><td class="mono">$66.86</td><td class="mono" style="color:var(--red-2); font-weight:700">-0.6%</td><td class="mono" style="color:var(--muted)">3</td></tr><tr><td class="mono">2026-05-22</td><td class="mono">2026-07-03</td><td class="mono">$54.69</td><td class="mono">$70.66</td><td class="mono" style="color:var(--green-2); font-weight:700">+29.2%</td><td class="mono" style="color:var(--muted)">42</td></tr><tr><td class="mono">2026-04-24</td><td class="mono">2026-05-16</td><td class="mono">$41.15</td><td class="mono">$41.80</td><td class="mono" style="color:var(--green-2); font-weight:700">+1.6%</td><td class="mono" style="color:var(--muted)">22</td></tr><tr><td class="mono">2026-03-15</td><td class="mono">2026-04-20</td><td class="mono">$37.24</td><td class="mono">$40.75</td><td class="mono" style="color:var(--green-2); font-weight:700">+9.4%</td><td class="mono" style="color:var(--muted)">36</td></tr><tr><td class="mono">2026-01-22</td><td class="mono">2026-03-05</td><td class="mono">$21.45</td><td class="mono">$30.54</td><td class="mono" style="color:var(--green-2); font-weight:700">+42.4%</td><td class="mono" style="color:var(--muted)">42</td></tr><tr><td class="mono">2025-11-15</td><td class="mono">2025-11-27</td><td class="mono">$38.57</td><td class="mono">$34.74</td><td class="mono" style="color:var(--red-2); font-weight:700">-9.9%</td><td class="mono" style="color:var(--muted)">12</td></tr><tr><td class="mono">2025-09-01</td><td class="mono">2025-10-12</td><td class="mono">$43.14</td><td class="mono">$39.73</td><td class="mono" style="color:var(--red-2); font-weight:700">-7.9%</td><td class="mono" style="color:var(--muted)">41</td></tr><tr><td class="mono">2025-07-21</td><td class="mono">2025-08-14</td><td class="mono">$44.27</td><td class="mono">$45.48</td><td class="mono" style="color:var(--green-2); font-weight:700">+2.7%</td><td class="mono" style="color:var(--muted)">24</td></tr></tbody>
+        </table>
       </div>
     </div>
   </section>

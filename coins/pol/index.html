@@ -127,6 +127,10 @@
   .tile{background:var(--panel); border:1px solid var(--border); border-radius:10px; padding:11px 13px;}
   .tile .tv{font-size:19px; font-weight:800; font-family:ui-monospace,monospace; letter-spacing:-0.01em;}
   .tile .tl{font-size:10.5px; color:var(--muted); text-transform:uppercase; letter-spacing:0.07em; margin-top:3px; line-height:1.4;}
+  .ledger-wrap{max-height:340px; overflow-y:auto; overflow-x:auto; border-top:1px solid var(--border);
+    border-radius:0 0 14px 14px;}
+  .ledger-wrap th{position:sticky; top:0; background:#141a3a; z-index:2; padding:10px;}
+  .ledger-wrap td, .ledger-wrap th{white-space:nowrap;}
   .grid2{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
   @media(max-width:700px){ .grid2{grid-template-columns:1fr;} }
   ul.compact{margin:8px 0 0; padding-left:0; list-style:none;}
@@ -262,6 +266,20 @@
         <b style="color:#10d9a0">long</b> (since 2026-07-10).
         This is an educational backtest, not a strategy we sell — our product's regime gate
         works on the same principle, one deliberately slow pair, validated out of sample.</p>
+      </div>
+    </div>
+    
+    <div class="card" style="margin-top:16px; padding:0;">
+      <div style="padding:16px 22px 10px;">
+        <h3 style="margin:0 0 4px; font-size:12px; text-transform:uppercase; letter-spacing:0.1em; color:var(--muted);">Every trade the rule made — 11 round trips, newest first</h3>
+        <p class="cap" style="margin:0;">6 winners, 5 losers. Cross-close
+        to cross-close, before fees. The open row is the current position marked to the last close.</p>
+      </div>
+      <div class="ledger-wrap">
+        <table>
+          <thead><tr><th>Entered</th><th>Exited</th><th>In at</th><th>Out at</th><th>Return</th><th>Days</th></tr></thead>
+          <tbody><tr style="background:rgba(251,191,36,0.05)"><td class="mono">2026-07-10</td><td class="mono"><span style="color:var(--amber); font-weight:700">still open</span></td><td class="mono">$0.0768</td><td class="mono">$0.0792</td><td class="mono" style="color:var(--green-2); font-weight:700">+3.1%</td><td class="mono" style="color:var(--muted)">2</td></tr><tr><td class="mono">2026-04-22</td><td class="mono">2026-05-18</td><td class="mono">$0.0932</td><td class="mono">$0.0909</td><td class="mono" style="color:var(--red-2); font-weight:700">-2.5%</td><td class="mono" style="color:var(--muted)">26</td></tr><tr><td class="mono">2026-02-19</td><td class="mono">2026-03-05</td><td class="mono">$0.1049</td><td class="mono">$0.1012</td><td class="mono" style="color:var(--red-2); font-weight:700">-3.5%</td><td class="mono" style="color:var(--muted)">14</td></tr><tr><td class="mono">2026-01-05</td><td class="mono">2026-01-23</td><td class="mono">$0.1250</td><td class="mono">$0.1281</td><td class="mono" style="color:var(--green-2); font-weight:700">+2.5%</td><td class="mono" style="color:var(--muted)">18</td></tr><tr><td class="mono">2025-10-08</td><td class="mono">2025-10-10</td><td class="mono">$0.2412</td><td class="mono">$0.1834</td><td class="mono" style="color:var(--red-2); font-weight:700">-24.0%</td><td class="mono" style="color:var(--muted)">2</td></tr><tr><td class="mono">2025-08-11</td><td class="mono">2025-09-18</td><td class="mono">$0.2369</td><td class="mono">$0.2609</td><td class="mono" style="color:var(--green-2); font-weight:700">+10.1%</td><td class="mono" style="color:var(--muted)">38</td></tr><tr><td class="mono">2025-07-07</td><td class="mono">2025-07-30</td><td class="mono">$0.1848</td><td class="mono">$0.2166</td><td class="mono" style="color:var(--green-2); font-weight:700">+17.2%</td><td class="mono" style="color:var(--muted)">23</td></tr><tr><td class="mono">2025-04-21</td><td class="mono">2025-05-21</td><td class="mono">$0.1991</td><td class="mono">$0.2420</td><td class="mono" style="color:var(--green-2); font-weight:700">+21.5%</td><td class="mono" style="color:var(--muted)">30</td></tr><tr><td class="mono">2025-03-29</td><td class="mono">2025-04-02</td><td class="mono">$0.2024</td><td class="mono">$0.1859</td><td class="mono" style="color:var(--red-2); font-weight:700">-8.2%</td><td class="mono" style="color:var(--muted)">4</td></tr><tr><td class="mono">2025-01-08</td><td class="mono">2025-01-11</td><td class="mono">$0.4638</td><td class="mono">$0.4596</td><td class="mono" style="color:var(--red-2); font-weight:700">-0.9%</td><td class="mono" style="color:var(--muted)">3</td></tr><tr><td class="mono">2024-11-10</td><td class="mono">2024-12-15</td><td class="mono">$0.4069</td><td class="mono">$0.6168</td><td class="mono" style="color:var(--green-2); font-weight:700">+51.6%</td><td class="mono" style="color:var(--muted)">35</td></tr></tbody>
+        </table>
       </div>
     </div>
   </section>
