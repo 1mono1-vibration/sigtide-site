@@ -17,7 +17,8 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
 {"@type":"Question","name":"Can it cover stocks, ETFs or FX instead of crypto?","acceptedAnswer":{"@type":"Answer","text":"Yes, anything with a public or affordable data API. Crypto is what runs in production today; the pipeline is asset-agnostic."}},
-{"@type":"Question","name":"Do I own the result?","acceptedAnswer":{"@type":"Answer","text":"Yes. The pipeline deploys into your own repository and hosting. If you stop working with us, everything keeps running and you keep the code."}},
+{"@type":"Question","name":"What's the cheapest way to start?","acceptedAnswer":{"@type":"Answer","text":"Daily Board at $49 per month. We host a branded daily market board for your community - no setup project, no code to maintain, live in about 48 hours. You can upgrade to a build tier later and take the whole pipeline in-house."}},
+{"@type":"Question","name":"Do I own the result?","acceptedAnswer":{"@type":"Answer","text":"On the build tiers, yes: the pipeline deploys into your own repository and hosting, so if you stop working with us everything keeps running and you keep the code. Daily Board is hosted by us instead, month to month, with no setup and nothing to maintain."}},
 {"@type":"Question","name":"Is this financial advice?","acceptedAnswer":{"@type":"Answer","text":"No. We build publishing infrastructure. Your content remains your responsibility, and educational-use disclaimers ship by default."}},
 {"@type":"Question","name":"What does it cost to run after setup?","acceptedAnswer":{"@type":"Answer","text":"Close to zero: free-tier market-data APIs, static hosting on GitHub Pages, no servers. The heaviest artifact is a rendered video, produced on a schedule on an ordinary machine."}}
 ]}
@@ -63,6 +64,8 @@
   .cta{display:inline-block; background:var(--green-2); color:#052018; font-weight:700; font-size:15.5px;
     border-radius:10px; padding:13px 26px; margin:8px 0;}
   .cta:hover{text-decoration:none; filter:brightness(1.08);}
+  .cta.alt{background:transparent; color:var(--text-2); border:1px solid var(--border); margin-left:8px;}
+  .cta.alt:hover{border-color:var(--accent); color:#fff;}
   .faq dt{color:#fff; font-weight:600; font-size:15.5px; margin-top:18px;}
   .faq dd{margin:6px 0 0; font-size:15px; color:var(--text-2);}
   footer{border-top:1px solid var(--border); margin-top:40px; padding:24px 0 40px; color:var(--muted); font-size:13px;}
@@ -127,7 +130,22 @@
     </ul>
 
     <h2>Pricing</h2>
+    <p>Two ways to work with us: <b>we run it for you</b> &mdash; monthly, no setup project,
+    live this week &mdash; or <b>we build it into your own stack</b>, one-time, and you own the code.</p>
     <div class="plans">
+      <div class="plan hot">
+        <h3>Daily Board</h3>
+        <div class="price">$49</div>
+        <div class="per">per month &middot; cancel anytime &middot; live in 48h</div>
+        <ul>
+          <li>Your branded daily board, hosted by us</li>
+          <li>49 majors rescored every morning</li>
+          <li>Your name, colour and featured coins</li>
+          <li>A fresh share image every day</li>
+          <li>Drop the link in Telegram, Discord or your site</li>
+        </ul>
+        <a class="cta" style="margin-top:10px;" href="mailto:hello@sigtide.com?subject=Daily%20Board%20setup&amp;body=Community%20or%20channel%3A%20%0D%0AWhere%20it%20lives%20(Telegram%20%2F%20Discord%20%2F%20site)%3A%20%0D%0ACoins%20you%20care%20about%3A%20">Start the board</a>
+      </div>
       <div class="plan">
         <h3>Pilot</h3>
         <div class="price">$950</div>
@@ -140,7 +158,7 @@
         </ul>
         <a class="cta" style="margin-top:10px;" href="mailto:hello@sigtide.com?subject=Pilot%20booking&amp;body=Newsletter%3A%20%0D%0AWatchlist%20(or%20%22use%20yours%22)%3A%20%0D%0AWhere%20your%20audience%20reads%20you%3A%20">Book the pilot</a>
       </div>
-      <div class="plan hot">
+      <div class="plan">
         <h3>Full pipeline</h3>
         <div class="price">$2,400</div>
         <div class="per">one-time &middot; 2&ndash;3 weeks</div>
@@ -163,12 +181,18 @@
       </div>
     </div>
 
-    <div class="callout"><b>No lock-in, by design.</b> The pipeline deploys into <i>your</i>
-    repository and hosting. You own the code, the domain and the output. If you walk away, the
-    robot keeps working for you, not for us.</div>
+    <div class="callout"><b>No lock-in, by design.</b> On the build tiers the pipeline deploys into
+    <i>your</i> repository and hosting &mdash; you own the code, the domain and the output, and if you
+    walk away the robot keeps working for you, not for us. Daily Board is the opposite trade on
+    purpose: nothing to set up because we host it, month to month, cancel whenever. Start there and
+    upgrade to a build tier the day you'd rather own it outright.</div>
 
     <h2>Questions you should ask</h2>
     <dl class="faq">
+      <dt>What's the cheapest way to start?</dt>
+      <dd>Daily Board, $49/month. We host a branded daily board for your community &mdash; no setup
+      project, no code to maintain, live in about 48 hours. If it earns its keep, upgrade to a build
+      tier and take the whole pipeline in-house.</dd>
       <dt>Why should I trust a pipeline with my audience?</dt>
       <dd>Don't trust &mdash; verify. Our own forward log is public and append-only: every daily
       call since June 2026, unedited. That's the standard your version ships with.</dd>
@@ -184,12 +208,13 @@
     </dl>
 
     <h2>Start with one email</h2>
-    <p>Tell us your watchlist and where your audience reads you. We'll reply within a day with an
-    honest yes/no and a fixed quote &mdash; if automation won't genuinely save you time, we'll say so.</p>
-    <a class="cta" href="mailto:hello@sigtide.com?subject=Pilot%20booking&amp;body=Newsletter%3A%20%0D%0AWatchlist%20(or%20%22use%20yours%22)%3A%20%0D%0AWhere%20your%20audience%20reads%20you%3A%20">Book the pilot &mdash; $950</a>
-    <p style="font-size:13.5px; opacity:.75; margin-top:10px;">Booking works by email &mdash; you get an
-    invoice, pay by bank transfer (SEPA/SWIFT), work starts on receipt. No card details on this site,
-    no prepayment before we've said an honest yes.</p>
+    <p>Tell us where your audience reads you and which coins they care about. We'll reply within a day
+    with an honest yes/no &mdash; if automation won't genuinely save you time, we'll say so.</p>
+    <a class="cta" href="mailto:hello@sigtide.com?subject=Daily%20Board%20setup&amp;body=Community%20or%20channel%3A%20%0D%0AWhere%20it%20lives%20(Telegram%20%2F%20Discord%20%2F%20site)%3A%20%0D%0ACoins%20you%20care%20about%3A%20">Start the board &mdash; $49/mo</a>
+    <a class="cta alt" href="mailto:hello@sigtide.com?subject=Pilot%20booking&amp;body=Newsletter%3A%20%0D%0AWatchlist%20(or%20%22use%20yours%22)%3A%20%0D%0AWhere%20your%20audience%20reads%20you%3A%20">Or book the pilot &mdash; $950</a>
+    <p style="font-size:13.5px; opacity:.75; margin-top:10px;">Everything starts by email &mdash; you get an
+    invoice and pay by bank transfer (SEPA/SWIFT); Daily Board is invoiced quarterly to keep the
+    admin light. No card details on this site, and no prepayment before we've said an honest yes.</p>
 
   </article>
 
