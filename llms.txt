@@ -1,0 +1,22 @@
+# SigTide
+
+> Daily trend-structure scan of the 49 largest crypto majors, plus a live risk-on/risk-off regime read for the whole market. Free, updated automatically every day. Not financial advice.
+
+SigTide scores every major crypto asset 0-20 on trend structure (price vs. 50-day average, higher highs/lows, momentum, relative strength) and reads whether the current market regime (Bitcoin's 50-day average vs. its 200-day average) is one where that structure edge actually holds. The site publishes its full methodology, including strategies it tested and rejected, and a live, append-only track record of every daily call it has made.
+
+## Core pages
+
+- [Home](https://sigtide.com/): what SigTide is and does, links to every section below.
+- [Is crypto risk-on or risk-off today?](https://sigtide.com/flip/): the single regime call for the whole market, updated daily — golden/death cross status, days in regime, an early-warning layer, and every 50/200 cross on record back to 2018.
+- [Crypto RSI heatmap today](https://sigtide.com/rsi/): average RSI(14) across the watchlist, overbought/oversold breadth, RSI vs. structure-score scatter per coin.
+- [Crypto market scores today](https://sigtide.com/scores/): all 49 coins ranked 0-20 on trend structure, tier-labeled (Strong/Mid/Weak/Poor).
+- [Open crypto signals today](https://sigtide.com/signals/): live long signals from the validated SMA crossover rule, ranked by reward-to-risk from today's price.
+- [Per-coin pages](https://sigtide.com/coins/): one page per watchlist coin (e.g. /coins/btc/, /coins/eth/) with its current score, structure read, and history.
+
+## Methodology and honesty
+
+- [Negative results: no tradeable long edge in crypto risk-off](https://sigtide.com/research/no-edge-in-risk-off/): a published research note on strategies tested and rejected, not just the ones that worked.
+
+## For businesses
+
+- [Automation](https://sigtide.com/automation/): SigTide's own scan-and-report pipeline offered as a service for other teams that want a daily market report built and run for them.
