@@ -67,20 +67,30 @@
 
   <article>
     <h1>Negative results: we found no tradeable long edge in crypto risk-off</h1>
-    <div class="dateline">Research note &middot; July 2026 &middot; ~8 minute read</div>
+    <div class="dateline">Research note &middot; July 2026 &middot; updated October 2026 &middot; ~8 minute read</div>
+
+    <div class="callout"><b>Update, August&ndash;October 2026: the one edge this note found
+    did not survive a later test.</b> In August we split the same history at 2023. The
+    risk-on gap between top- and bottom-tier coins came almost entirely from before 2023
+    (+24.1 percentage points over 30 days); <b>since 2023 it is +3.6pp with a range of
+    &minus;4.4 to +11.2, which is noise</b>. The regime gate on its own (hold the basket in
+    risk-on, cash in risk-off) made about 0%/yr since 2023, against about +32%/yr for simply
+    holding. So today we claim no measurable edge for the score in either regime. The July
+    text below is kept as written, with the claims this update overturns marked.</div>
 
     <p>We run a small quantitative service that scores 49 liquid crypto majors on daily
-    trend structure. Its one validated claim is regime-dependent: when Bitcoin's 50-day
+    trend structure. In July its one claim that passed our gate was regime-dependent: when Bitcoin's 50-day
     moving average is above its 200-day (&ldquo;risk-on&rdquo;), coins our rubric ranks in the top tier
     beat bottom-tier coins by about <b>+12.5 percentage points over the next 30 days</b>
-    (block-bootstrap 95% CI [+1.9, +25.3] &mdash; excludes zero). When Bitcoin is below that
+    (block-bootstrap 95% CI [+1.9, +25.3] &mdash; excludes zero; <i>pre-2023 only, see the update above</i>). When Bitcoin is below that
     line (&ldquo;risk-off&rdquo;), the edge vanishes, and the honest output of the system is:
-    <b>stand down, hold cash, wait.</b></p>
+    <b>no signal, hold cash, wait.</b></p>
 
-    <p>That answer is commercially inconvenient. Bitcoin has now been risk-off for
-    <b><span data-live="riskoff-days">28</span> days</b>, which means our product has spent
-    <span data-live="riskoff-days">28</span> days telling people not to buy
-    anything. So we had every incentive to find a strategy that works in bear regimes
+    <p>That answer is commercially inconvenient. When we wrote this, Bitcoin had been risk-off
+    for most of a year &mdash; <b>295 days</b> by 7 September 2026, when the golden cross ended
+    the stretch &mdash; which meant our product spent all that time telling people not to buy
+    anything. (Today Bitcoin is <span data-live="regime-name">risk-on</span>, day
+    <span data-live="regime-days">28</span>.) So we had every incentive to find a strategy that works in bear regimes
     &mdash; and we spent the quiet season genuinely trying. This note reports that
     <b>everything we tried failed</b>, with the numbers, because negative results with
     real confidence intervals seem underrepresented in a space that mostly publishes wins.</p>
@@ -112,12 +122,14 @@
     <div class="tablewrap"><table>
       <thead><tr><th>Scope</th><th>Top-tier minus bottom-tier, forward 30d</th><th>95% CI</th><th>Verdict</th></tr></thead>
       <tbody>
-        <tr><td>Risk-on</td><td class="mono">+12.5pp</td><td class="mono">[+1.9, +25.3]</td><td class="verdict-yes">real</td></tr>
+        <tr><td>Risk-on, full history (July)</td><td class="mono">+12.5pp</td><td class="mono">[+1.9, +25.3]</td><td class="verdict-yes">passed in July</td></tr>
+        <tr><td>Risk-on, before 2023 (August split)</td><td class="mono">+24.1pp</td><td class="mono">&mdash;</td><td class="verdict-yes">where the July result came from</td></tr>
+        <tr><td>Risk-on, since 2023 (August split)</td><td class="mono">+3.6pp</td><td class="mono">&minus;4.4 to +11.2</td><td class="verdict-no">noise</td></tr>
         <tr><td>Risk-off</td><td class="mono">&minus;4.1pp</td><td class="mono">includes 0</td><td class="verdict-no">no edge</td></tr>
       </tbody>
     </table></div>
-    <p>So the product's edge is real but conditional &mdash; it only exists when the tide is
-    coming in. In risk-off the top of our own leaderboard is statistically
+    <p>In July this read as an edge that was real but conditional &mdash; only there when the tide is
+    coming in. The August split showed even that came from before 2023. In risk-off the top of our own leaderboard is statistically
     indistinguishable from the bottom. That result is what motivated everything below:
     if ranking strength doesn't work in bear regimes, does <i>anything</i>?</p>
 
@@ -181,7 +193,7 @@
     <div class="tablewrap"><table>
       <thead><tr><th>Strategy family</th><th>Verdict in risk-off</th></tr></thead>
       <tbody>
-        <tr><td>Trend/structure ranking (our product)</td><td class="verdict-no">no edge (real in risk-on only)</td></tr>
+        <tr><td>Trend/structure ranking (our product)</td><td class="verdict-no">no edge (the risk-on edge was pre-2023 only)</td></tr>
         <tr><td>Relative-strength rotation</td><td class="verdict-no">rejected &mdash; lost to the passive basket</td></tr>
         <tr><td>Short-horizon reversal</td><td class="verdict-no">rejected &mdash; untradeable + multiplicity risk</td></tr>
         <tr><td>Oversold mean-reversion</td><td class="verdict-no">rejected &mdash; lean, but CIs include zero</td></tr>
@@ -189,7 +201,7 @@
     </table></div>
 
     <div class="callout"><b>Conclusion: on daily bars of liquid crypto majors, we could not
-    validate any long strategy in risk-off.</b> Standing down in bear regimes isn't
+    validate any long strategy in risk-off.</b> Giving no signal in bear regimes isn't
     cowardice or laziness &mdash; on our data it's arithmetic. The least-bad long in risk-off
     was simply holding BTC, and even that drew down 67%.</div>
 
@@ -219,10 +231,12 @@
     is that it tells people <i>not</i> to trade for months at a time &mdash; a claim that's
     easy to dismiss as marketing until you see the graveyard of alternatives we tested
     against it.</p>
-    <p>Everything here accrues into a public, append-only <a href="/#track-record">forward
-    log</a> &mdash; every daily call, timestamped, never edited. If the mean-reversion lean is
+    <p>Everything here accrues into a public <a href="/#track-record">forward
+    log</a> &mdash; one timestamped row per daily run. A same-day re-run replaces that day's
+    row, and rows before 31 July 2026 are flagged as suspect because of a data-cache bug
+    fixed that day. If the mean-reversion lean is
     real, the forward data will eventually say so out-of-sample, and we'll upgrade it from
-    lean to edge in public. Until then: the tide is out, and we wait. The live regime
+    lean to edge in public. The live regime
     status is at <a href="/flip/">sigtide.com/flip</a>.</p>
 
     <div class="end-note"><b>Educational use only &mdash; not financial advice.</b> All
