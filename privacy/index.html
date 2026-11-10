@@ -1,107 +1,75 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Privacy | SigTide</title>
-<meta name="description" content="What SigTide measures on sigtide.com and what it never does: no accounts, no ads, no cookies of our own. Page views are counted with Cloudflare Web Analytics.">
+<meta name="description" content="What SigTide measures, what the email sign-up stores, and what we never do.">
 <link rel="canonical" href="https://sigtide.com/privacy/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="SigTide">
 <meta property="og:title" content="Privacy | SigTide">
-<meta property="og:description" content="No accounts, no ads, no cookies of our own. Page views are counted with Cloudflare Web Analytics.">
+<meta property="og:description" content="What SigTide measures, what the email sign-up stores, and what we never do.">
 <meta property="og:url" content="https://sigtide.com/privacy/">
-<meta property="og:type" content="article">
-<meta name="twitter:card" content="summary">
-<style>
-  :root{
-    --bg:#0a0e27; --panel:rgba(20,26,58,0.88); --border:#2d3868;
-    --text:#ecedfd; --text-2:#b8bce0; --muted:#8088c0;
-    --accent:#a78bfa; --green-2:#10d9a0;
-  }
-  *{box-sizing:border-box;}
-  body{margin:0; padding:0; min-height:100vh; color:var(--text); line-height:1.7;
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
-    background:linear-gradient(180deg,#0a0e27 0%,#0d1339 100%);}
-  .wrap{max-width:760px; margin:0 auto; padding:0 22px;}
-  a{color:var(--accent); text-decoration:none;}
-  a:hover{text-decoration:underline;}
-  nav{display:flex; align-items:center; justify-content:space-between; padding:22px 0; gap:16px; flex-wrap:wrap;}
-  .brand{font-weight:800; font-size:19px; color:var(--text);}
-  .brand .dot{color:var(--green-2);}
-  .nav-links{display:flex; gap:18px; font-size:13px;}
-  .nav-links a{color:var(--text-2);}
-  article{padding:20px 0 40px;}
-  h1{font-size:32px; line-height:1.2; letter-spacing:-0.01em; color:#fff; margin:10px 0 8px;}
-  .dateline{font-size:13.5px; color:var(--muted); margin-bottom:28px;}
-  h2{font-size:21px; color:#fff; margin:38px 0 10px; letter-spacing:-0.01em;}
-  p{font-size:16px; color:var(--text-2); margin:14px 0;}
-  b, strong{color:#fff;}
-  li{font-size:15.5px; color:var(--text-2); margin:6px 0;}
-  .callout{background:var(--panel); border:1px solid var(--border); border-left:3px solid var(--accent);
-    border-radius:10px; padding:16px 20px; margin:22px 0; font-size:15px; color:var(--text-2);}
-  footer{border-top:1px solid var(--border); margin-top:40px; padding:24px 0 40px; color:var(--muted); font-size:13px;}
-</style>
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='10' fill='%236c47ff'/%3E%3Cpath d='M6.5 19.6c2.6 0 3.4-4.6 6.2-4.6s3.6 4.6 6.3 4.6 3.5-4.6 6.5-4.6' fill='none' stroke='%23fff' stroke-width='2.7' stroke-linecap='round'/%3E%3Ccircle cx='23.6' cy='8.8' r='3.1' fill='%23ffc542'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=IBM+Plex+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="../assets/site.css?v=ad0cd867">
+<script src="../assets/site.js?v=ad0cd867" defer></script>
 </head>
-<body>
-<div class="wrap">
+<body data-page="plain" data-root="../" data-v="ad0cd867" data-signup="https://sigtide-signup.sigtide.workers.dev" data-ts="0x4AAAAAAF78MM8cGD1vx2C4">
+<header class="top"><div class="wrap top-in">
+  <a class="logo" href="../index.html" aria-label="SigTide home"><svg class="logo-mark" viewBox="0 0 32 32" width="30" height="30" aria-hidden="true"><rect width="32" height="32" rx="10" fill="#6c47ff"/><path d="M6.5 19.6c2.6 0 3.4-4.6 6.2-4.6s3.6 4.6 6.3 4.6 3.5-4.6 6.5-4.6" fill="none" stroke="#fff" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="23.6" cy="8.8" r="3.1" fill="#ffc542"/></svg><span>SigTide</span></a>
+  <nav class="nav" aria-label="Main"><a href="../board/index.html">All 49 coins</a><a href="../record/index.html">Our record</a></nav>
+  <details class="menu"><summary aria-label="Menu"><svg class="ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary><nav class="menu-pop" aria-label="Main"><a href="../board/index.html">All 49 coins</a><a href="../record/index.html">Our record</a></nav></details>
+  <a class="btn btn-sm top-cta" href="#join">Free email</a>
+</div></header>
+<main id="main">
+<section id="join" class="sec sec-first plain"><div class="plain-in plain-text">
+<h1>Privacy</h1>
+<p class="plain-small">Last updated 10 November 2026</p>
+<p class="plain-lead">The short version. SigTide has no accounts, no ads and no cookies of its own. If you sign up for our email,
+we keep your address and the coin you picked, and use them only to send you what you asked for.</p>
 
-  <nav>
-    <a class="brand" href="/">SigTide<span class="dot">.</span></a>
-    <div class="nav-links">
-      <a href="/coins/">Coin scores</a>
-      <a href="/flip/">Flip status</a>
-      <a href="/">Daily read</a>
-    </div>
-  </nav>
+<h2 class="h2">What we measure on this site</h2>
+<p>We use Cloudflare Web Analytics to see which pages people read and where they came from. It counts page views, the page that
+linked to us, the country, the browser and device type, and how fast the page loaded. We only ever see totals, never a profile
+of a person. Cloudflare states that it uses no cookies or local storage for this, and does not fingerprint visitors.</p>
+<p>We also use Google Search Console, which tells us which Google searches showed our pages. It works from Google's own search
+data and puts nothing in your browser. We do not run Google Analytics, advertising pixels or retargeting tags.</p>
 
-  <article>
-    <h1>Privacy</h1>
-    <div class="dateline">Last updated 4 November 2026</div>
+<h2 class="h2">If you sign up for the email</h2>
+<ul>
+<li>When you touch the form, Cloudflare Turnstile checks that a person, not a bot, is filling it in. It loads only then.</li>
+<li>The form sends your email address and the coin you picked, if any, to our sign-up service, which runs on Cloudflare.
+It sends you one email with a confirm button, and nothing else happens until you tap it.</li>
+<li>When you confirm, your address and coin are stored by Resend, our email provider (EU region). Resend sends the Monday
+letter, and an email the day your coin switches. Like most email tools, it can record whether an email was delivered,
+opened, or a link in it was clicked.</li>
+<li>Every email has a one-tap unsubscribe link. To have your address deleted completely, write to <a href="mailto:hello@sigtide.com">hello@sigtide.com</a>.</li>
+</ul>
 
-    <div class="callout"><b>The short version.</b> SigTide has no accounts, no ads and no
-    cookies of its own. We count page views with Cloudflare Web Analytics, which uses no
-    cookies and does not follow you around the web. If you subscribe to our email, your
-    address is kept by our newsletter provider and used only to send you that email.</div>
+<h2 class="h2">What we never do</h2>
+<ul>
+<li>Your email address is never sold, rented or shared.</li>
+<li>We never ask for passwords, exchange logins, API keys or money.</li>
+<li>We never send you anything you did not sign up for.</li>
+</ul>
 
-    <h2>What we measure on this site</h2>
-    <p>We use <a href="https://www.cloudflare.com/web-analytics/" rel="noopener">Cloudflare
-    Web Analytics</a> to see which pages people read and where they came from. It counts page
-    views, the page that linked to us, the country, the browser and device type, and how fast
-    the page loaded. We only ever see totals, never a profile of a person.</p>
-    <p>Cloudflare states that it uses no cookies or local storage for this, and does not
-    "fingerprint" visitors by their IP address, browser or any other data. We do not run
-    Google Analytics, advertising pixels or retargeting tags.</p>
-    <p>We also use Google Search Console, which tells us which Google searches showed our
-    pages. It works from Google's own search data and puts nothing in your browser.</p>
-
-    <h2>If you subscribe to the email</h2>
-    <p>The signup form is provided by <a href="https://www.beehiiv.com/privacy" rel="noopener">Beehiiv</a>,
-    our newsletter provider. When you subscribe, Beehiiv stores your email address so it can
-    send you the email you asked for. Like most newsletter tools, Beehiiv can record whether an
-    email was opened or a link in it was clicked. Its privacy policy covers what it collects.</p>
-    <p>Every email has a one-click unsubscribe link. To have your address deleted completely,
-    write to <a href="mailto:hello@sigtide.com">hello@sigtide.com</a>.</p>
-
-    <h2>What we never do</h2>
-    <ul>
-      <li>We never sell or share your email address.</li>
-      <li>We never ask for passwords, exchange logins, API keys or money.</li>
-      <li>We never send you anything you did not sign up for.</li>
-    </ul>
-
-    <h2>Contact</h2>
-    <p>Questions about this page, or anything else: <a href="mailto:hello@sigtide.com">hello@sigtide.com</a>.
-    A person reads every email.</p>
-
-    <p style="margin-top:34px;font-size:14px;color:var(--muted)">SigTide is educational. Nothing on this site is financial advice.</p>
-  </article>
-
-  <footer>
-    <div>SigTide &middot; <a href="/">home</a> &middot; <a href="/coins/">coin scores</a>
-    &middot; <a href="/flip/">flip status</a> &middot; <a href="/research/no-edge-in-risk-off/">research</a>
-    &middot; <a href="/privacy/">privacy</a></div>
-  </footer>
-
-</div>
+<h2 class="h2">Contact</h2>
+<p>Questions about this page, or anything else: <a href="mailto:hello@sigtide.com">hello@sigtide.com</a>. A person reads every email.</p>
+<p>SigTide is educational. Nothing on this site is financial advice.</p>
+<p class="plain-small"><a href="../index.html">Back to SigTide</a></p>
+</div></section>
+</main>
+<footer class="foot"><div class="wrap">
+  <p class="f-warn">Educational only. Not financial advice.</p>
+  <p class="f-method">Daily closing prices, 0.15% cost per switch, no future data used.</p>
+  <nav class="f-links" aria-label="More from SigTide"><a href="../board/index.html">Who&#x27;s IN right now</a><a href="../record/index.html#practice">Practice test (no real money)</a><a href="https://sigtide.com/flip/">Bitcoin&#x27;s long trend</a><a href="https://sigtide.com/rsi/">RSI map</a><a href="https://sigtide.com/research/no-edge-in-risk-off/">What failed</a><a href="../privacy/index.html">Privacy</a></nav>
+  <p class="f-contact"><a href="mailto:hello@sigtide.com"><svg class="ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4.5 7.5 7.5 5.6 7.5-5.6"/></svg>hello@sigtide.com</a><a href="https://www.youtube.com/@SigTide" rel="noopener"><svg class="ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="4"/><path d="m10 9 5 3-5 3V9Z"/></svg>YouTube</a></p>
+</div></footer>
 <!-- sigtide:analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "42f28562915645ab9f6fd61e6a1b6806"}'></script><!-- /sigtide:analytics -->
 </body>
 </html>

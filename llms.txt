@@ -1,22 +1,22 @@
 # SigTide
 
-> Daily trend-structure scan of the 49 largest crypto majors, plus a live risk-on/risk-off regime read for the whole market. Free, updated automatically every day. Not financial advice.
+> One simple rule, checked every day on the 49 largest crypto coins: a coin is IN while its 10-day average price is above its 44-day average, and OUT (in cash) when it is below. The site shows what that rule did next to just holding Bitcoin and the average coin, each with its worst fall. Free, updated every day. Not financial advice.
 
-SigTide scores every major crypto asset 0-20 on trend structure (price vs. 50-day average, higher highs/lows, momentum, relative strength) and reads the current market regime (Bitcoin's 50-day average vs. its 200-day average). Before 2023 the score's edge showed up only in risk-on; since 2023 it has tested as noise in both regimes, and the site says so. It publishes its full methodology, including strategies it tested and rejected, and a live daily track record (one row per run; same-day re-runs replace that day's row).
+SigTide publishes the rule's state for every coin, the past results after costs, a live practice test with no real money (started 2026-10-08), and every test it ran, including the ones that failed. Since 2023 Bitcoin alone made more than the rule; the rule's case is the smaller fall.
 
 ## Core pages
 
-- [Home](https://sigtide.com/): what SigTide is and does, links to every section below.
-- [Is crypto risk-on or risk-off today?](https://sigtide.com/flip/): the single regime call for the whole market, updated daily — golden/death cross status, days in regime, an early-warning layer, and every 50/200 cross on record back to 2018.
-- [Crypto RSI heatmap today](https://sigtide.com/rsi/): average RSI(14) across the watchlist, overbought/oversold breadth, RSI vs. structure-score scatter per coin.
-- [Crypto market scores today](https://sigtide.com/scores/): all 49 coins ranked 0-20 on trend structure, tier-labeled (Strong/Mid/Weak/Poor).
-- [Open crypto signals today](https://sigtide.com/signals/): open long crosses from an SMA crossover rule, ranked by reward-to-risk from today's price. A mechanical watch-list, not advice; since 2023 no edge has survived costs.
-- [Per-coin pages](https://sigtide.com/coins/): one page per watchlist coin (e.g. /coins/btc/, /coins/eth/) with its current score, structure read, and history.
+- [Is your coin IN or OUT today?](https://sigtide.com/): type a coin and see its state, since when, and what $100 did following the rule and just holding.
+- [All 49 coins](https://sigtide.com/board/): every coin IN or OUT today, what switched, and the coins closest to a switch.
+- [Our record](https://sigtide.com/record/): the practice test next to Bitcoin and the average coin, the long view since 2023, and every test we ran with its verdict.
+- [Coin pages](https://sigtide.com/coins/btc/): one page per coin (for example /coins/btc/, /coins/pepe/): the answer, the chart, the $100 past test and the coin's last switches.
+- [Is crypto risk-on or risk-off today?](https://sigtide.com/flip/): Bitcoin's 50-day vs 200-day average, as market context.
+- [Crypto RSI heatmap today](https://sigtide.com/rsi/): average RSI(14) across the 49 coins.
+
+## Email
+
+- A free letter every Monday, and an email the day a reader's chosen coin switches IN or OUT. Nothing is sent before the reader confirms. [Privacy](https://sigtide.com/privacy/).
 
 ## Methodology and honesty
 
-- [Negative results: no tradeable long edge in crypto risk-off](https://sigtide.com/research/no-edge-in-risk-off/): a published research note on strategies tested and rejected, not just the ones that worked.
-
-## For businesses
-
-- [Automation](https://sigtide.com/automation/): SigTide's own scan-and-report pipeline offered as a service for other teams that want a daily market report built and run for them.
+- [Negative results: no tradeable long edge in crypto risk-off](https://sigtide.com/research/no-edge-in-risk-off/): strategies tested and rejected, not just the ones that worked.

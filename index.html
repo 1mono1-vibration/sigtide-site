@@ -1,727 +1,106 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SigTide — crypto majors scored daily, every call on the record</title>
-<meta name="description" content="Every major coin scored daily, and every call published on an append-only record — including the ones that went wrong. Free.">
-<style>
-  :root{
-    --bg:#0a0e27; --panel:rgba(20,26,58,0.88); --panel-2:rgba(28,35,80,0.78);
-    --border:#2d3868; --text:#ecedfd; --text-2:#b8bce0; --muted:#8088c0;
-    --accent:#a78bfa; --green-2:#10d9a0; --blue-2:#60a5fa; --amber:#fbbf24; --red-2:#f472b6;
-  }
-  *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  body{
-    margin:0; padding:0; min-height:100vh; color:var(--text); line-height:1.6;
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
-    background:
-      radial-gradient(ellipse at top left, rgba(167,139,250,0.18) 0%, transparent 55%),
-      radial-gradient(ellipse at bottom right, rgba(16,217,160,0.13) 0%, transparent 55%),
-      linear-gradient(180deg,#0a0e27 0%,#0d1339 100%);
-    background-attachment:fixed;
-  }
-  .wrap{max-width:1080px; margin:0 auto; padding:0 22px;}
-  a{color:var(--accent); text-decoration:none;}
-
-  /* nav */
-  nav{display:flex; align-items:center; justify-content:space-between; padding:22px 0;}
-  .brand{font-weight:800; font-size:19px; letter-spacing:-0.01em;}
-  .brand .dot{color:var(--green-2);}
-  .nav-tag{font-size:12px; color:var(--muted); letter-spacing:0.04em;}
-
-  /* live price ticker */
-  .ticker{display:flex; align-items:center; gap:14px; flex-wrap:wrap;
-          background:var(--card,#11131a); border:1px solid var(--line,#232733);
-          border-radius:12px; padding:10px 14px; margin:0 0 14px;}
-  .ticker-label{display:inline-flex; align-items:center; gap:7px; font-size:12px;
-                font-weight:700; letter-spacing:.06em; text-transform:uppercase;
-                color:var(--text-2,#9aa4b2); white-space:nowrap;}
-  .ticker-items{display:flex; gap:16px; flex-wrap:wrap; flex:1 1 auto; min-width:0;}
-  .ticker-item{display:inline-flex; align-items:baseline; gap:6px; font-size:14px;}
-  .ticker-item b{color:#fff; font-family:ui-monospace,Menlo,monospace; font-weight:600;}
-  .ticker-item .sym{color:var(--text-2,#9aa4b2); font-weight:700; font-size:12px;}
-  .ticker-item .chg{font-size:12px; font-family:ui-monospace,Menlo,monospace;}
-  .ticker-item .up{color:var(--green-2,#3ddc97);} .ticker-item .dn{color:#f2555a;}
-  .ticker-note{font-size:11px; color:var(--muted,#6b7280); white-space:nowrap;}
-  @media(max-width:620px){ .ticker-note{display:none;} }
-
-  /* hero */
-  .hero{
-    background:linear-gradient(135deg, rgba(167,139,250,0.22) 0%, rgba(16,217,160,0.13) 100%);
-    border:1px solid var(--border); border-radius:20px; padding:48px 44px; margin:8px 0 30px;
-    backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
-  }
-  .badge{display:inline-block; padding:5px 13px; border-radius:14px;
-    background:rgba(167,139,250,0.20); color:var(--accent);
-    font-size:11px; font-weight:700; letter-spacing:0.09em; text-transform:uppercase; margin-bottom:16px;}
-  .hero h1{margin:0 0 14px; font-size:42px; line-height:1.12; letter-spacing:-0.02em; color:#fff;}
-  .hero h1 .hl{background:linear-gradient(90deg,var(--accent),var(--green-2));
-    -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;}
-  .hero .lede{font-size:18px; color:var(--text-2); max-width:680px; margin:0 0 26px;}
-  @media(max-width:620px){ .hero{padding:32px 22px;} .hero h1{font-size:30px;} .hero .lede{font-size:16px;} }
-
-  /* email form */
-  .signup{display:flex; gap:10px; flex-wrap:wrap; max-width:520px;}
-  .signup input[type=email]{
-    flex:1 1 260px; min-width:0; padding:15px 16px; font-size:15px;
-    background:rgba(10,14,39,0.7); border:1px solid var(--border); border-radius:11px;
-    color:var(--text); outline:none; transition:border-color .15s;}
-  .signup input[type=email]:focus{border-color:var(--accent);}
-  .signup button{
-    padding:15px 24px; font-size:15px; font-weight:700; cursor:pointer;
-    border:none; border-radius:11px; color:#0a0e27; white-space:nowrap;
-    background:linear-gradient(90deg,var(--accent),var(--green-2));
-    transition:transform .12s, filter .12s;}
-  .signup button:hover{transform:translateY(-1px); filter:brightness(1.06);}
-  .signup button:disabled{opacity:.6; cursor:default; transform:none;}
-  .hp{position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden;}
-  .microcopy{font-size:12.5px; color:var(--muted); margin-top:12px;}
-  .form-msg{margin-top:14px; font-size:14px; font-weight:600; min-height:20px;}
-  .form-msg.ok{color:var(--green-2);} .form-msg.err{color:var(--red-2);}
-  .demo-flag{font-size:11px; color:var(--amber); margin-top:6px;}
-  /* Beehiiv embed (official loader injects an iframe here) */
-  .bh-embed{max-width:520px; min-height:64px;}
-  .bh-embed iframe{width:100%!important; max-width:520px; border:0;}
-  .final .bh-embed{margin:0 auto;}
-
-  /* live proof */
-  .proof{display:grid; grid-template-columns:1.2fr 1fr; gap:18px; margin-bottom:30px;}
-  @media(max-width:760px){ .proof{grid-template-columns:1fr;} }
-  .card{background:var(--panel); border:1px solid var(--border); border-radius:14px;
-    padding:22px 24px; backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);}
-  .card h3{margin:0 0 4px; font-size:11px; text-transform:uppercase; letter-spacing:0.11em; color:var(--muted);}
-  .live-dot{display:inline-block; width:7px; height:7px; border-radius:50%; background:var(--green-2);
-    margin-right:7px; box-shadow:0 0 0 0 rgba(16,217,160,.6); animation:pulse 2.2s infinite;}
-  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(16,217,160,.5);}70%{box-shadow:0 0 0 7px rgba(16,217,160,0);}100%{box-shadow:0 0 0 0 rgba(16,217,160,0);}}
-  .regime-pill{display:inline-block; padding:5px 13px; border-radius:10px; font-weight:800;
-    font-size:13px; letter-spacing:0.05em; margin:6px 0 10px;}
-  .regime-off{background:rgba(244,114,182,0.14); color:var(--red-2);}
-  .regime-on{background:rgba(16,217,160,0.14); color:var(--green-2);}
-  .regime-line{font-size:14px; color:var(--text-2);}
-  /* signal bar */
-  .sig-top{display:flex; align-items:baseline; justify-content:space-between; margin:10px 0 8px;}
-  .sig-val{font-family:ui-monospace,monospace; font-size:30px; font-weight:800;}
-  .sig-band{font-size:12px; font-weight:800; letter-spacing:0.08em;}
-  .sig-track{position:relative; height:12px; border-radius:7px;
-    background:linear-gradient(90deg,#f472b6 0%,#fbbf24 40%,#60a5fa 70%,#10d9a0 100%);}
-  .sig-marker{position:absolute; top:-4px; width:4px; height:20px; border-radius:2px;
-    background:#fff; box-shadow:0 0 6px rgba(0,0,0,.5); transform:translateX(-50%);}
-  .sig-ticks{display:flex; justify-content:space-between; font-size:10px; color:var(--muted);
-    margin-top:6px; letter-spacing:0.05em;}
-  .top-list{list-style:none; margin:6px 0 0; padding:0;}
-  .top-list li{display:flex; justify-content:space-between; align-items:center;
-    padding:8px 0; border-bottom:1px solid rgba(45,56,104,0.5);}
-  .top-list li:last-child{border-bottom:none;}
-  .top-list .tk{font-weight:700; font-size:15px;}
-  .top-list .sc{font-family:ui-monospace,monospace; font-weight:800; font-size:18px;}
-  .top-list .sc small{font-size:11px; color:var(--muted); font-weight:600;}
-  .minirow{display:flex; gap:18px; margin-top:14px; flex-wrap:wrap;}
-  .mini{font-size:12px; color:var(--muted);} .mini b{color:var(--text); font-size:15px; font-family:ui-monospace,monospace;}
-
-  /* sections */
-  section{margin:46px 0;}
-  .sec-h{font-size:13px; text-transform:uppercase; letter-spacing:0.13em; color:var(--muted); margin:0 0 20px;}
-  .three{display:grid; grid-template-columns:repeat(3,1fr); gap:18px;}
-  @media(max-width:760px){ .three{grid-template-columns:1fr;} }
-  .feat{background:var(--panel); border:1px solid var(--border); border-radius:14px; padding:24px;}
-  .feat .ic{font-size:24px; margin-bottom:10px;}
-  .feat h4{margin:0 0 8px; font-size:17px; color:#fff;}
-  .feat p{margin:0; font-size:14px; color:var(--text-2);}
-  .feat.headline{border:1px solid var(--accent); background:linear-gradient(135deg,rgba(167,139,250,0.16),rgba(16,217,160,0.08));}
-  .feat.headline .tagk{display:inline-block; font-size:10px; font-weight:800; letter-spacing:0.1em;
-    text-transform:uppercase; color:var(--accent); margin-bottom:8px;}
-
-  /* plans */
-  .plans{display:grid; grid-template-columns:repeat(3,1fr); gap:18px; align-items:start; margin-top:8px;}
-  @media(max-width:820px){ .plans{grid-template-columns:1fr;} }
-  .plan{position:relative; background:var(--panel); border:1px solid var(--border); border-radius:14px; padding:28px 24px 24px;}
-  .plan.pro{border-color:var(--accent); box-shadow:0 0 26px rgba(167,139,250,0.22);}
-  .plan.poseidon{border-color:#38bdf8; background:linear-gradient(180deg,rgba(56,189,248,0.10),rgba(20,26,58,0.88));}
-  .plan .pname{font-size:13px; font-weight:800; letter-spacing:0.06em; text-transform:uppercase; color:var(--muted);}
-  .plan.pro .pname{color:var(--accent);}
-  .plan.poseidon .pname{color:#7dd3fc;}
-  .plan .price{font-size:30px; font-weight:800; margin:8px 0 2px; font-family:ui-monospace,monospace;}
-  .plan .price small{font-size:14px; color:var(--muted); font-weight:600;}
-  .plan .ptag{font-size:12.5px; color:var(--muted); margin:2px 0 0;}
-  .plan .plain{font-size:13px; color:var(--text-2); line-height:1.55; margin:12px 0 0;
-    padding-top:12px; border-top:1px solid rgba(45,56,104,0.5);}
-  .plan .plain b{color:#fff;}
-  .plans-intro{font-size:15px; color:var(--text-2); line-height:1.65; max-width:780px; margin:-6px 0 22px;}
-  .plans-intro b{color:#fff;} .plans-intro .w{color:var(--accent);}
-  .plan ul{list-style:none; margin:14px 0 0; padding:0;}
-  .plan li{font-size:14px; color:var(--text-2); padding:6px 0 6px 24px; position:relative;}
-  .plan li::before{content:"✓"; position:absolute; left:0; color:var(--green-2); font-weight:800;}
-  .plan.poseidon li::before{color:#38bdf8;}
-  .pbadge{position:absolute; top:-11px; left:50%; transform:translateX(-50%); white-space:nowrap;
-    font-size:10px; font-weight:800; letter-spacing:0.07em; text-transform:uppercase; padding:4px 12px; border-radius:20px;}
-  .pbadge.pop{background:var(--accent); color:#0a0e27;}
-  .pbadge.early{background:linear-gradient(90deg,#38bdf8,#0ea5e9); color:#04121f;}
-  .pcta{display:block; margin-top:18px; text-align:center; text-decoration:none; cursor:pointer;
-    background:linear-gradient(90deg,#38bdf8,#0ea5e9); color:#04121f; font-weight:800; font-size:14px;
-    padding:12px 16px; border-radius:10px;}
-  .pcta:hover{filter:brightness(1.08);}
-  .soon{display:inline-block; font-size:10px; font-weight:800; letter-spacing:0.08em; text-transform:uppercase;
-    color:var(--amber); background:rgba(251,191,36,0.13); padding:3px 9px; border-radius:8px; margin-left:8px;}
-
-  /* final cta */
-  .final{background:linear-gradient(135deg,rgba(167,139,250,0.2),rgba(16,217,160,0.12));
-    border:1px solid var(--border); border-radius:20px; padding:44px; text-align:center;}
-  .final h2{margin:0 0 10px; font-size:28px; color:#fff;}
-  .final p{margin:0 0 24px; color:var(--text-2); font-size:16px;}
-  .final .signup{margin:0 auto; justify-content:center;}
-
-  footer{border-top:1px solid var(--border); margin-top:50px; padding:26px 0 40px; color:var(--muted); font-size:12.5px;}
-  footer .disc{max-width:760px; margin-bottom:10px; line-height:1.6;}
-
-  /* nav links */
-  .nav-links{display:flex; gap:20px; font-size:13px; align-items:center;}
-  .nav-links a{color:var(--text-2);}
-  .nav-links a:hover{color:var(--accent);}
-  @media(max-width:620px){ .nav-links{gap:12px; font-size:12px; min-width:0; overflow-x:auto; white-space:nowrap;} }
-
-  /* ===== stand-down scoreboard ===== */
-  .scoreboard{background:var(--panel-2); border:1px solid var(--border); border-radius:18px; padding:34px 32px; margin:30px 0;
-    backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);}
-  .scoreboard .eyebrow{font-size:11px; text-transform:uppercase; letter-spacing:0.12em; color:var(--red-2); font-weight:800; margin-bottom:7px;}
-  .scoreboard h2{margin:0 0 7px; font-size:26px; color:#fff; letter-spacing:-0.01em;}
-  .scoreboard .sub{font-size:14px; color:var(--text-2); margin:0 0 22px; max-width:700px;}
-  .sb-cards{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:26px;}
-  @media(max-width:680px){ .sb-cards{grid-template-columns:1fr;} }
-  .sb-card{background:rgba(10,14,39,0.5); border:1px solid var(--border); border-radius:12px; padding:18px;}
-  .sb-card .k{font-size:11px; text-transform:uppercase; letter-spacing:0.07em; color:var(--muted); margin-bottom:9px;}
-  .sb-card .v{font-size:27px; font-weight:800; font-family:ui-monospace,monospace; line-height:1;}
-  .sb-card .d{font-size:12.5px; color:var(--text-2); margin-top:8px;}
-  .sb-illo{background:rgba(10,14,39,0.4); border:1px solid var(--border); border-radius:12px; padding:22px 20px 18px;}
-  .sb-illo .ititle{font-size:12px; text-transform:uppercase; letter-spacing:0.08em; color:var(--muted); text-align:center; margin-bottom:18px;}
-  .sb-bars{display:flex; align-items:flex-end; justify-content:center; gap:26px;}
-  .sb-bar{display:flex; flex-direction:column; align-items:center; justify-content:flex-end; width:30%; max-width:140px;}
-  .sb-bar .bv{font-size:16px; font-weight:800; font-family:ui-monospace,monospace; margin-bottom:7px;}
-  .sb-bar .bcol{width:100%; border-radius:8px 8px 0 0; min-height:6px;}
-  .sb-bar .bl{font-size:12px; color:var(--text-2); margin-top:10px; text-align:center; line-height:1.35;}
-  .sb-illo-cap{font-size:11.5px; color:var(--muted); text-align:center; margin-top:16px;}
-  .sb-verdict{font-size:14.5px; color:var(--text); line-height:1.6; margin:22px 0 0; padding:15px 18px;
-    background:rgba(16,217,160,0.06); border-left:3px solid var(--green-2); border-radius:0 10px 10px 0;}
-  .sb-caveat{font-size:13px; color:var(--text-2); line-height:1.6; margin:12px 0 0; padding:14px 18px;
-    background:rgba(251,191,36,0.06); border-left:3px solid var(--amber); border-radius:0 10px 10px 0;}
-
-  /* ===== public track record ===== */
-  .track .intro{font-size:14px; color:var(--text-2); max-width:730px; margin:0 0 18px; line-height:1.6;}
-  .tr-summary{display:flex; gap:30px; flex-wrap:wrap; margin:0 0 18px; padding:16px 22px;
-    background:var(--panel); border:1px solid var(--border); border-radius:12px;}
-  .tr-summary .ts{font-size:12px; color:var(--muted);}
-  .tr-summary .ts b{display:block; font-size:21px; color:var(--text); font-family:ui-monospace,monospace; font-weight:800; margin-top:3px;}
-  .tr-wrap{overflow-x:auto; border:1px solid var(--border); border-radius:12px;}
-  table.tr{width:100%; border-collapse:collapse; font-size:13px; min-width:640px;}
-  table.tr th{text-align:left; padding:11px 14px; font-size:10.5px; text-transform:uppercase; letter-spacing:0.05em;
-    color:var(--muted); background:rgba(10,14,39,0.55); border-bottom:1px solid var(--border);}
-  table.tr td{padding:11px 14px; border-bottom:1px solid rgba(45,56,104,0.4); color:var(--text-2);}
-  table.tr tr:last-child td{border-bottom:none;}
-  table.tr td.dt{font-family:ui-monospace,monospace; color:var(--text); white-space:nowrap;}
-  table.tr td.sig{font-family:ui-monospace,monospace; font-weight:700;}
-  .rpill{display:inline-block; font-size:10px; font-weight:800; letter-spacing:0.03em; padding:3px 8px; border-radius:7px;}
-  .rpill.off{background:rgba(244,114,182,0.14); color:var(--red-2);}
-  .rpill.on{background:rgba(16,217,160,0.14); color:var(--green-2);}
-  table.tr .call{color:var(--amber); font-weight:700; white-space:nowrap;}
-  table.tr .lead{font-family:ui-monospace,monospace; font-size:12px; color:var(--text); white-space:nowrap;}
-  .tr-foot{font-size:12px; color:var(--muted); margin-top:12px; font-style:italic;}
-
-  /* --- month aggregation: summary rows that open the days inside them --- */
-  .tr-controls{display:flex; align-items:center; justify-content:space-between; gap:14px;
-    flex-wrap:wrap; margin:0 0 10px;}
-  .tr-controls .trc-note{font-size:12px; color:var(--muted);}
-  .trc-btn{font:inherit; font-size:12px; font-weight:700; color:var(--text-2); cursor:pointer;
-    background:var(--panel); border:1px solid var(--border); border-radius:8px; padding:7px 13px;}
-  .trc-btn:hover{color:#fff; border-color:var(--accent);}
-  .trc-btn:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
-  tr.trm{cursor:pointer;}
-  tr.trm > td{background:rgba(10,14,39,0.4); border-bottom:1px solid var(--border);
-    font-weight:700; color:var(--text);}
-  tr.trm:hover > td{background:rgba(167,139,250,0.09);}
-  tr.trm:focus-visible{outline:2px solid var(--accent); outline-offset:-2px;}
-  tr.trm .mlabel{display:flex; align-items:center; gap:9px; white-space:nowrap;}
-  tr.trm .caret{display:inline-block; width:9px; font-size:10px; color:var(--accent);
-    transition:transform .15s ease;}
-  tr.trm[aria-expanded="true"] .caret{transform:rotate(90deg);}
-  tr.trm .mcount{font-family:ui-monospace,monospace; font-size:11px; font-weight:700;
-    color:var(--muted); background:rgba(45,56,104,0.55); border-radius:20px; padding:2px 8px;}
-  tr.trd{display:none;}
-  tr.trd.open{display:table-row;}
-  tr.trd > td:first-child{padding-left:30px;}
-  tr.trd > td{font-size:12.5px;}
-
-  /* ===== founding members ===== */
-  .founding{background:linear-gradient(135deg,rgba(56,189,248,0.13),rgba(167,139,250,0.10));
-    border:1px solid #38bdf8; border-radius:18px; padding:36px 34px; margin:30px 0;}
-  .founding .fbadge{display:inline-block; font-size:10px; font-weight:800; letter-spacing:0.1em; text-transform:uppercase;
-    color:#04121f; background:linear-gradient(90deg,#38bdf8,#0ea5e9); padding:4px 12px; border-radius:20px; margin-bottom:14px;}
-  .founding h2{margin:0 0 10px; font-size:26px; color:#fff; letter-spacing:-0.01em;}
-  .founding .lede{font-size:15px; color:var(--text-2); max-width:660px; margin:0 0 24px; line-height:1.6;}
-  .f-benes{display:grid; grid-template-columns:repeat(2,1fr); gap:18px; margin-bottom:26px;}
-  @media(max-width:620px){ .f-benes{grid-template-columns:1fr;} }
-  .f-bene{display:flex; gap:13px; align-items:flex-start;}
-  .f-bene .fic{font-size:21px; line-height:1.1;}
-  .f-bene h4{margin:0 0 4px; font-size:15px; color:#fff;}
-  .f-bene p{margin:0; font-size:13px; color:var(--text-2); line-height:1.55;}
-  .f-cta-row{display:flex; align-items:center; gap:20px; flex-wrap:wrap;}
-  .f-cta{display:inline-block; background:linear-gradient(90deg,#38bdf8,#0ea5e9); color:#04121f; font-weight:800;
-    font-size:15px; padding:14px 26px; border-radius:11px; text-decoration:none;}
-  .f-cta:hover{filter:brightness(1.08);}
-  .f-spots{font-size:13px; color:var(--text-2);}
-  .f-spots b{color:#7dd3fc; font-family:ui-monospace,monospace;}
-  .f-fine{font-size:12px; color:var(--muted); margin-top:16px; line-height:1.6; max-width:660px;}
-
-  /* ===== newcomer glossary (hover / tap) ===== */
-  .term{border-bottom:1px dashed rgba(167,139,250,0.7); cursor:help; -webkit-tap-highlight-color:transparent;}
-  .term:hover{border-bottom-color:var(--accent); color:#fff;}
-  .term:focus{outline:2px solid var(--accent); outline-offset:2px; border-radius:3px;}
-  .hint{display:flex; align-items:center; justify-content:center; gap:7px; font-size:12.5px;
-    color:var(--muted); margin:-12px 0 26px;}
-  .hint b{color:var(--text-2); font-weight:600;}
-  .hint .u{border-bottom:1px dashed rgba(167,139,250,0.7); color:var(--accent);}
-  #tipcard{position:fixed; z-index:9999; max-width:290px; padding:12px 14px;
-    background:#0d1235; border:1px solid var(--accent); border-radius:11px; color:var(--text);
-    font-size:13px; line-height:1.55; box-shadow:0 12px 34px rgba(0,0,0,0.55);
-    opacity:0; transform:translateY(4px); transition:opacity .12s, transform .12s; pointer-events:none;}
-  #tipcard.show{opacity:1; transform:translateY(0);}
-  #tipcard .tt{display:block; font-size:10.5px; text-transform:uppercase; letter-spacing:0.07em;
-    color:var(--accent); font-weight:800; margin-bottom:5px;}
-</style>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Is your coin IN or OUT today? | SigTide</title>
+<meta name="description" content="Type a coin. See if it is IN or OUT today, since when, and what one simple rule did. 49 coins, checked every day. Free. Not financial advice.">
+<link rel="canonical" href="https://sigtide.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="SigTide">
+<meta property="og:title" content="Is your coin IN or OUT today? | SigTide">
+<meta property="og:description" content="Type a coin. See if it is IN or OUT today, since when, and what one simple rule did. 49 coins, checked every day. Free. Not financial advice.">
+<meta property="og:url" content="https://sigtide.com/">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='10' fill='%236c47ff'/%3E%3Cpath d='M6.5 19.6c2.6 0 3.4-4.6 6.2-4.6s3.6 4.6 6.3 4.6 3.5-4.6 6.5-4.6' fill='none' stroke='%23fff' stroke-width='2.7' stroke-linecap='round'/%3E%3Ccircle cx='23.6' cy='8.8' r='3.1' fill='%23ffc542'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=IBM+Plex+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="assets/site.css?v=ad0cd867">
+<script src="assets/site.js?v=ad0cd867" defer></script>
 <!-- sigtide:gsc --><meta name="google-site-verification" content="wO9eyFAouOjC4XhoKFdzeE6nge0TJcRh5bjrvy08HME"><!-- /sigtide:gsc -->
 </head>
-<body>
-<div class="wrap">
-
-  <nav>
-    <div class="brand">SigTide<span class="dot">.</span></div>
-    <div class="nav-links">
-      <a href="/flip/">Flip status</a>
-      <a href="/signals/">Open signals</a>
-      <a href="/scores/">Score map</a>
-      <a href="/rsi/">RSI</a>
-      <a href="/coins/">Coin scores</a>
-      <a href="/automation/">Automation</a>
-      
-      <a href="#track-record">Track record</a>
-      <a href="#founding">Founding</a>
-    </div>
-  </nav>
-
-  <!-- HERO -->
-  <header class="hero">
-    <span class="badge">Free · join the waitlist</span>
-    <h1>Every major coin, scored daily. <span class="hl">Every call on the record.</span></h1>
-    <p class="lede">We score the major coins every day, tell you plainly what the numbers do and
-      don't support — including when the score has <strong><span class="term" tabindex="0" data-term="No signal"
-      data-tip="In risk-off the score has never shown an edge, so it makes no call. That is not a forecast that prices will fall.">no signal</span></strong> —
-      and publish every call on an append-only record, the misses included. When Bitcoin's regime flips, you get
-      <span class="term" tabindex="0" data-term="The flip email"
-      data-tip="Sent the day Bitcoin's trend flips back to risk-on.">the email</span>.</p>
-
-    <div class="bh-embed"><script async src="https://subscribe-forms.beehiiv.com/v3/loader.js" data-beehiiv-form="30359b98-5d01-4752-97bc-1ee29bad5b76"></script></div>
-    <div class="microcopy">No spam. One email when it matters, plus the daily read if you want it. Unsubscribe anytime.</div>
-    <div class="edition-chip" style="margin-top:14px; font-size:12.5px; letter-spacing:0.04em; color:var(--text-2); opacity:0.85;">&#9881; Edition <b>#147</b> of this page &mdash; rebuilt automatically by the daily scan since 2026-06-15.</div>
-  </header>
-
-  <div class="hint">💡 <b>New to this?</b> Hover or tap any <span class="u">underlined term</span> for a plain-English explanation.</div>
-
-  <!-- LIVE PRICE TICKER — deliberately OUTSIDE the scored panel below.
-       Price is live; every score on this page is fixed to the last completed
-       daily close. Mixing the two is what makes a number look made up. -->
-  <div class="ticker" id="tickerStrip" hidden>
-    <span class="ticker-label"><span class="live-dot"></span>Live price</span>
-    <div class="ticker-items" id="tickerItems"></div>
-    <span class="ticker-note">updates every 20s · scores below are fixed to the 9 Nov close</span>
-  </div>
-
-  <!-- LIVE PROOF -->
-  <div class="proof">
-    <div class="card">
-      <h3><span class="live-dot"></span>Today's real read · November 10, 2026</h3>
-      <div class="regime-pill term regime-on" tabindex="0" data-term="RISK-ON" data-tip="When Bitcoin's 50-day average is above its 200-day — the medium-term trend points up. Before 2023 the friendlier time to hold crypto; since 2023 the market has actually risen more on risk-off days." style="border-bottom:none">RISK-ON</div>
-      <div class="regime-line">Risk-on for 63 days — golden cross 2026-09-08. Today's scoreboard below — a watch-list, not a buy list.</div>
-      <div class="sig-top">
-        <span class="sig-val" style="color:#f472b6">1.4<small style="font-size:14px;color:var(--muted)">/10</small></span>
-        <span class="sig-band term" tabindex="0" data-term="Watchlist signal" data-tip="The average strength across all the coins we track, on a 0–10 dial — a quick read of how healthy the whole market looks today: WEAK, MIXED, HEALTHY or STRONG. It describes structure, not what to do." style="color:#f472b6; border-bottom:none">WEAK</span>
-      </div>
-      <div class="sig-track"><div class="sig-marker" style="left:14.2%"></div></div>
-      <div class="sig-ticks"><span>WEAK</span><span>MIXED</span><span>HEALTHY</span><span>STRONG</span></div>
-      <div class="minirow">
-        <span class="mini"><span class="term" tabindex="0" data-term="Fear & Greed" data-tip="A 0–100 gauge of overall market mood. Low numbers mean fear (everyone's nervous); high numbers mean greed (everyone's euphoric).">Fear &amp; Greed</span> <b>32</b> Fear</span>
-        <span class="mini">Coins scanned <b>49</b></span>
-        <span class="mini"><span class="term" tabindex="0" data-term="Strong tier" data-tip="The coins scoring near the top of our 0–20 scale — the healthiest-looking trends on the board that day.">Strong-tier</span> <b>3</b></span>
-      </div>
-    </div>
-    <div class="card">
-      <h3>Top of the watchlist today</h3>
-      <ul class="top-list">
-        <li><span class="tk">JST</span><span class="sc" style="color:#10d9a0">20<small>/20</small></span></li>
-<li><span class="tk">NIGHT</span><span class="sc" style="color:#10d9a0">18<small>/20</small></span></li>
-<li><span class="tk">PEPE</span><span class="sc" style="color:#10d9a0">17<small>/20</small></span></li>
-      </ul>
-      <div class="microcopy" style="margin-top:14px">This panel is generated by the live pipeline — not a screenshot. It's the
-        same engine subscribers get, refreshed daily.</div>
-    </div>
-  </div>
-
-  <!-- STAND-DOWN SCOREBOARD -->
-  
-
-  <!-- HOW IT WORKS -->
-  <section>
-    <h2 class="sec-h">How it works</h2>
-    <div class="three">
-      <div class="feat">
-        <div class="ic">📊</div>
-        <h4>Scored every day</h4>
-        <p>Every major coin gets a <span class="term" tabindex="0" data-term="Bullish-structure score" data-tip="We grade every coin from 0 to 20 on signs of a healthy uptrend — rising averages, higher highs, momentum. Higher means a stronger-looking setup.">0–20 bullish-structure score</span> — trend, momentum,
-          relative strength, the lot — translated into plain English. No charts to read.</p>
-      </div>
-      <div class="feat">
-        <div class="ic">🛡️</div>
-        <h4>Told when there's no edge</h4>
-        <p>Before 2023 the score's edge showed up only when Bitcoin was <span class="term" tabindex="0" data-term="Risk-on" data-tip="When Bitcoin's 50-day average is above its 200-day — the medium-term trend points up. Before 2023 the friendlier time to hold crypto; since 2023 the market has actually risen more on risk-off days.">risk-on</span>. Since 2023
-          we haven't been able to measure one in either regime — and we say so, loudly.</p>
-      </div>
-      <div class="feat headline">
-        <span class="tagk">The heads-up</span>
-        <div class="ic">🔔</div>
-        <h4>The flip email</h4>
-        <p>It happens about twice a year. When Bitcoin flips back to risk-on, you get
-          one email — the day it happens, with that day's scoreboard.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- PUBLIC TRACK RECORD -->
-  <section id="track-record" class="track">
-    <h2 class="sec-h">Live track record · nothing hidden</h2>
-    <p class="intro">A public, timestamped log of every daily call we've made. It's appended
-      automatically — one row per daily run. Calls are never edited after the fact: a same-day
-      re-run replaces that day's row, and rows before 31 July 2026 are flagged for a data bug fixed that day. That's the whole point: an honest record you can check, not a
-      cherry-picked highlight reel.</p>
-
-    <div class="tr-summary">
-      <div class="ts">Days logged<b>147</b></div>
-      <div class="ts">Every call<b>Mixed</b></div>
-      <div class="ts">Bitcoin over the window<b style="color:var(--green-2)">+13%</b></div>
-      <div class="ts">Window<b style="font-size:15px">2026-06-15 → 2026-11-10</b></div>
-    </div>
-
-    <div class="tr-controls">
-      <div class="trc-note">Grouped by month — click any month to open the individual days inside it.</div>
-      <button type="button" class="trc-btn" id="tr-toggle-all" data-open="false">Expand all months</button>
-    </div>
-
-    <div class="tr-wrap">
-      <table class="tr">
-        <thead><tr>
-          <th>Month / date</th><th><span class="term" tabindex="0" data-term="Regime" data-tip="Whether Bitcoin was risk-on or risk-off that day. Before 2023 it was the biggest single factor in whether buying coins paid off; since 2023 it hasn't been.">Regime</span></th><th><span class="term" tabindex="0" data-term="Signal" data-tip="That day's average watchlist strength on a 0–10 scale. Higher means more coins looked healthy.">Signal</span></th><th><span class="term" tabindex="0" data-term="Call" data-tip="What the scan said that day. Until 2026-09-29 risk-off days read 'Stand down' and risk-on days 'Leaders live'; since then 'No signal' and 'Watchlist', because the score has never shown an edge in risk-off and since 2023 hasn't shown one in risk-on either.">Call</span></th><th>Top of the board</th><th>BTC close</th>
-        </tr></thead>
-        <tbody>
-        <tr class="trm" role="button" tabindex="0" aria-expanded="true" data-month="2026-11"><td><span class="mlabel"><span class="caret">&#9656;</span>November 2026<span class="mcount">10d</span></span></td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#f472b6">1.6<small style="color:var(--muted)">/10 avg</small></td><td><span class="call" style="color:var(--green-2)">Watchlist</span></td><td class="lead">JST <span style="color:var(--muted)">led 7/10</span></td><td class="dt">$75,368 <span style="color:var(--red-2);font-size:11.5px">−3%</span></td></tr><tr class="trd m-2026-11 open"><td class="dt">2026-11-10</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#f472b6">1.4<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Watchlist</span></td><td class="lead">JST 20 · NIGHT 18 · PEPE 17</td><td class="dt">$75,368</td></tr><tr class="trd m-2026-11 open"><td class="dt">2026-11-09</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#f472b6">1.3<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Watchlist</span></td><td class="lead">JST 19 · PEPE 17 · ZEC 14</td><td class="dt">$74,851</td></tr><tr class="trd m-2026-11 open"><td class="dt">2026-11-08</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#f472b6">1.6<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Watchlist</span></td><td class="lead">JST 19 · ZEC 19 · XMR 17</td><td class="dt">$75,868</td></tr><tr class="trd m-2026-11 open"><td class="dt">2026-11-07</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#f472b6">1.7<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Watchlist</span></td><td class="lead">JST 19 · ZEC 19 · PEPE 18</td><td class="dt">$75,844</td></tr><tr class="trd m-2026-11 open"><td class="dt">2026-11-06</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#f472b6">1.4<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Watchlist</span></td><td class="lead">JST 19 · ZEC 19 · XMR 18</td><td class="dt">$76,088</td></tr><tr class="trd m-2026-11 open"><td class="dt">2026-11-05</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#f472b6">2.1<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Watchlist</span></td><td class="lead">XMR 19 · JST 19 · ZEC 19</td><td class="dt">$80,504</td></tr><tr class="trd m-2026-11 open"><td class="dt">2026-11-04</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#f472b6">1.6<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Watchlist</span></td><td class="lead">JST 19 · XMR 18 · HYPE 18</td><td class="dt">$77,454</td></tr><tr class="trd m-2026-11 open"><td class="dt">2026-11-03</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#f472b6">1.5<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Watchlist</span></td><td class="lead">JST 19 · PEPE 17 · XMR 17</td><td class="dt">$76,816</td></tr><tr class="trd m-2026-11 open"><td class="dt">2026-11-02</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#f472b6">1.9<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Watchlist</span></td><td class="lead">PEPE 19 · JST 18 · XMR 17</td><td class="dt">$78,354</td></tr><tr class="trd m-2026-11 open"><td class="dt">2026-11-01</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#f472b6">2.1<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Watchlist</span></td><td class="lead">PEPE 20 · ZEC 19 · BCH 18</td><td class="dt">$77,582</td></tr><tr class="trm" role="button" tabindex="0" aria-expanded="false" data-month="2026-10"><td><span class="mlabel"><span class="caret">&#9656;</span>October 2026<span class="mcount">31d</span></span></td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#fbbf24">4.8<small style="color:var(--muted)">/10 avg</small></td><td><span class="call" style="color:var(--green-2)">Watchlist</span></td><td class="lead">JST <span style="color:var(--muted)">led 16/31</span></td><td class="dt">$77,369 <span style="color:var(--red-2);font-size:11.5px">−7%</span></td></tr><tr class="trd m-2026-10"><td class="dt">2026-10-31</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#f472b6">2.0<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Watchlist</span></td><td class="lead">PEPE 19 · ZEC 19 · BCH 18</td><td class="dt">$77,369</td></tr><tr class="trd m-2026-10"><td class="dt">2026-10-30</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#f472b6">1.7<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Watchlist</span></td><td class="lead">JST 19 · PEPE 19 · XMR 17</td><td class="dt">$77,992</td></tr><tr class="trd m-2026-10"><td class="dt">2026-10-29</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#f472b6">2.9<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Watchlist</span></td><td class="lead">BCH 20 · PEPE 20 · JST 19</td><td class="dt">$81,344</td></tr><tr class="trd m-2026-10"><td class="dt">2026-10-28</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#f472b6">2.6<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Watchlist</span></td><td class="lead">JST 19 · ZEC 19 · BNB 19</td><td class="dt">$80,910</td></tr><tr class="trd m-2026-10"><td class="dt">2026-10-27</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#f472b6">2.3<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Watchlist</span></td><td class="lead">PEPE 19 · JST 18 · ZEC 17</td><td class="dt">$80,151</td></tr><tr class="trd m-2026-10"><td class="dt">2026-10-26</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#f472b6">1.9<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Watchlist</span></td><td class="lead">JST 19 · PEPE 19 · XMR 17</td><td class="dt">$80,154</td></tr><tr class="trd m-2026-10"><td class="dt">2026-10-25</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#f472b6">2.0<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Watchlist</span></td><td class="lead">JST 19 · XMR 19 · PEPE 17</td><td class="dt">$80,888</td></tr><tr class="trd m-2026-10"><td class="dt">2026-10-24</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#f472b6">2.3<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Watchlist</span></td><td class="lead">JST 19 · XMR 18 · PEPE 17</td><td class="dt">$81,189</td></tr><tr class="trd m-2026-10"><td class="dt">2026-10-23</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#f472b6">2.8<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Watchlist</span></td><td class="lead">JST 19 · PEPE 16 · WLD 16</td><td class="dt">$81,416</td></tr><tr class="trd m-2026-10"><td class="dt">2026-10-22</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#fbbf24">4.2<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Watchlist</span></td><td class="lead">JST 19 · NEAR 18 · WLD 17</td><td class="dt">$84,093</td></tr><tr class="trd m-2026-10"><td class="dt">2026-10-21</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#f472b6">4.0<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Watchlist</span></td><td class="lead">JST 19 · PEPE 18 · AERO 18</td><td class="dt">$83,028</td></tr><tr class="trd m-2026-10"><td class="dt">2026-10-20</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#f472b6">3.5<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Watchlist</span></td><td class="lead">JST 19 · WLD 18 · PEPE 17</td><td class="dt">$81,938</td></tr><tr class="trd m-2026-10"><td class="dt">2026-10-19</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#f472b6">3.3<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Watchlist</span></td><td class="lead">JST 18 · NEAR 18 · XMR 16</td><td class="dt">$82,116</td></tr><tr class="trd m-2026-10"><td class="dt">2026-10-18</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#f472b6">3.2<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Watchlist</span></td><td class="lead">JST 18 · AERO 16 · XMR 15</td><td class="dt">$81,491</td></tr><tr class="trd m-2026-10"><td class="dt">2026-10-17</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#f472b6">4.0<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Watchlist</span></td><td class="lead">JST 18 · FIL 18 · WLD 18</td><td class="dt">$81,616</td></tr><tr class="trd m-2026-10"><td class="dt">2026-10-16</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#fbbf24">4.2<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Watchlist</span></td><td class="lead">AERO 18 · FIL 18 · NIGHT 18</td><td class="dt">$82,246</td></tr><tr class="trd m-2026-10"><td class="dt">2026-10-15</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#fbbf24">4.3<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Watchlist</span></td><td class="lead">JST 19 · AERO 19 · FIL 18</td><td class="dt">$81,682</td></tr><tr class="trd m-2026-10"><td class="dt">2026-10-14</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#fbbf24">5.2<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Watchlist</span></td><td class="lead">ATOM 19 · AERO 19 · JST 18</td><td class="dt">$83,169</td></tr><tr class="trd m-2026-10"><td class="dt">2026-10-13</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#fbbf24">4.7<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Watchlist</span></td><td class="lead">NIGHT 19 · FIL 18 · JST 18</td><td class="dt">$81,850</td></tr><tr class="trd m-2026-10"><td class="dt">2026-10-12</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#60a5fa">6.2<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Watchlist</span></td><td class="lead">FIL 20 · ATOM 19 · AAVE 19</td><td class="dt">$83,773</td></tr><tr class="trd m-2026-10"><td class="dt">2026-10-11</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#fbbf24">5.8<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Watchlist</span></td><td class="lead">AERO 19 · JST 19 · NIGHT 19</td><td class="dt">$82,988</td></tr><tr class="trd m-2026-10"><td class="dt">2026-10-10</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#fbbf24">6.0<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Watchlist</span></td><td class="lead">JST 20 · ATOM 19 · JUP 19</td><td class="dt">$82,636</td></tr><tr class="trd m-2026-10"><td class="dt">2026-10-09</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#fbbf24">5.5<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Watchlist</span></td><td class="lead">JST 20 · NIGHT 19 · QNT 19</td><td class="dt">$81,754</td></tr><tr class="trd m-2026-10"><td class="dt">2026-10-08</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#60a5fa">6.8<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Watchlist</span></td><td class="lead">AAVE 20 · JUP 19 · WLD 19</td><td class="dt">$83,322</td></tr><tr class="trd m-2026-10"><td class="dt">2026-10-07</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#10d9a0">8.1<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Watchlist</span></td><td class="lead">JST 20 · ETH 19 · AAVE 19</td><td class="dt">$85,550</td></tr><tr class="trd m-2026-10"><td class="dt">2026-10-06</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#10d9a0">8.3<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Watchlist</span></td><td class="lead">WLD 20 · ETH 19 · FIL 19</td><td class="dt">$85,767</td></tr><tr class="trd m-2026-10"><td class="dt">2026-10-05</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#10d9a0">8.2<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Watchlist</span></td><td class="lead">XLM 19 · ETH 19 · AAVE 19</td><td class="dt">$86,530</td></tr><tr class="trd m-2026-10"><td class="dt">2026-10-04</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#60a5fa">7.9<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Watchlist</span></td><td class="lead">SKY 19 · RENDER 19 · ICP 19</td><td class="dt">$84,754</td></tr><tr class="trd m-2026-10"><td class="dt">2026-10-03</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#60a5fa">7.8<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Watchlist</span></td><td class="lead">SKY 20 · JST 20 · ICP 20</td><td class="dt">$84,518</td></tr><tr class="trd m-2026-10"><td class="dt">2026-10-02</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#10d9a0">8.0<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Watchlist</span></td><td class="lead">ICP 20 · JST 20 · AAVE 20</td><td class="dt">$84,880</td></tr><tr class="trd m-2026-10"><td class="dt">2026-10-01</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#10d9a0">8.3<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Watchlist</span></td><td class="lead">XLM 20 · ICP 20 · PUMP 19</td><td class="dt">$83,624</td></tr><tr class="trm" role="button" tabindex="0" aria-expanded="false" data-month="2026-09"><td><span class="mlabel"><span class="caret">&#9656;</span>September 2026<span class="mcount">30d</span></span></td><td><span class="rpill on">RISK-ON 23</span> <span class="rpill off">OFF 7</span></td><td class="sig" style="color:#60a5fa">6.8<small style="color:var(--muted)">/10 avg</small></td><td><span class="call">Mixed</span></td><td class="lead">JST <span style="color:var(--muted)">led 5/30</span></td><td class="dt">$83,664 <span style="color:var(--green-2);font-size:11.5px">+6%</span></td></tr><tr class="trd m-2026-09"><td class="dt">2026-09-30</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#10d9a0">8.1<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Watchlist</span></td><td class="lead">XLM 20 · PUMP 19 · JST 19</td><td class="dt">$83,664</td></tr><tr class="trd m-2026-09"><td class="dt">2026-09-29</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#10d9a0">8.3<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Leaders live</span></td><td class="lead">XLM 20 · TAO 19 · FIL 19</td><td class="dt">$83,500</td></tr><tr class="trd m-2026-09"><td class="dt">2026-09-28</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#10d9a0">8.4<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Leaders live</span></td><td class="lead">JST 20 · TAO 20 · POL 20</td><td class="dt">$84,472</td></tr><tr class="trd m-2026-09"><td class="dt">2026-09-27</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#10d9a0">8.4<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Leaders live</span></td><td class="lead">FIL 20 · POL 20 · TAO 20</td><td class="dt">$84,433</td></tr><tr class="trd m-2026-09"><td class="dt">2026-09-26</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#10d9a0">8.3<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Leaders live</span></td><td class="lead">POL 20 · RENDER 20 · ICP 20</td><td class="dt">$84,100</td></tr><tr class="trd m-2026-09"><td class="dt">2026-09-25</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#60a5fa">7.9<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Leaders live</span></td><td class="lead">RENDER 20 · ONDO 19 · BNB 19</td><td class="dt">$84,410</td></tr><tr class="trd m-2026-09"><td class="dt">2026-09-24</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#60a5fa">7.6<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Leaders live</span></td><td class="lead">AAVE 19 · ICP 19 · XMR 19</td><td class="dt">$84,398</td></tr><tr class="trd m-2026-09"><td class="dt">2026-09-23</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#60a5fa">7.9<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Leaders live</span></td><td class="lead">ZEC 20 · SHIB 20 · AAVE 19</td><td class="dt">$86,209</td></tr><tr class="trd m-2026-09"><td class="dt">2026-09-22</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#60a5fa">7.7<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Leaders live</span></td><td class="lead">SHIB 20 · HYPE 19 · AAVE 19</td><td class="dt">$86,620</td></tr><tr class="trd m-2026-09"><td class="dt">2026-09-21</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#60a5fa">7.6<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Leaders live</span></td><td class="lead">BNB 20 · ETH 19 · HYPE 19</td><td class="dt">$81,178</td></tr><tr class="trd m-2026-09"><td class="dt">2026-09-20</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#60a5fa">7.5<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Leaders live</span></td><td class="lead">BNB 19 · HYPE 19 · ZEC 19</td><td class="dt">$81,250</td></tr><tr class="trd m-2026-09"><td class="dt">2026-09-19</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#60a5fa">7.1<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Leaders live</span></td><td class="lead">BNB 19 · POL 19 · ETH 18</td><td class="dt">$80,884</td></tr><tr class="trd m-2026-09"><td class="dt">2026-09-18</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#fbbf24">5.6<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Leaders live</span></td><td class="lead">JUP 19 · POL 19 · JST 19</td><td class="dt">$76,417</td></tr><tr class="trd m-2026-09"><td class="dt">2026-09-17</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#fbbf24">4.5<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Leaders live</span></td><td class="lead">JST 20 · ZEC 19 · POL 18</td><td class="dt">$76,206</td></tr><tr class="trd m-2026-09"><td class="dt">2026-09-16</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#fbbf24">4.1<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Leaders live</span></td><td class="lead">JST 20 · BNB 18 · ZEC 18</td><td class="dt">$75,644</td></tr><tr class="trd m-2026-09"><td class="dt">2026-09-15</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#60a5fa">6.1<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Leaders live</span></td><td class="lead">JST 18 · NEAR 18 · SOL 18</td><td class="dt">$78,189</td></tr><tr class="trd m-2026-09"><td class="dt">2026-09-14</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#fbbf24">5.1<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Leaders live</span></td><td class="lead">JST 18 · FIL 18 · BNB 18</td><td class="dt">$76,842</td></tr><tr class="trd m-2026-09"><td class="dt">2026-09-13</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#fbbf24">5.6<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Leaders live</span></td><td class="lead">NEAR 19 · LTC 19 · ZEC 19</td><td class="dt">$77,279</td></tr><tr class="trd m-2026-09"><td class="dt">2026-09-12</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#fbbf24">5.6<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Leaders live</span></td><td class="lead">NEAR 19 · ZEC 19 · POL 18</td><td class="dt">$77,226</td></tr><tr class="trd m-2026-09"><td class="dt">2026-09-11</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#fbbf24">5.3<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Leaders live</span></td><td class="lead">NEAR 20 · ZEC 19 · BNB 18</td><td class="dt">$76,569</td></tr><tr class="trd m-2026-09"><td class="dt">2026-09-10</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#60a5fa">6.8<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Leaders live</span></td><td class="lead">BNB 19 · DOT 19 · NEAR 18</td><td class="dt">$78,306</td></tr><tr class="trd m-2026-09"><td class="dt">2026-09-09</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#60a5fa">7.5<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Leaders live</span></td><td class="lead">TAO 20 · LTC 20 · HYPE 19</td><td class="dt">$78,456</td></tr><tr class="trd m-2026-09"><td class="dt">2026-09-08</td><td><span class="rpill on">RISK-ON</span></td><td class="sig" style="color:#60a5fa">7.6<small style="color:var(--muted)">/10</small></td><td><span class="call" style="color:var(--green-2)">Leaders live</span></td><td class="lead">LTC 20 · TAO 20 · AVAX 19</td><td class="dt">$79,112</td></tr><tr class="trd m-2026-09"><td class="dt">2026-09-07</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#60a5fa">7.4<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">TAO 20 · HYPE 19 · ENA 19</td><td class="dt">$80,342</td></tr><tr class="trd m-2026-09"><td class="dt">2026-09-06</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#60a5fa">6.9<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">ENA 19 · LTC 18 · HYPE 18</td><td class="dt">$79,832</td></tr><tr class="trd m-2026-09"><td class="dt">2026-09-05</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#60a5fa">6.6<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">SOL 19 · HYPE 19 · ENA 19</td><td class="dt">$79,661</td></tr><tr class="trd m-2026-09"><td class="dt">2026-09-04</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#60a5fa">6.8<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">HYPE 19 · ETH 19 · ENA 19</td><td class="dt">$81,270</td></tr><tr class="trd m-2026-09"><td class="dt">2026-09-03</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#fbbf24">5.9<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">ZEC 19 · XMR 19 · ENA 19</td><td class="dt">$77,340</td></tr><tr class="trd m-2026-09"><td class="dt">2026-09-02</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#fbbf24">5.9<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">HYPE 19 · ZEC 19 · ENA 19</td><td class="dt">$77,439</td></tr><tr class="trd m-2026-09"><td class="dt">2026-09-01</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#fbbf24">5.8<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">HYPE 19 · ETH 19 · PENGU 19</td><td class="dt">$78,581</td></tr><tr class="trm" role="button" tabindex="0" aria-expanded="false" data-month="2026-08"><td><span class="mlabel"><span class="caret">&#9656;</span>August 2026<span class="mcount">31d</span></span></td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">3.9<small style="color:var(--muted)">/10 avg</small></td><td><span class="call">Stand down</span></td><td class="lead">XMR <span style="color:var(--muted)">led 17/31</span></td><td class="dt">$77,682 <span style="color:var(--green-2);font-size:11.5px">+24%</span></td></tr><tr class="trd m-2026-08"><td class="dt">2026-08-31</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#fbbf24">5.7<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">ETH 19 · HYPE 19 · PUMP 19</td><td class="dt">$77,682</td></tr><tr class="trd m-2026-08"><td class="dt">2026-08-30</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#60a5fa">6.7<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">HYPE 19 · ETH 19 · PUMP 19</td><td class="dt">$78,230</td></tr><tr class="trd m-2026-08"><td class="dt">2026-08-29</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#60a5fa">6.6<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">HYPE 19 · ZEC 19 · PENGU 19</td><td class="dt">$77,846</td></tr><tr class="trd m-2026-08"><td class="dt">2026-08-28</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#60a5fa">7.1<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">XMR 20 · PEPE 19 · UNI 18</td><td class="dt">$80,250</td></tr><tr class="trd m-2026-08"><td class="dt">2026-08-27</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#60a5fa">6.8<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">XMR 19 · PEPE 19 · TRX 18</td><td class="dt">$79,024</td></tr><tr class="trd m-2026-08"><td class="dt">2026-08-26</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#60a5fa">6.4<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">XMR 19 · ZEC 19 · PEPE 19</td><td class="dt">$78,539</td></tr><tr class="trd m-2026-08"><td class="dt">2026-08-25</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#fbbf24">6.0<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">XMR 19 · PENGU 17 · HYPE 17</td><td class="dt">$78,993</td></tr><tr class="trd m-2026-08"><td class="dt">2026-08-24</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#fbbf24">5.7<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">XMR 19 · HYPE 18 · ZEC 17</td><td class="dt">$77,734</td></tr><tr class="trd m-2026-08"><td class="dt">2026-08-23</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#fbbf24">5.3<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">XMR 19 · ICP 18 · PUMP 17</td><td class="dt">$77,075</td></tr><tr class="trd m-2026-08"><td class="dt">2026-08-22</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#fbbf24">5.6<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">XMR 18 · ZEC 18 · ICP 18</td><td class="dt">$78,338</td></tr><tr class="trd m-2026-08"><td class="dt">2026-08-21</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#fbbf24">5.1<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">XMR 20 · TRX 18 · ETH 18</td><td class="dt">$73,025</td></tr><tr class="trd m-2026-08"><td class="dt">2026-08-20</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#fbbf24">4.1<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">XMR 20 · TRX 18 · BNB 18</td><td class="dt">$69,335</td></tr><tr class="trd m-2026-08"><td class="dt">2026-08-19</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">2.9<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">XMR 20 · TRX 20 · BNB 19</td><td class="dt">$64,725</td></tr><tr class="trd m-2026-08"><td class="dt">2026-08-18</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">2.9<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">XMR 20 · TRX 20 · ZEC 20</td><td class="dt">$64,532</td></tr><tr class="trd m-2026-08"><td class="dt">2026-08-17</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">2.6<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">BNB 20 · XMR 20 · TRX 20</td><td class="dt">$62,900</td></tr><tr class="trd m-2026-08"><td class="dt">2026-08-16</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">2.5<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">XMR 20 · BNB 20 · TRX 20</td><td class="dt">$63,086</td></tr><tr class="trd m-2026-08"><td class="dt">2026-08-15</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">2.6<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">TRX 20 · BNB 20 · XMR 19</td><td class="dt">$63,044</td></tr><tr class="trd m-2026-08"><td class="dt">2026-08-14</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">2.7<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">BNB 20 · XMR 19 · PUMP 18</td><td class="dt">$63,491</td></tr><tr class="trd m-2026-08"><td class="dt">2026-08-13</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">2.4<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">BNB 20 · XMR 19 · TRX 17</td><td class="dt">$63,480</td></tr><tr class="trd m-2026-08"><td class="dt">2026-08-12</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">2.7<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">BNB 20 · PUMP 19 · XMR 19</td><td class="dt">$63,600</td></tr><tr class="trd m-2026-08"><td class="dt">2026-08-11</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">2.8<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">BNB 20 · XMR 19 · PUMP 17</td><td class="dt">$63,970</td></tr><tr class="trd m-2026-08"><td class="dt">2026-08-10</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">2.8<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">BNB 20 · XMR 19 · PUMP 18</td><td class="dt">$64,902</td></tr><tr class="trd m-2026-08"><td class="dt">2026-08-09</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">2.9<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">XMR 20 · PUMP 19 · ETH 18</td><td class="dt">$64,963</td></tr><tr class="trd m-2026-08"><td class="dt">2026-08-08</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">2.6<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">XMR 20 · JST 19 · PUMP 19</td><td class="dt">$64,923</td></tr><tr class="trd m-2026-08"><td class="dt">2026-08-07</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">2.6<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">XMR 20 · JST 19 · PUMP 19</td><td class="dt">$64,324</td></tr><tr class="trd m-2026-08"><td class="dt">2026-08-06</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">2.8<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">XMR 20 · JST 19 · PUMP 19</td><td class="dt">$64,665</td></tr><tr class="trd m-2026-08"><td class="dt">2026-08-05</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">2.6<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">JST 19 · PUMP 19 · XMR 18</td><td class="dt">$64,107</td></tr><tr class="trd m-2026-08"><td class="dt">2026-08-04</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">2.4<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">PUMP 20 · XMR 20 · UNI 19</td><td class="dt">$63,520</td></tr><tr class="trd m-2026-08"><td class="dt">2026-08-03</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">2.8<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">JST 19 · XMR 19 · PUMP 19</td><td class="dt">$63,570</td></tr><tr class="trd m-2026-08"><td class="dt">2026-08-02</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">2.1<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">XMR 19 · PUMP 19 · UNI 19</td><td class="dt">$62,824</td></tr><tr class="trd m-2026-08"><td class="dt">2026-08-01</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">2.4<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">ONDO 20 · UNI 19 · PUMP 19</td><td class="dt">$62,888</td></tr><tr class="trm" role="button" tabindex="0" aria-expanded="false" data-month="2026-07"><td><span class="mlabel"><span class="caret">&#9656;</span>July 2026<span class="mcount">30d</span></span></td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">3.1<small style="color:var(--muted)">/10 avg</small></td><td><span class="call">Stand down</span></td><td class="lead">AAVE <span style="color:var(--muted)">led 8/30</span></td><td class="dt">$64,780 <span style="color:var(--green-2);font-size:11.5px">+10%</span></td></tr><tr class="trd m-2026-07"><td class="dt">2026-07-31</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">2.6<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">ONDO 20 · PUMP 19 · UNI 18</td><td class="dt">$64,780</td></tr><tr class="trd m-2026-07"><td class="dt">2026-07-30</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">2.2<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">ETH 20 · UNI 20 · PUMP 19</td><td class="dt">$64,073</td></tr><tr class="trd m-2026-07"><td class="dt">2026-07-29</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">2.4<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">UNI 20 · ETH 20 · LINK 19</td><td class="dt">$64,470</td></tr><tr class="trd m-2026-07"><td class="dt">2026-07-28</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">2.6<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">ETH 20 · UNI 19 · PUMP 19</td><td class="dt">$63,580</td></tr><tr class="trd m-2026-07"><td class="dt">2026-07-27</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">2.9<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">ONDO 20 · ETH 20 · UNI 20</td><td class="dt">$64,889</td></tr><tr class="trd m-2026-07"><td class="dt">2026-07-26</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">3.0<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">LINK 20 · ETH 20 · JST 19</td><td class="dt">$64,500</td></tr><tr class="trd m-2026-07"><td class="dt">2026-07-25</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">2.7<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">UNI 20 · LINK 20 · JST 19</td><td class="dt">$64,111</td></tr><tr class="trd m-2026-07"><td class="dt">2026-07-24</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">3.2<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">LINK 20 · UNI 20 · ETH 20</td><td class="dt">$65,492</td></tr><tr class="trd m-2026-07"><td class="dt">2026-07-23</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">3.1<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">LINK 20 · ETH 20 · UNI 20</td><td class="dt">$64,916</td></tr><tr class="trd m-2026-07"><td class="dt">2026-07-22</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">3.4<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">UNI 20 · PUMP 19 · ONDO 18</td><td class="dt">$65,961</td></tr><tr class="trd m-2026-07"><td class="dt">2026-07-21</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">3.7<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">PUMP 20 · UNI 20 · ZEC 18</td><td class="dt">$65,604</td></tr><tr class="trd m-2026-07"><td class="dt">2026-07-20</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">3.1<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">ZEC 19 · UNI 18 · LINK 17</td><td class="dt">$64,237</td></tr><tr class="trd m-2026-07"><td class="dt">2026-07-19</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">3.1<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">ZEC 20 · UNI 19 · ETH 16</td><td class="dt">$64,660</td></tr><tr class="trd m-2026-07"><td class="dt">2026-07-18</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">3.0<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">UNI 19 · ZEC 19 · JST 18</td><td class="dt">$64,016</td></tr><tr class="trd m-2026-07"><td class="dt">2026-07-17</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">3.2<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">UNI 19 · JST 18 · ZEC 18</td><td class="dt">$62,925</td></tr><tr class="trd m-2026-07"><td class="dt">2026-07-16</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">3.6<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">UNI 20 · ZEC 18 · JST 18</td><td class="dt">$64,620</td></tr><tr class="trd m-2026-07"><td class="dt">2026-07-15</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">3.6<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">UNI 20 · JST 19 · AAVE 18</td><td class="dt">$64,647</td></tr><tr class="trd m-2026-07"><td class="dt">2026-07-14</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">3.2<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">JST 20 · UNI 20 · AAVE 17</td><td class="dt">$62,747</td></tr><tr class="trd m-2026-07"><td class="dt">2026-07-13</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">3.3<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">AAVE 19 · JST 19 · UNI 19</td><td class="dt">$62,889</td></tr><tr class="trd m-2026-07"><td class="dt">2026-07-12</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">3.3<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">AAVE 20 · UNI 20 · JST 17</td><td class="dt">$63,702</td></tr><tr class="trd m-2026-07"><td class="dt">2026-07-11</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">3.5<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">AAVE 19 · UNI 19 · JST 17</td><td class="dt">$64,166</td></tr><tr class="trd m-2026-07"><td class="dt">2026-07-10</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">3.3<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">AAVE 19 · UNI 19 · JST 17</td><td class="dt">$64,184</td></tr><tr class="trd m-2026-07"><td class="dt">2026-07-09</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">3.2<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">AAVE 20 · JST 19 · UNI 19</td><td class="dt">$62,876</td></tr><tr class="trd m-2026-07"><td class="dt">2026-07-08</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">2.7<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">AAVE 18 · JST 17 · AERO 17</td><td class="dt">$62,162</td></tr><tr class="trd m-2026-07"><td class="dt">2026-07-07</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">3.2<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">AAVE 18 · JST 17 · JUP 17</td><td class="dt">$63,184</td></tr><tr class="trd m-2026-07"><td class="dt">2026-07-06</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">3.1<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">AAVE 18 · JST 17 · JUP 17</td><td class="dt">$62,841</td></tr><tr class="trd m-2026-07"><td class="dt">2026-07-05</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">3.3<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">HYPE 19 · AAVE 18 · JST 17</td><td class="dt">$62,944</td></tr><tr class="trd m-2026-07"><td class="dt">2026-07-04</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">3.4<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">JST 19 · HYPE 19 · AAVE 19</td><td class="dt">$62,490</td></tr><tr class="trd m-2026-07"><td class="dt">2026-07-02</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">2.8<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">JST 19 · JUP 17 · AAVE 17</td><td class="dt">$61,694</td></tr><tr class="trd m-2026-07"><td class="dt">2026-07-01</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">2.4<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">JST 19 · JUP 18 · AERO 16</td><td class="dt">$59,018</td></tr><tr class="trm" role="button" tabindex="0" aria-expanded="false" data-month="2026-06"><td><span class="mlabel"><span class="caret">&#9656;</span>June 2026<span class="mcount">15d</span></span></td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">2.7<small style="color:var(--muted)">/10 avg</small></td><td><span class="call">Stand down</span></td><td class="lead">CC <span style="color:var(--muted)">led 15/15</span></td><td class="dt">$59,584 <span style="color:var(--red-2);font-size:11.5px">−11%</span></td></tr><tr class="trd m-2026-06"><td class="dt">2026-06-30</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">2.7<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">CC 18 · HYPE 18 · JUP 17</td><td class="dt">$59,584</td></tr><tr class="trd m-2026-06"><td class="dt">2026-06-29</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">2.8<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">CC 18 · JUP 18 · HYPE 18</td><td class="dt">$60,490</td></tr><tr class="trd m-2026-06"><td class="dt">2026-06-28</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">2.3<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">CC 18 · HYPE 18 · JUP 17</td><td class="dt">$60,342</td></tr><tr class="trd m-2026-06"><td class="dt">2026-06-26</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">2.6<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">CC 18 · HYPE 18 · JUP 17</td><td class="dt">$60,350</td></tr><tr class="trd m-2026-06"><td class="dt">2026-06-25</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">2.6<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">CC 18 · HYPE 18 · JUP 17</td><td class="dt">$61,302</td></tr><tr class="trd m-2026-06"><td class="dt">2026-06-24</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">2.6<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">CC 18 · HYPE 18 · JUP 17</td><td class="dt">$62,812</td></tr><tr class="trd m-2026-06"><td class="dt">2026-06-23</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">2.5<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">CC 18 · HYPE 18 · JUP 17</td><td class="dt">$62,200</td></tr><tr class="trd m-2026-06"><td class="dt">2026-06-22</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">2.7<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">CC 18 · HYPE 18 · JUP 17</td><td class="dt">$64,296</td></tr><tr class="trd m-2026-06"><td class="dt">2026-06-21</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">2.7<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">CC 18 · HYPE 18 · JUP 17</td><td class="dt">$64,172</td></tr><tr class="trd m-2026-06"><td class="dt">2026-06-20</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">2.7<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">CC 18 · HYPE 18 · KAS 12</td><td class="dt">$63,478</td></tr><tr class="trd m-2026-06"><td class="dt">2026-06-19</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">2.6<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">CC 18 · HYPE 18 · KAS 12</td><td class="dt">$62,406</td></tr><tr class="trd m-2026-06"><td class="dt">2026-06-18</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">2.9<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">CC 18 · HYPE 18 · ONDO 13</td><td class="dt">$63,921</td></tr><tr class="trd m-2026-06"><td class="dt">2026-06-17</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">3.0<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">CC 18 · HYPE 18 · ONDO 16</td><td class="dt">$65,172</td></tr><tr class="trd m-2026-06"><td class="dt">2026-06-16</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">3.1<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">CC 18 · HYPE 18 · ONDO 17</td><td class="dt">$66,581</td></tr><tr class="trd m-2026-06"><td class="dt">2026-06-15</td><td><span class="rpill off">RISK-OFF</span></td><td class="sig" style="color:#f472b6">3.1<small style="color:var(--muted)">/10</small></td><td><span class="call">Stand down</span></td><td class="lead">CC 18 · HYPE 18 · ONDO 15</td><td class="dt">$66,637</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p class="tr-foot">Newest first. Every day we've scanned is in this table — months are collapsed
-      for readability, not to hide anything. Updated automatically every day the scan runs — most recent 2026-11-10.</p>
-
-    <script>
-    (function(){
-      var tbl = document.querySelector('#track-record table.tr');
-      if(!tbl) return;
-      function daysOf(key){ return tbl.querySelectorAll('tr.trd.m-' + key); }
-      function setMonth(row, open){
-        row.setAttribute('aria-expanded', open ? 'true' : 'false');
-        var d = daysOf(row.getAttribute('data-month'));
-        for(var i=0;i<d.length;i++) d[i].classList.toggle('open', open);
-      }
-      var months = tbl.querySelectorAll('tr.trm');
-      for(var i=0;i<months.length;i++){
-        (function(row){
-          function flip(){ setMonth(row, row.getAttribute('aria-expanded') !== 'true'); }
-          row.addEventListener('click', flip);
-          row.addEventListener('keydown', function(e){
-            if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); flip(); }
-          });
-        })(months[i]);
-      }
-      var btn = document.getElementById('tr-toggle-all');
-      if(btn) btn.addEventListener('click', function(){
-        var open = btn.getAttribute('data-open') !== 'true';
-        btn.setAttribute('data-open', open ? 'true' : 'false');
-        btn.textContent = open ? 'Collapse all months' : 'Expand all months';
-        for(var i=0;i<months.length;i++) setMonth(months[i], open);
-      });
-    })();
-    </script>
-  </section>
-
-  <!-- PLANS (3 tiers; Poseidon = price anchor + early-access waitlist) -->
-  <section>
-    <h2 class="sec-h">Three ways to ride the tide <span class="soon">early-bird pricing</span></h2>
-    <p class="plans-intro">The short version: <b>Free tells you <span class="w">when</span> to pay attention.
-      Current gives you <span class="w">every detail</span> on every coin. Poseidon does it in <span class="w">real time</span>.</b>
-      Same daily engine underneath — you're choosing how much detail and how fast you want it.</p>
-    <div class="hint" style="margin:2px 0 18px"><b>Wondering what a line really gets you?</b>
-      <span class="u">Hover or tap any feature</span> for the plain-English version.</div>
-    <div class="plans">
-
-      <div class="plan">
-        <div class="pname">Ripple</div>
-        <div class="price">$0</div>
-        <p class="ptag">The alarm clock — free forever.</p>
-        <p class="plain"><b>The alarm.</b> You get the one email the day the market flips, plus
-          a quick daily one-liner. Enough if you just want to be told <b>when to look.</b></p>
-        <ul>
-          <li><span class="term" tabindex="0" data-term="The regime-flip alert" data-tip="The day Bitcoin's long-term trend flips back to risk-on, it lands in your inbox. You hear it the day it happens, not a week later. No noise in between.">The regime-flip alert — the day it turns</span></li>
-          <li><span class="term" tabindex="0" data-term="Today's one-line read" data-tip="One sentence every morning: the current regime, how healthy the watchlist looks on a 0-10 dial, and whether today deserves your attention at all. Ten seconds to stay oriented without watching charts.">Today's one-line read</span></li>
-          <li><span class="term" tabindex="0" data-term="Weekly watchlist snapshot" data-tip="Once a week, the full leaderboard: every coin we track ranked 0-20 by trend health, so you see at a glance what is leading and what is broken.">Weekly watchlist snapshot</span></li>
-        </ul>
-      </div>
-
-      <div class="plan pro">
-        <div class="pbadge pop">Planned</div>
-        <div class="pname">Current</div>
-        <div class="price">~$12<small>/mo</small></div>
-        <p class="ptag">The playbook — for active traders.</p>
-        <p class="plain"><b>The playbook.</b> Every morning: all the coins ranked, with the exact
-          entry, stop and target for each — plus the full dashboard. For when you're actually
-          <b>trading it, not just watching.</b></p>
-        <ul>
-          <li><span class="term" tabindex="0" data-term="Everything in Ripple" data-tip="All the free alerts stay: the flip email, the daily one-liner and the weekly snapshot. Current adds the detail on top.">Everything in Ripple</span></li>
-          <li><span class="term" tabindex="0" data-term="The daily email" data-tip="The complete morning scan in your inbox: all 49 majors ranked by the 20-point structure score, with tiers, momentum, and how far each coin sits from its trigger level.">The daily email with the full ranked watchlist</span></li>
-          <li><span class="term" tabindex="0" data-term="Per-coin playbook" data-tip="For every coin: the exact breakout entry, a volatility-based stop, 2R and 3R profit targets and a suggested position size — plus a plain-English paragraph on what is working and what is missing for that coin.">Per-coin breakdowns, levels &amp; the trade playbook</span></li>
-          <li><span class="term" tabindex="0" data-term="Interactive dashboard" data-tip="The same tool we use ourselves: per-coin charts with moving averages, signal gauges, score components, historical context for every setup, and a private portfolio view that never leaves your browser.">Full interactive dashboard access</span></li>
-          <li><span class="term" tabindex="0" data-term="Your coins, your alerts" data-tip="Ask for coins outside the default watchlist and set your own alert levels — the same engine scores them and they arrive in your daily email.">Your own coins, your own alerts</span></li>
-        </ul>
-      </div>
-
-      <div class="plan poseidon">
-        <div class="pbadge early">Early access · limited spots</div>
-        <div class="pname">Poseidon</div>
-        <div class="price">~$99<small>/mo</small></div>
-        <p class="ptag">The war room — command the whole ocean.</p>
-        <p class="plain"><b>The war room.</b> Everything in Current, but <b>live</b> — instant alerts
-          the second a level hits, unlimited watchlists of your own coins, and raw data export.</p>
-        <ul>
-          <li><span class="term" tabindex="0" data-term="Everything in Current" data-tip="The full daily playbook and dashboard are included — Poseidon adds speed and depth on top.">Everything in Current</span></li>
-          <li><span class="term" tabindex="0" data-term="Real-time alerts" data-tip="Instead of waiting for tomorrow's email: a push notification within moments of a coin crossing its entry, stop or target — while the move is still happening. Rolling out with the first cohort.">Real-time alerts — instant push the moment a level hits</span></li>
-          <li><span class="term" tabindex="0" data-term="Unlimited custom watchlists" data-tip="Track any coin we can reach data for, in as many watchlists as you like — each one scored by the same 20-point engine that runs the main board.">Unlimited custom coins &amp; watchlists</span></li>
-          <li><span class="term" tabindex="0" data-term="Multi-timeframe + short side" data-tip="Faster timeframes for tighter entries, plus short-side structure reads so risk-off markets become more than a waiting room. Built together with the founding cohort.">Multi-timeframe + short-side signals</span></li>
-          <li><span class="term" tabindex="0" data-term="API &amp; data export" data-tip="Programmatic access to every score, level and regime call we generate — pull the data into your own sheets, bots or models.">API &amp; raw data export</span></li>
-          <li><span class="term" tabindex="0" data-term="Priority direct line" data-tip="A direct channel to the people building this. Questions about a call, feature requests, custom needs — answered first.">Priority direct line</span></li>
-        </ul>
-        <a class="pcta" href="#join">Request early access →</a>
-      </div>
-
-    </div>
-    <div class="microcopy" style="margin-top:16px">Founding members lock in early-bird pricing for life. <strong>Poseidon</strong> opens to a limited first cohort — join the waitlist to claim a spot. Prices aren't final; the waitlist helps set them.</div>
-  </section>
-
-  <!-- FOUNDING MEMBERS -->
-  <section id="founding" class="founding">
-    <div class="fbadge">Founding members · early access</div>
-    <h2>Get in while it's early.</h2>
-    <p class="lede">SigTide is still small. Founding members claim a spot now, lock in the lowest price
-      we'll ever charge, and help decide what gets built next. You're not buying a promise: every call
-      we've made is on the public record above, so you can check exactly what you're signing up for.</p>
-
-    <div class="f-benes"><div class="f-bene"><div class="fic">🔒</div><div><h4>Lifetime founding rate</h4><p>Lock in the lowest price SigTide will ever charge. When paid tiers open, founders keep their rate for life — even as the public price climbs.</p></div></div><div class="f-bene"><div class="fic">🔔</div><div><h4>The flip alert, guaranteed</h4><p>Founders get the regime-flip email the moment it fires — never gated behind a higher tier.</p></div></div><div class="f-bene"><div class="fic">🗣️</div><div><h4>Shape what gets built</h4><p>A direct line to the roadmap. Founding members' requests jump the queue while the product is still taking shape.</p></div></div><div class="f-bene"><div class="fic">🏅</div><div><h4>Founding-member badge</h4><p>Permanent founding status. You were here early — and the record shows it.</p></div></div></div>
-
-    <div class="f-cta-row">
-      <a class="f-cta" href="#join">Claim a founding spot →</a>
-      <div class="f-spots">First <b>100</b> founding spots · reserved through the waitlist</div>
-    </div>
-    <p class="f-fine">No charge today. Founding spots are held through the free waitlist — when paid
-      tiers open, we'll email you to claim yours before the public price goes live. Educational use
-      only; not financial advice.</p>
-  </section>
-
-  <!-- FINAL CTA -->
-  <section id="join">
-    <div class="final">
-      <h2>Get the daily read, free.</h2>
-      <p>Every coin scored each morning, every call on the public record, and one email the day
-        Bitcoin's regime flips.</p>
-      <div class="bh-embed"><script async src="https://subscribe-forms.beehiiv.com/v3/loader.js" data-beehiiv-form="30359b98-5d01-4752-97bc-1ee29bad5b76"></script></div>
-    </div>
-  </section>
-
-  <footer>
-    <div class="disc"><strong>Educational use only.</strong> SigTide is not financial,
-      investment, or trading advice. Markets are risky and you can lose money. Nothing here
-      is a recommendation to buy or sell any asset. Do your own research.</div>
-    <div>© 2026 SigTide · Daily read as of November 10, 2026</div>
-  </footer>
-
+<body data-page="home" data-root="" data-v="ad0cd867" data-signup="https://sigtide-signup.sigtide.workers.dev" data-ts="0x4AAAAAAF78MM8cGD1vx2C4">
+<header class="top"><div class="wrap top-in">
+  <a class="logo" href="index.html" aria-label="SigTide home"><svg class="logo-mark" viewBox="0 0 32 32" width="30" height="30" aria-hidden="true"><rect width="32" height="32" rx="10" fill="#6c47ff"/><path d="M6.5 19.6c2.6 0 3.4-4.6 6.2-4.6s3.6 4.6 6.3 4.6 3.5-4.6 6.5-4.6" fill="none" stroke="#fff" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="23.6" cy="8.8" r="3.1" fill="#ffc542"/></svg><span>SigTide</span></a>
+  <nav class="nav" aria-label="Main"><a href="board/index.html">All 49 coins</a><a href="record/index.html">Our record</a></nav>
+  <details class="menu"><summary aria-label="Menu"><svg class="ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary><nav class="menu-pop" aria-label="Main"><a href="board/index.html">All 49 coins</a><a href="record/index.html">Our record</a></nav></details>
+  <a class="btn btn-sm top-cta" href="#join">Free email</a>
+</div></header>
+<main id="main">
+<section id="hero" class="h-hero"><div class="wrap h-in">
+<div class="h-head"><h1>How's your coin today?</h1><p class="h-lead">Type a coin. See if it is IN or OUT.</p></div>
+<form class="search " role="search" autocomplete="off" action="board/index.html" data-search="custom"><svg class="ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></svg><input id="q" name="q" type="search" placeholder="Try pepe, xrp or bitcoin" aria-label="Try pepe, xrp or bitcoin" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="go" role="combobox" aria-expanded="false" aria-controls="q-list" aria-autocomplete="list"><ul id="q-list" class="sugg" role="listbox" aria-label="Matching coins" hidden></ul><p class="s-miss" role="status" hidden></p></form>
+<section id="answer" class="h-answer" aria-live="polite">
+<div class="h-card"><article class="answer is-out"><div class="a-coin"><img class="coin-ic" src="assets/icons/btc.svg" alt="" width="44" height="44"><p class="a-name">Bitcoin</p><p class="a-px"><b>$75,368</b><small>at the Nov 9 close</small></p></div><div class="a-tile"><h2 class="a-big">BTC is <span class="a-st">OUT</span></h2><p class="a-sub">in cash since Oct 23, 2026</p><p class="a-mean">The rule holds no BTC now. It waits in cash.</p><p class="a-change"><svg class="ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h14l-3.5-3.5M20 16H6l3.5 3.5"/></svg><span>If the price stays the same, it switches IN in about 41 days.</span></p></div><p class="a-100">$100 since Jan 2023: followed the rule <b>$319</b> <span class="nw">(worst fall <span class="fall">−39%),</span></span> just held <b>$456</b> <span class="nw fall">(−53%)</span></p></article></div>
+<a class="btn btn-ghost h-more" href="coins/btc/index.html"><span>See the full BTC page</span><svg class="ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+</section>
+<div class="h-chips" role="group" aria-label="Popular coins"><a class="h-chip" href="coins/btc/index.html" data-sym="BTC" aria-label="Bitcoin: OUT"><img class="coin-ic" src="assets/icons/btc.svg" alt="" width="26" height="26"><span>BTC</span><i class="h-dot d-out" aria-hidden="true"></i></a><a class="h-chip" href="coins/eth/index.html" data-sym="ETH" aria-label="Ethereum: OUT"><img class="coin-ic" src="assets/icons/eth.svg" alt="" width="26" height="26"><span>ETH</span><i class="h-dot d-out" aria-hidden="true"></i></a><a class="h-chip" href="coins/xrp/index.html" data-sym="XRP" aria-label="XRP: OUT"><img class="coin-ic" src="assets/icons/xrp.svg" alt="" width="26" height="26"><span>XRP</span><i class="h-dot d-out" aria-hidden="true"></i></a><a class="h-chip" href="coins/sol/index.html" data-sym="SOL" aria-label="Solana: OUT"><img class="coin-ic" src="assets/icons/sol.svg" alt="" width="26" height="26"><span>SOL</span><i class="h-dot d-out" aria-hidden="true"></i></a><a class="h-chip" href="coins/doge/index.html" data-sym="DOGE" aria-label="Dogecoin: OUT"><img class="coin-ic" src="assets/icons/doge.svg" alt="" width="26" height="26"><span>DOGE</span><i class="h-dot d-out" aria-hidden="true"></i></a><a class="h-chip" href="coins/pepe/index.html" data-sym="PEPE" aria-label="Pepe: IN"><img class="coin-ic" src="assets/icons/pepe.svg" alt="" width="26" height="26"><span>PEPE</span><i class="h-dot d-in" aria-hidden="true"></i></a></div>
+<p class="h-key"><i class="h-dot d-in" aria-hidden="true"></i>IN <i class="h-dot d-out" aria-hidden="true"></i>OUT</p>
+<p class="h-count">3 of 49 coins are IN today. Updated Nov 9.</p>
+<form class="join-form h-form" action="#" method="post"><p class="jf-head">Free: a weekly letter, plus your coin&#x27;s switches.</p><div class="jf-row"><input id="em-hero" type="email" name="email" placeholder="you@email.com" autocomplete="email" required aria-label="Email address"><button class="btn" type="submit">Join</button></div><label class="jf-coin" for="cn-hero"><span>Your coin, for an email the day it switches</span><select id="cn-hero" name="coin"><option value="">None, just the Monday letter</option><option value="BTC">BTC (Bitcoin)</option><option value="ETH">ETH (Ethereum)</option><option value="BNB">BNB</option><option value="XRP">XRP</option><option value="SOL">SOL (Solana)</option><option value="TRX">TRX (TRON)</option><option value="HYPE">HYPE (Hyperliquid)</option><option value="ZEC">ZEC (Zcash)</option><option value="DOGE">DOGE (Dogecoin)</option><option value="XMR">XMR (Monero)</option><option value="LINK">LINK (Chainlink)</option><option value="ADA">ADA (Cardano)</option><option value="XLM">XLM (Stellar)</option><option value="NEAR">NEAR (NEAR Protocol)</option><option value="BCH">BCH (Bitcoin Cash)</option><option value="UNI">UNI (Uniswap)</option><option value="LTC">LTC (Litecoin)</option><option value="AVAX">AVAX (Avalanche)</option><option value="CC">CC</option><option value="SUI">SUI</option><option value="HBAR">HBAR (Hedera)</option><option value="SHIB">SHIB (Shiba Inu)</option><option value="PEPE">PEPE</option><option value="QNT">QNT (Quant)</option><option value="TAO">TAO (Bittensor)</option><option value="ENA">ENA (Ethena)</option><option value="AAVE">AAVE</option><option value="ONDO">ONDO</option><option value="PUMP">PUMP (Pump.fun)</option><option value="WLFI">WLFI (World Liberty Financial)</option><option value="DOT">DOT (Polkadot)</option><option value="JST">JST (JUST)</option><option value="SKY">SKY</option><option value="ICP">ICP (Internet Computer)</option><option value="WLD">WLD (Worldcoin)</option><option value="ETC">ETC (Ethereum Classic)</option><option value="ASTER">ASTER</option><option value="POL">POL (Polygon)</option><option value="JUP">JUP (Jupiter)</option><option value="RENDER">RENDER</option><option value="KAS">KAS (Kaspa)</option><option value="ALGO">ALGO (Algorand)</option><option value="NIGHT">NIGHT (Midnight)</option><option value="FIL">FIL (Filecoin)</option><option value="ATOM">ATOM (Cosmos)</option><option value="PENGU">PENGU (Pudgy Penguins)</option><option value="TON">TON (Toncoin)</option><option value="BONK">BONK</option><option value="AERO">AERO (Aerodrome)</option></select></label><div class="jf-hp" aria-hidden="true"><label for="hp-hero">Leave this empty</label><input id="hp-hero" type="text" name="website" tabindex="-1" autocomplete="off"></div><div class="jf-ts"></div><p class="jf-note" role="status" aria-live="polite" hidden></p><noscript><p class="jf-note is-err">Signing up needs JavaScript for a quick bot check. Or write to hello@sigtide.com.</p></noscript></form>
+</div></section>
+<section id="today" class="h-sec"><div class="wrap h-today">
+<div class="h-mood">
+<h2 class="h2">3 of 49 are IN</h2>
+<div class="dots" role="img" aria-label="3 of 49 coins are IN"><i class="d-out"></i><i class="d-out"></i><i class="d-out"></i><i class="d-out"></i><i class="d-out"></i><i class="d-out"></i><i class="d-out"></i><i class="d-out"></i><i class="d-out"></i><i class="d-in"></i><i class="d-out"></i><i class="d-out"></i><i class="d-out"></i><i class="d-out"></i><i class="d-out"></i><i class="d-out"></i><i class="d-out"></i><i class="d-out"></i><i class="d-out"></i><i class="d-out"></i><i class="d-out"></i><i class="d-out"></i><i class="d-in"></i><i class="d-out"></i><i class="d-out"></i><i class="d-out"></i><i class="d-out"></i><i class="d-out"></i><i class="d-out"></i><i class="d-out"></i><i class="d-out"></i><i class="d-in"></i><i class="d-out"></i><i class="d-out"></i><i class="d-out"></i><i class="d-out"></i><i class="d-out"></i><i class="d-out"></i><i class="d-out"></i><i class="d-out"></i><i class="d-out"></i><i class="d-out"></i><i class="d-out"></i><i class="d-out"></i><i class="d-out"></i><i class="d-out"></i><i class="d-out"></i><i class="d-out"></i><i class="d-out"></i></div>
+<div class="h-fg"><p class="h-fg-n">32</p><div><p class="h-fg-k">Fear &amp; Greed: <span class="h-fg-l">Fear</span></p><p class="h-fg-c">market mood, 0 to 100</p></div></div>
 </div>
-
-<script>
-  // Wired by build_landing.py. Empty endpoint => DEMO mode (localStorage only).
-  var WAITLIST_ENDPOINT = "";
-  var FORM_FIELD = "email";
-  var DEMO = !WAITLIST_ENDPOINT;
-  var LS_KEY = "cryptoscan_waitlist_v1";
-
-  if (DEMO) { var df = document.getElementById("demoFlag"); if (df) df.hidden = false; }
-
-  function validEmail(e){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e); }
-
-  function handle(formId, inputId, btnId, msgId, hpId){
-    var form = document.getElementById(formId);
-    if (!form) return;
-    form.addEventListener("submit", function(ev){
-      ev.preventDefault();
-      var input = document.getElementById(inputId);
-      var btn   = document.getElementById(btnId);
-      var msg   = document.getElementById(msgId);
-      var hp    = document.getElementById(hpId);
-      var email = (input.value || "").trim();
-      msg.className = "form-msg";
-
-      if (hp && hp.value) { return; }            // honeypot tripped — silently drop
-      if (!validEmail(email)) {
-        msg.textContent = "Please enter a valid email address.";
-        msg.className = "form-msg err"; return;
-      }
-
-      function success(){
-        msg.textContent = "You're on the list — watch your inbox. 🎉";
-        msg.className = "form-msg ok";
-        input.value = ""; btn.disabled = true; btn.textContent = "Added ✓";
-      }
-      function fail(){
-        msg.textContent = "Something went wrong — please try again in a moment.";
-        msg.className = "form-msg err";
-        btn.disabled = false;
-      }
-
-      btn.disabled = true; btn.textContent = "Adding…";
-
-      if (DEMO) {
-        try {
-          var list = JSON.parse(localStorage.getItem(LS_KEY) || "[]");
-          if (list.indexOf(email) === -1) list.push(email);
-          localStorage.setItem(LS_KEY, JSON.stringify(list));
-        } catch(e){}
-        setTimeout(success, 350);
-        return;
-      }
-
-      var body = encodeURIComponent(FORM_FIELD) + "=" + encodeURIComponent(email);
-      fetch(WAITLIST_ENDPOINT, {
-        method: "POST",
-        headers: {"Content-Type": "application/x-www-form-urlencoded", "Accept": "application/json"},
-        body: body, mode: "cors"
-      }).then(function(r){
-        if (r.ok || r.status === 0) success(); else fail();
-      }).catch(function(){
-        // no-cors providers (e.g. some embeds) resolve opaque — treat as success
-        success();
-      });
-    });
-  }
-
-  handle("waitForm",  "emailInput",  "submitBtn",  "formMsg",  "hp_name");
-  handle("waitForm2", "emailInput2", "submitBtn2", "formMsg2", "hp_name2");
-
-  // ----- newcomer glossary: plain-English tooltips on hover / focus / tap -----
-  (function(){
-    var card = document.createElement("div");
-    card.id = "tipcard";
-    document.body.appendChild(card);
-    var cur = null;
-
-    function show(el){
-      var tip = el.getAttribute("data-tip"); if (!tip) return;
-      var label = el.getAttribute("data-term") || el.textContent.trim();
-      card.innerHTML = "";
-      var h = document.createElement("span"); h.className = "tt"; h.textContent = label;
-      card.appendChild(h);
-      card.appendChild(document.createTextNode(tip));
-      card.classList.add("show");
-      var r = el.getBoundingClientRect();
-      var cw = card.offsetWidth, ch = card.offsetHeight, m = 8;
-      var left = r.left + r.width/2 - cw/2;
-      left = Math.max(m, Math.min(left, window.innerWidth - cw - m));
-      var top = r.top - ch - 10;
-      if (top < m) top = r.bottom + 10;           // flip below if no room above
-      card.style.left = left + "px";
-      card.style.top  = top + "px";
-      cur = el;
-    }
-    function hide(){ card.classList.remove("show"); cur = null; }
-
-    document.querySelectorAll("[data-tip]").forEach(function(el){
-      el.addEventListener("mouseenter", function(){ show(el); });
-      el.addEventListener("mouseleave", hide);
-      el.addEventListener("focus", function(){ show(el); });
-      el.addEventListener("blur", hide);
-      el.addEventListener("click", function(e){      // tap on mobile = toggle
-        e.stopPropagation();
-        if (cur === el) hide(); else show(el);
-      });
-    });
-    document.addEventListener("click", hide);        // tap elsewhere dismisses
-    window.addEventListener("scroll", hide, true);
-    window.addEventListener("resize", hide);
-  })();
-
-  /* Live price strip. Reads Binance's public market-data mirror straight from
-     the browser (it sends Access-Control-Allow-Origin: *, and it is the same
-     host the pipeline uses — api.binance.com 451s some regions). This is the
-     ONLY live number on the page: every score is fixed to the last completed
-     daily close, and the strip says so. If the fetch fails the strip simply
-     stays hidden — a missing ticker is fine, a wrong price is not. */
-  (function(){
-    var SYMS = ["BTCUSDT", "ETHUSDT", "SOLUSDT", "XRPUSDT", "JSTUSDT"];
-    var strip = document.getElementById("tickerStrip");
-    var host  = document.getElementById("tickerItems");
-    if (!strip || !host || !SYMS.length) return;
-    var url = "https://data-api.binance.vision/api/v3/ticker/24hr?symbols="
-              + encodeURIComponent(JSON.stringify(SYMS));
-    function fmt(p){
-      p = parseFloat(p);
-      if (!isFinite(p)) return "-";
-      if (p >= 1000) return "$" + p.toLocaleString("en-US",{maximumFractionDigits:0});
-      if (p >= 1)    return "$" + p.toFixed(2);
-      if (p >= 0.01) return "$" + p.toFixed(4);
-      return "$" + p.toPrecision(3);
-    }
-    function paint(rows){
-      host.textContent = "";
-      rows.forEach(function(r){
-        var chg = parseFloat(r.priceChangePercent);
-        var el = document.createElement("span");
-        el.className = "ticker-item";
-        var s = document.createElement("span");
-        s.className = "sym"; s.textContent = r.symbol.replace(/USDT$/, "");
-        var b = document.createElement("b"); b.textContent = fmt(r.lastPrice);
-        var c = document.createElement("span");
-        c.className = "chg " + (chg >= 0 ? "up" : "dn");
-        c.textContent = (chg >= 0 ? "+" : "") + chg.toFixed(2) + "%";
-        el.appendChild(s); el.appendChild(b); el.appendChild(c);
-        host.appendChild(el);
-      });
-      strip.hidden = false;
-    }
-    function tick(){
-      fetch(url, {cache:"no-store"})
-        .then(function(r){ return r.ok ? r.json() : Promise.reject(r.status); })
-        .then(function(rows){ if (Array.isArray(rows) && rows.length) paint(rows); })
-        .catch(function(){ /* leave the strip hidden; never show a stale price */ });
-    }
-    tick();
-    var timer = setInterval(tick, 20000);
-    // Don't poll a tab nobody is looking at.
-    document.addEventListener("visibilitychange", function(){
-      if (document.hidden) { clearInterval(timer); }
-      else { tick(); clearInterval(timer); timer = setInterval(tick, 20000); }
-    });
-  })();
-</script>
+<div class="h-inbox"><p class="h-cap">Change since each moved IN.</p><ul class="h-inlist"><li><a class="h-inrow" href="coins/xmr/index.html"><img class="coin-ic" src="assets/icons/xmr.svg" alt="" width="28" height="28" loading="lazy" decoding="async"><b>XMR</b><svg class="h-spark" viewBox="0 0 96 32" width="96" height="32" role="img" aria-label="Monero price, last 90 days"><path class="h-sp-fill" d="M1.0 29.0L2.0 29.0L3.1 28.3L4.1 27.2L5.1 27.2L6.2 26.6L7.2 27.0L8.2 25.9L9.3 27.2L10.3 26.9L11.3 24.9L12.4 26.0L13.4 23.8L14.4 24.2L15.5 24.3L16.5 22.6L17.5 20.7L18.6 20.9L19.6 19.1L20.6 15.5L21.7 17.2L22.7 18.4L23.7 15.6L24.8 15.6L25.8 11.9L26.8 13.6L27.9 15.8L28.9 17.8L29.9 16.5L31.0 16.9L32.0 15.4L33.0 13.7L34.1 15.9L35.1 16.2L36.1 17.1L37.2 17.9L38.2 15.9L39.2 11.0L40.3 12.8L41.3 11.2L42.3 8.1L43.4 10.0L44.4 12.1L45.4 10.9L46.5 11.8L47.5 11.5L48.6 12.8L49.6 13.4L50.6 13.3L51.7 13.1L52.7 13.1L53.7 13.6L54.8 12.0L55.8 12.9L56.8 11.2L57.9 11.5L58.9 12.2L59.9 13.6L61.0 15.7L62.0 15.7L63.0 13.8L64.1 15.0L65.1 12.6L66.1 12.5L67.2 12.6L68.2 11.7L69.2 10.4L70.3 7.3L71.3 6.6L72.3 7.4L73.4 5.0L74.4 7.1L75.4 8.9L76.5 5.5L77.5 8.0L78.5 7.4L79.6 6.5L80.6 7.4L81.6 6.8L82.7 8.6L83.7 7.4L84.7 7.3L85.8 6.7L86.8 4.0L87.8 3.0L88.9 5.4L89.9 6.1L90.9 7.1L92.0 7.7L93.0 8.9L93.0 32L1.0 32Z"/><path class="h-sp-in" d="M1.0 29.0L2.0 29.0L3.1 28.3L4.1 27.2L5.1 27.2L6.2 26.6L7.2 27.0L8.2 25.9L9.3 27.2L10.3 26.9L11.3 24.9L12.4 26.0L13.4 23.8L14.4 24.2L15.5 24.3L16.5 22.6L17.5 20.7L18.6 20.9L19.6 19.1L20.6 15.5L21.7 17.2L22.7 18.4L23.7 15.6L24.8 15.6L25.8 11.9L26.8 13.6L27.9 15.8L28.9 17.8L29.9 16.5L31.0 16.9L32.0 15.4L33.0 13.7L34.1 15.9L35.1 16.2L36.1 17.1L37.2 17.9L38.2 15.9L39.2 11.0L40.3 12.8L41.3 11.2L42.3 8.1L43.4 10.0L44.4 12.1L45.4 10.9L46.5 11.8L47.5 11.5L48.6 12.8L49.6 13.4L50.6 13.3L51.7 13.1L52.7 13.1L53.7 13.6L54.8 12.0L55.8 12.9L56.8 11.2L57.9 11.5L58.9 12.2L59.9 13.6L61.0 15.7L62.0 15.7L63.0 13.8L64.1 15.0L65.1 12.6L66.1 12.5L67.2 12.6L68.2 11.7L69.2 10.4L70.3 7.3L71.3 6.6L72.3 7.4L73.4 5.0L74.4 7.1L75.4 8.9L76.5 5.5L77.5 8.0L78.5 7.4L79.6 6.5L80.6 7.4L81.6 6.8L82.7 8.6L83.7 7.4L84.7 7.3L85.8 6.7L86.8 4.0L87.8 3.0L88.9 5.4L89.9 6.1L90.9 7.1L92.0 7.7L93.0 8.9"/></svg><span class="h-chg up">+74%</span></a></li><li><a class="h-inrow" href="coins/pepe/index.html"><img class="coin-ic" src="assets/icons/pepe.svg" alt="" width="28" height="28" loading="lazy" decoding="async"><b>PEPE</b><svg class="h-spark" viewBox="0 0 96 32" width="96" height="32" role="img" aria-label="Pepe price, last 90 days"><path class="h-sp-out" d="M1.0 27.9L2.0 27.8L3.1 28.0L4.1 28.5L5.1 29.0L6.2 28.8L7.2 28.9L8.2 25.9L9.3 22.5L10.3 13.2"/><path class="h-sp-fill" d="M10.3 13.2L11.3 13.8L12.4 13.4L13.4 13.9L14.4 16.3L15.5 15.9L16.5 15.4L17.5 17.5L18.6 18.0L19.6 20.5L20.6 19.0L21.7 19.8L22.7 20.2L23.7 17.4L24.8 19.2L25.8 18.4L26.8 18.0L27.9 18.2L28.9 17.9L29.9 19.7L31.0 22.2L32.0 21.5L33.0 20.3L34.1 20.8L35.1 19.9L36.1 20.7L37.2 20.4L38.2 18.4L39.2 16.3L40.3 13.3L41.3 14.4L42.3 6.6L43.4 4.3L44.4 11.0L45.4 10.0L46.5 9.4L47.5 10.6L48.6 10.7L49.6 12.3L50.6 11.8L51.7 11.6L52.7 10.0L53.7 11.9L54.8 11.3L55.8 10.2L56.8 10.4L57.9 11.6L58.9 13.4L59.9 16.2L61.0 14.8L62.0 14.0L63.0 12.2L64.1 15.2L65.1 12.4L66.1 13.6L67.2 13.5L68.2 14.1L69.2 15.6L70.3 14.3L71.3 12.8L72.3 8.7L73.4 8.0L74.4 10.3L75.4 8.6L76.5 9.2L77.5 11.6L78.5 11.2L79.6 8.3L80.6 3.9L81.6 8.7L82.7 4.8L83.7 4.2L84.7 5.4L85.8 6.5L86.8 5.5L87.8 4.5L88.9 6.3L89.9 4.3L90.9 5.5L92.0 4.6L93.0 3.0L93.0 32L10.3 32Z"/><path class="h-sp-in" d="M10.3 13.2L11.3 13.8L12.4 13.4L13.4 13.9L14.4 16.3L15.5 15.9L16.5 15.4L17.5 17.5L18.6 18.0L19.6 20.5L20.6 19.0L21.7 19.8L22.7 20.2L23.7 17.4L24.8 19.2L25.8 18.4L26.8 18.0L27.9 18.2L28.9 17.9L29.9 19.7L31.0 22.2L32.0 21.5L33.0 20.3L34.1 20.8L35.1 19.9L36.1 20.7L37.2 20.4L38.2 18.4L39.2 16.3L40.3 13.3L41.3 14.4L42.3 6.6L43.4 4.3L44.4 11.0L45.4 10.0L46.5 9.4L47.5 10.6L48.6 10.7L49.6 12.3L50.6 11.8L51.7 11.6L52.7 10.0L53.7 11.9L54.8 11.3L55.8 10.2L56.8 10.4L57.9 11.6L58.9 13.4L59.9 16.2L61.0 14.8L62.0 14.0L63.0 12.2L64.1 15.2L65.1 12.4L66.1 13.6L67.2 13.5L68.2 14.1L69.2 15.6L70.3 14.3L71.3 12.8L72.3 8.7L73.4 8.0L74.4 10.3L75.4 8.6L76.5 9.2L77.5 11.6L78.5 11.2L79.6 8.3L80.6 3.9L81.6 8.7L82.7 4.8L83.7 4.2L84.7 5.4L85.8 6.5L86.8 5.5L87.8 4.5L88.9 6.3L89.9 4.3L90.9 5.5L92.0 4.6L93.0 3.0"/></svg><span class="h-chg up">+24%</span></a></li><li><a class="h-inrow" href="coins/jst/index.html"><img class="coin-ic" src="assets/icons/jst.svg" alt="" width="28" height="28" loading="lazy" decoding="async"><b>JST</b><svg class="h-spark" viewBox="0 0 96 32" width="96" height="32" role="img" aria-label="JUST price, last 90 days"><path class="h-sp-out" d="M1.0 25.3L2.0 23.6L3.1 23.9L4.1 22.6L5.1 22.0L6.2 22.5L7.2 22.4L8.2 23.4L9.3 22.6L10.3 22.9L11.3 23.8L12.4 24.7L13.4 25.8L14.4 26.6L15.5 25.9L16.5 27.7L17.5 27.0L18.6 27.4L19.6 29.0L20.6 26.4L21.7 24.9L22.7 22.3L23.7 22.6L24.8 21.6L25.8 21.0L26.8 20.7"/><path class="h-sp-fill" d="M26.8 20.7L27.9 22.9L28.9 23.7L29.9 23.4L31.0 24.3L32.0 22.6L33.0 21.1L34.1 19.6L35.1 19.2L36.1 18.1L37.2 17.5L38.2 19.0L39.2 19.4L40.3 17.7L41.3 19.0L42.3 18.7L43.4 19.8L44.4 20.7L45.4 19.2L46.5 14.9L47.5 14.5L48.6 12.6L49.6 10.7L50.6 12.3L51.7 9.1L52.7 10.2L53.7 9.5L54.8 6.5L55.8 5.6L56.8 7.7L57.9 5.0L58.9 4.6L59.9 5.6L61.0 4.1L62.0 6.9L63.0 6.7L64.1 6.7L65.1 6.7L66.1 4.6L67.2 9.9L68.2 7.9L69.2 7.8L70.3 7.8L71.3 5.2L72.3 5.3L73.4 5.5L74.4 6.0L75.4 5.0L76.5 5.1L77.5 5.1L78.5 6.1L79.6 6.0L80.6 5.1L81.6 4.7L82.7 7.1L83.7 8.0L84.7 6.5L85.8 5.4L86.8 4.3L87.8 5.7L88.9 5.4L89.9 3.9L90.9 3.6L92.0 4.5L93.0 3.0L93.0 32L26.8 32Z"/><path class="h-sp-in" d="M26.8 20.7L27.9 22.9L28.9 23.7L29.9 23.4L31.0 24.3L32.0 22.6L33.0 21.1L34.1 19.6L35.1 19.2L36.1 18.1L37.2 17.5L38.2 19.0L39.2 19.4L40.3 17.7L41.3 19.0L42.3 18.7L43.4 19.8L44.4 20.7L45.4 19.2L46.5 14.9L47.5 14.5L48.6 12.6L49.6 10.7L50.6 12.3L51.7 9.1L52.7 10.2L53.7 9.5L54.8 6.5L55.8 5.6L56.8 7.7L57.9 5.0L58.9 4.6L59.9 5.6L61.0 4.1L62.0 6.9L63.0 6.7L64.1 6.7L65.1 6.7L66.1 4.6L67.2 9.9L68.2 7.9L69.2 7.8L70.3 7.8L71.3 5.2L72.3 5.3L73.4 5.5L74.4 6.0L75.4 5.0L76.5 5.1L77.5 5.1L78.5 6.1L79.6 6.0L80.6 5.1L81.6 4.7L82.7 7.1L83.7 8.0L84.7 6.5L85.8 5.4L86.8 4.3L87.8 5.7L88.9 5.4L89.9 3.9L90.9 3.6L92.0 4.5L93.0 3.0"/></svg><span class="h-chg up">+31%</span></a></li></ul></div>
+</div></section>
+<section id="switches" class="h-sec h-band"><div class="wrap h-sw">
+<div><h2 class="h2">Latest switches</h2><ul class="h-rows"><li><a class="h-row" href="coins/night/index.html"><img class="coin-ic" src="assets/icons/night.svg" alt="" width="24" height="24" loading="lazy" decoding="async"><span><b>NIGHT</b> moved <b class="h-w-out">OUT</b></span><span class="h-when">Nov 7</span></a></li><li><a class="h-row" href="coins/qnt/index.html"><img class="coin-ic" src="assets/icons/qnt.svg" alt="" width="24" height="24" loading="lazy" decoding="async"><span><b>QNT</b> moved <b class="h-w-out">OUT</b></span><span class="h-when">Oct 31</span></a></li><li><a class="h-row" href="coins/wld/index.html"><img class="coin-ic" src="assets/icons/wld.svg" alt="" width="24" height="24" loading="lazy" decoding="async"><span><b>WLD</b> moved <b class="h-w-out">OUT</b></span><span class="h-when">Oct 29</span></a></li><li><a class="h-row" href="coins/near/index.html"><img class="coin-ic" src="assets/icons/near.svg" alt="" width="24" height="24" loading="lazy" decoding="async"><span><b>NEAR</b> moved <b class="h-w-out">OUT</b></span><span class="h-when">Oct 29</span></a></li><li><a class="h-row" href="coins/aero/index.html"><img class="coin-ic" src="assets/icons/aero.svg" alt="" width="24" height="24" loading="lazy" decoding="async"><span><b>AERO</b> moved <b class="h-w-out">OUT</b></span><span class="h-when">Oct 26</span></a></li></ul></div>
+<div class="h-near"><h3 class="h-h3">Next in line</h3><p class="sub">if the price stays the same</p><ul class="h-ntiles"><li><a class="h-ntile" href="coins/xmr/index.html"><img class="coin-ic" src="assets/icons/xmr.svg" alt="" width="24" height="24" loading="lazy" decoding="async"><span><b>XMR</b><em class="h-w-out">moves OUT</em><small>about 11 days</small></span></a></li><li><a class="h-ntile" href="coins/night/index.html"><img class="coin-ic" src="assets/icons/night.svg" alt="" width="24" height="24" loading="lazy" decoding="async"><span><b>NIGHT</b><em class="h-w-in">moves IN</em><small>about 16 days</small></span></a></li><li><a class="h-ntile" href="coins/qnt/index.html"><img class="coin-ic" src="assets/icons/qnt.svg" alt="" width="24" height="24" loading="lazy" decoding="async"><span><b>QNT</b><em class="h-w-in">moves IN</em><small>about 19 days</small></span></a></li></ul></div>
+</div></section>
+<section id="honest" class="h-sec"><div class="wrap h-honest">
+<div class="h-bars">
+<h2 class="h2">$100 since Jan 2023</h2>
+<p class="sub">Past test, after costs.</p>
+<div class="db"><div class="db-head"><span class="db-scale"><span class="db-ref" style="left:21.9%">$100</span></span><span class="db-fh">Worst fall</span></div><div class="db-row db-rule"><span class="db-l">The rule on all 49 coins</span><b class="db-v">$345</b><span class="db-t"><i style="width:75.7%"></i><u style="left:21.9%"></u></span><span class="db-f">−35%</span></div><div class="db-row db-btc"><span class="db-l">Bitcoin, just held</span><b class="db-v">$456</b><span class="db-t"><i style="width:100.0%"></i><u style="left:21.9%"></u></span><span class="db-f">−53%</span></div><div class="db-row db-basket"><span class="db-l">All 49 coins, just held</span><b class="db-v">$237</b><span class="db-t"><i style="width:52.1%"></i><u style="left:21.9%"></u></span><span class="db-f">−69%</span></div></div>
+</div>
+<div class="h-read">
+<p class="h-sent">Bitcoin made more. The rule fell less.</p>
+<p class="h-year">In 2025: the rule <span class="down">−1.3%,</span> Bitcoin <span class="down">−6.3%,</span> all 49 <span class="down">−45%.</span></p>
+<p class="h-links"><a class="h-link" href="record/index.html">9 of 12 tests failed <svg class="ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+<a class="h-link" href="record/index.html#practice">Practice test (no real money) <svg class="ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></p>
+</div>
+</div></section>
+<section id="how" class="h-sec h-band"><div class="wrap h-how">
+<h2 class="h2">How it works</h2>
+<svg class="h-pic" viewBox="0 0 320 120" role="img" aria-label="The 10-day average crosses above the 44-day average. After that the coin is IN.">
+<rect width="320" height="120" rx="16" fill="#fff"/>
+<path d="M183.9 0H304a16 16 0 0 1 16 16V104a16 16 0 0 1-16 16H183.9Z" fill="#10b3a3" fill-opacity=".17"/>
+<path d="M18 66L302 56" fill="none" stroke="#8a85a3" stroke-width="3.5" stroke-dasharray="8 7" stroke-linecap="round"/>
+<path d="M18 88C120 112,178 46,302 22" fill="none" stroke="#6c47ff" stroke-width="4.5" stroke-linecap="round"/>
+<circle cx="183.9" cy="60.0" r="8" fill="#ffc542" stroke="#fff" stroke-width="3.5"/>
+<g font-size="15" font-weight="800"><text x="24" y="27" fill="#475569">OUT</text><text x="193.9" y="27" fill="#06756a">IN</text></g>
+<g font-size="13" font-weight="700"><text x="24" y="55" fill="#5b5675">44-day</text><text x="24" y="113" fill="#5232e6">10-day</text></g>
+</svg>
+<ol class="h-steps"><li>We check each coin daily.</li><li>We compare two price averages.</li><li>10-day above 44-day is IN. Below is OUT.</li></ol>
+</div></section>
+<section id="faq" class="h-sec"><div class="wrap h-faq">
+<h2 class="h2">Questions</h2>
+<div>
+<details class="qa"><summary>Is this financial advice?<svg class="ic qa-ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></summary><p>No. We show what one rule does, and how it did in the past. You decide.</p></details>
+<details class="qa"><summary>Why not just hold Bitcoin?<svg class="ic qa-ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></summary><p>You can. The numbers above show both, with each worst fall.</p></details>
+<details class="qa"><summary>Is it free?<svg class="ic qa-ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></summary><p>Yes. The site and the emails are free.</p></details>
+</div>
+</div></section>
+<section id="join" class="sec-join"><div class="wrap join-in">
+<div class="join-copy">
+<h2 class="h2">One letter a week, and your coin&#x27;s switches</h2>
+<p class="sub">Free. Every Monday: what the rule did, next to Bitcoin and the average coin. Pick a coin, and we also email you the day it switches.</p>
+<form class="join-form " action="#" method="post"><div class="jf-row"><input id="em-join" type="email" name="email" placeholder="you@email.com" autocomplete="email" required aria-label="Email address"><button class="btn" type="submit">Join free</button></div><label class="jf-coin" for="cn-join"><span>Your coin, for an email the day it switches</span><select id="cn-join" name="coin"><option value="">None, just the Monday letter</option><option value="BTC">BTC (Bitcoin)</option><option value="ETH">ETH (Ethereum)</option><option value="BNB">BNB</option><option value="XRP">XRP</option><option value="SOL">SOL (Solana)</option><option value="TRX">TRX (TRON)</option><option value="HYPE">HYPE (Hyperliquid)</option><option value="ZEC">ZEC (Zcash)</option><option value="DOGE">DOGE (Dogecoin)</option><option value="XMR">XMR (Monero)</option><option value="LINK">LINK (Chainlink)</option><option value="ADA">ADA (Cardano)</option><option value="XLM">XLM (Stellar)</option><option value="NEAR">NEAR (NEAR Protocol)</option><option value="BCH">BCH (Bitcoin Cash)</option><option value="UNI">UNI (Uniswap)</option><option value="LTC">LTC (Litecoin)</option><option value="AVAX">AVAX (Avalanche)</option><option value="CC">CC</option><option value="SUI">SUI</option><option value="HBAR">HBAR (Hedera)</option><option value="SHIB">SHIB (Shiba Inu)</option><option value="PEPE">PEPE</option><option value="QNT">QNT (Quant)</option><option value="TAO">TAO (Bittensor)</option><option value="ENA">ENA (Ethena)</option><option value="AAVE">AAVE</option><option value="ONDO">ONDO</option><option value="PUMP">PUMP (Pump.fun)</option><option value="WLFI">WLFI (World Liberty Financial)</option><option value="DOT">DOT (Polkadot)</option><option value="JST">JST (JUST)</option><option value="SKY">SKY</option><option value="ICP">ICP (Internet Computer)</option><option value="WLD">WLD (Worldcoin)</option><option value="ETC">ETC (Ethereum Classic)</option><option value="ASTER">ASTER</option><option value="POL">POL (Polygon)</option><option value="JUP">JUP (Jupiter)</option><option value="RENDER">RENDER</option><option value="KAS">KAS (Kaspa)</option><option value="ALGO">ALGO (Algorand)</option><option value="NIGHT">NIGHT (Midnight)</option><option value="FIL">FIL (Filecoin)</option><option value="ATOM">ATOM (Cosmos)</option><option value="PENGU">PENGU (Pudgy Penguins)</option><option value="TON">TON (Toncoin)</option><option value="BONK">BONK</option><option value="AERO">AERO (Aerodrome)</option></select></label><div class="jf-hp" aria-hidden="true"><label for="hp-join">Leave this empty</label><input id="hp-join" type="text" name="website" tabindex="-1" autocomplete="off"></div><div class="jf-ts"></div><p class="jf-note" role="status" aria-live="polite" hidden></p><noscript><p class="jf-note is-err">Signing up needs JavaScript for a quick bot check. Or write to hello@sigtide.com.</p></noscript></form>
+</div>
+<div class="rcpt-wrap" role="img" aria-label="What the rule says at the Nov 9 close"><div class="rcpt"><div class="rcpt-h"><b>SIGTIDE</b><span>At the Nov 9 close</span></div><div class="rs"><div class="t"><span>IN today</span><span>3 of 49</span></div><div class="rl "><span>XMR</span><span>+74%</span></div><div class="rl "><span>PEPE</span><span>+24%</span></div><div class="rl "><span>JST</span><span>+31%</span></div></div><div class="rs"><div class="rl "><span>OUT, in cash</span><span>46 coins</span></div><div class="rl "><span>Switched</span><span>none</span></div></div><div class="rs"><div class="t"><span>Next in line</span><span></span></div><div class="rl "><span>XMR → OUT</span><span>about 11 days</span></div></div><div class="rcpt-f"><i class="barcode"></i></div></div></div>
+</div></section>
+</main>
+<footer class="foot"><div class="wrap">
+  <p class="f-warn">Educational only. Not financial advice.</p>
+  <p class="f-method">Daily closing prices, 0.15% cost per switch, no future data used.</p>
+  <nav class="f-links" aria-label="More from SigTide"><a href="board/index.html">Who&#x27;s IN right now</a><a href="record/index.html#practice">Practice test (no real money)</a><a href="https://sigtide.com/flip/">Bitcoin&#x27;s long trend</a><a href="https://sigtide.com/rsi/">RSI map</a><a href="https://sigtide.com/research/no-edge-in-risk-off/">What failed</a><a href="privacy/index.html">Privacy</a></nav>
+  <p class="f-contact"><a href="mailto:hello@sigtide.com"><svg class="ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4.5 7.5 7.5 5.6 7.5-5.6"/></svg>hello@sigtide.com</a><a href="https://www.youtube.com/@SigTide" rel="noopener"><svg class="ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="4"/><path d="m10 9 5 3-5 3V9Z"/></svg>YouTube</a></p>
+</div></footer>
 <!-- sigtide:analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "42f28562915645ab9f6fd61e6a1b6806"}'></script><!-- /sigtide:analytics -->
 </body>
 </html>
