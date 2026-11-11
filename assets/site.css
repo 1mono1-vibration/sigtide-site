@@ -812,3 +812,93 @@ body[data-page="record"] .rc-points li::before{content:"";position:absolute;left
 .plain-small{font-size:14px!important;color:var(--muted)}
 .plain .join-card{margin-top:20px}
 @media (min-width:960px){.plain{padding-top:64px;padding-bottom:80px}.plain h1{font-size:40px}}
+
+/* ===== 50_context.css ===== */
+/* /flip/ (Bitcoin's long trend), /rsi/ (crypto RSI today) and the research note. Same tokens as every page. */
+.fl-hero{padding-top:36px;padding-bottom:36px}
+.fl-in,.fl-wrap,.note-in{max-width:880px;margin:0 auto}
+.fl-hero h1{font-size:32px;line-height:1.15;font-weight:800;letter-spacing:-.02em}
+.fl-answer{margin-top:10px;font-size:64px;line-height:1;font-weight:800;letter-spacing:-.03em}
+.fl-answer.is-in{color:var(--in-text)}
+.fl-answer.is-out{color:var(--out-text)}
+.fl-answer.rs-avg{color:var(--violet)}
+.fl-lead{margin-top:14px;font-size:18px;line-height:1.5}
+.fl-note{margin-top:8px;font-size:15px;color:var(--muted)}
+.fl-p{margin-top:12px;font-size:16.5px;line-height:1.6;max-width:720px}
+.fl-p a{display:inline-flex;align-items:center;gap:6px;font-weight:700;text-decoration:none}
+.fl-p a .ic{width:17px;height:17px}
+
+.fl-tiles{display:grid;grid-template-columns:1fr;gap:10px;margin-top:16px}
+.fl-tile{padding:16px;border-radius:16px;background:#fff;border:1px solid var(--line)}
+.fl-t-h{font-size:13.5px;font-weight:700;color:var(--muted)}
+.fl-t-big{margin-top:6px;font-size:24px;line-height:1.2;font-weight:800}
+.fl-t-big small{font-size:14px;font-weight:600;color:var(--muted)}
+.fl-t-line{margin-top:8px;font-size:15px;line-height:1.45}
+.fl-foot{margin-top:12px}
+
+.fl-rows{margin-top:16px}
+.fl-row{display:grid;grid-template-columns:78px 1fr auto;grid-template-areas:"pill date n" "bar bar bar";gap:6px 10px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}
+.fl-row:first-child{border-top:0}
+.fl-pill{grid-area:pill;display:inline-flex;justify-content:center;height:22px;padding:0 8px;border-radius:999px;font-size:12px;font-weight:700;line-height:22px}
+.fl-pill.is-in{background:var(--in-tile);color:var(--in-text)}
+.fl-pill.is-out{background:var(--out-tile);color:var(--out-text)}
+.fl-d{grid-area:date;font-size:15px}
+.fl-n{grid-area:n;font-size:15px;white-space:nowrap}
+.fl-bar{grid-area:bar;height:8px;border-radius:99px;background:var(--band);overflow:hidden}
+.fl-bar i{display:block;height:100%;border-radius:99px;background:var(--violet)}
+.fl-row:first-child .fl-bar i{background:var(--in)}
+
+.rs-gauge{position:relative;display:flex;height:12px;margin-top:16px;border-radius:99px;overflow:visible;max-width:560px}
+.rs-z{height:100%}
+.rs-z-cold{width:30%;background:#dbeafe;border-radius:99px 0 0 99px}
+.rs-z-mid{width:40%;background:var(--band)}
+.rs-z-hot{width:30%;background:#ffe4e0;border-radius:0 99px 99px 0}
+.rs-gauge i{position:absolute;top:-5px;width:4px;height:22px;margin-left:-2px;border-radius:2px;background:var(--ink)}
+.rs-scale{display:flex;justify-content:space-between;max-width:560px;margin-top:6px;font-size:12.5px;color:var(--muted)}
+.rs-past{font-size:16px;font-weight:700}
+.rs-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:16px}
+.rs-chip{display:flex;align-items:center;gap:8px;min-height:48px;padding:8px 10px;border-radius:14px;color:var(--ink);text-decoration:none;border:1.5px solid transparent}
+.rs-chip.is-in{background:var(--in-tile)}
+.rs-chip.is-out{background:var(--out-tile)}
+.rs-chip.at-hot{border-color:#ffb4a9}
+.rs-chip.at-cold{border-color:#93c5fd}
+.rs-chip img{width:24px;height:24px}
+.rs-sym{flex:1;min-width:0;font-weight:700;font-size:14.5px;overflow:hidden;text-overflow:ellipsis}
+.rs-chip b{font-size:16px}
+.rs-key{display:inline-block;padding:0 7px;border-radius:999px;font-size:12px;font-weight:700}
+.rs-key.is-in{background:var(--in-tile);color:var(--in-text)}
+.rs-key.is-out{background:var(--out-tile);color:var(--out-text)}
+
+/* the research note: a long read */
+.note{padding-top:36px;padding-bottom:48px}
+.note h1{font-size:30px;line-height:1.2;font-weight:800;letter-spacing:-.02em}
+.note h2{margin-top:32px;font-size:22px;line-height:1.25;font-weight:800;letter-spacing:-.01em}
+.note h3{margin-top:22px;font-size:18px;font-weight:800}
+.note p,.note li{margin-top:12px;font-size:16.5px;line-height:1.65}
+.note ul,.note ol{padding-left:20px;list-style:disc}
+.note ol{list-style:decimal}
+.note .dateline{margin-top:8px;font-size:14px;color:var(--muted)}
+.note .callout{margin-top:18px;padding:14px 16px;border-radius:14px;background:var(--near-tile);font-size:16px;line-height:1.6}
+.note .end-note{margin-top:28px;padding:14px 16px;border-radius:14px;background:var(--band);font-size:15px;line-height:1.6}
+.note .tablewrap{margin-top:16px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.note table{width:100%;min-width:520px;border-collapse:collapse;font-size:14.5px}
+.note th,.note td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.note th{font-size:13px;color:var(--muted);font-weight:700}
+.note .verdict-yes{color:var(--in-text);font-weight:700}
+.note .verdict-no{color:var(--fall-text);font-weight:700}
+.note .mono{font-family:var(--mono);font-size:.92em}
+.note a{color:var(--violet-dark)}
+
+@media (min-width:700px){
+  .fl-tiles{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .rs-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .fl-row{grid-template-columns:90px 150px 1fr 90px;grid-template-areas:"pill date bar n"}
+  .fl-n{text-align:right}
+}
+@media (min-width:960px){
+  .fl-hero{padding-top:56px;padding-bottom:48px}
+  .fl-hero h1{font-size:40px}
+  .fl-answer{font-size:80px}
+  .rs-grid{grid-template-columns:repeat(6,minmax(0,1fr))}
+  .note h1{font-size:38px}
+}

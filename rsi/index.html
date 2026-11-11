@@ -1,211 +1,77 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Crypto RSI heatmap today — average RSI 37.8 | SigTide</title>
-<meta name="description" content="Average crypto RSI today: 37.8 across 49 majors (daily timeframe). 0 overbought, 6 oversold, 16% with positive MACD momentum. Live RSI heatmap colored by trend structure, updated daily.">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Crypto RSI today: average 37.8 | SigTide</title>
+<meta name="description" content="The average 14-day RSI of the 49 coins we follow is 37.8, on the cold side. Every coin&#x27;s RSI, next to its IN or OUT. Daily prices only. Not financial advice.">
 <link rel="canonical" href="https://sigtide.com/rsi/">
-<meta property="og:title" content="Crypto RSI heatmap — average RSI 37.8 across 49 majors">
-<meta property="og:description" content="Average crypto RSI today: 37.8 across 49 majors (daily timeframe). 0 overbought, 6 oversold, 16% with positive MACD momentum. Live RSI heatmap colored by trend structure, updated daily.">
-<meta property="og:url" content="https://sigtide.com/rsi/">
 <meta property="og:type" content="website">
-<meta property="og:image" content="https://sigtide.com/logo.png">
-<meta name="twitter:card" content="summary">
-<script type="application/ld+json">
-{
- "@context": "https://schema.org",
- "@type": "FAQPage",
- "mainEntity": [
-  {
-   "@type": "Question",
-   "name": "What is the average crypto RSI today?",
-   "acceptedAnswer": {
-    "@type": "Answer",
-    "text": "As of 2026-11-11, the average 14-day RSI across 49 major cryptocurrencies is 37.8 on the daily timeframe. 0 coins are overbought (RSI 70 or higher) and 6 are oversold (RSI 30 or lower)."
-   }
-  },
-  {
-   "@type": "Question",
-   "name": "What does RSI mean in crypto?",
-   "acceptedAnswer": {
-    "@type": "Answer",
-    "text": "RSI (Relative Strength Index) measures the speed of recent price changes on a 0-100 scale. Readings above 70 are conventionally called overbought and below 30 oversold. It describes momentum; it does not predict reversals \u2014 strong trends can stay overbought for weeks."
-   }
-  },
-  {
-   "@type": "Question",
-   "name": "Is overbought RSI a sell signal?",
-   "acceptedAnswer": {
-    "@type": "Answer",
-    "text": "No. Overbought means momentum has been unusually strong, which happens in both blow-off tops and healthy trends. SigTide reads RSI against a 20-point trend-structure score: high RSI with weak structure is a pump without a base, while high RSI with strong structure is often trend continuation."
-   }
-  }
- ]
-}
-</script>
-<style>
-  :root{
-    --bg:#0a0e27; --panel:rgba(20,26,58,0.88); --panel-2:rgba(28,35,80,0.78);
-    --border:#2d3868; --text:#ecedfd; --text-2:#b8bce0; --muted:#8088c0;
-    --accent:#a78bfa; --green-2:#10d9a0; --blue-2:#60a5fa; --amber:#fbbf24; --red-2:#f472b6;
-  }
-  *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  body{
-    margin:0; padding:0; min-height:100vh; color:var(--text); line-height:1.6;
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
-    background:
-      radial-gradient(ellipse at top left, rgba(167,139,250,0.18) 0%, transparent 55%),
-      radial-gradient(ellipse at bottom right, rgba(16,217,160,0.13) 0%, transparent 55%),
-      linear-gradient(180deg,#0a0e27 0%,#0d1339 100%);
-    background-attachment:fixed;
-  }
-  .wrap{max-width:920px; margin:0 auto; padding:0 22px;}
-  a{color:var(--accent); text-decoration:none;}
-  nav{display:flex; align-items:center; justify-content:space-between; padding:22px 0;}
-  .brand{font-weight:800; font-size:19px; letter-spacing:-0.01em; color:var(--text);}
-  .brand .dot{color:var(--green-2);}
-  .nav-back{font-size:13px; color:var(--muted);}
-  .nav-back a{color:var(--text-2);}
-
-  .hero{background:linear-gradient(135deg, rgba(167,139,250,0.22) 0%, rgba(16,217,160,0.13) 100%);
-    border:1px solid var(--border); border-radius:20px; padding:40px 44px 34px; margin:8px 0 26px;
-    backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); text-align:center;}
-  .badge{display:inline-block; padding:5px 13px; border-radius:14px;
-    background:rgba(167,139,250,0.20); color:var(--accent);
-    font-size:11px; font-weight:700; letter-spacing:0.09em; text-transform:uppercase; margin-bottom:14px;}
-  .hero h1{margin:0 0 6px; font-size:32px; line-height:1.12; letter-spacing:-0.02em; color:#fff;}
-  .answer{font-size:60px; font-weight:800; letter-spacing:-0.03em; margin:8px 0 2px; color:#ecedfd;
-    font-family:ui-monospace,monospace;}
-  .hero .lede{font-size:15.5px; color:var(--text-2); max-width:640px; margin:10px auto 0;}
-  .live-dot{display:inline-block; width:7px; height:7px; border-radius:50%; background:var(--green-2);
-    margin-right:7px; box-shadow:0 0 0 0 rgba(16,217,160,.6); animation:pulse 2.2s infinite;}
-  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(16,217,160,.5);}70%{box-shadow:0 0 0 7px rgba(16,217,160,0);}100%{box-shadow:0 0 0 0 rgba(16,217,160,0);}}
-  @media(max-width:620px){ .hero{padding:28px 20px;} .hero h1{font-size:22px;} .answer{font-size:44px;} }
-
-  .rsi-band{position:relative; height:12px; border-radius:6px; max-width:460px; margin:18px auto 6px;
-    background:linear-gradient(90deg,#10d9a0 0%,#10d9a0 25%,#64748b 40%,#64748b 60%,#f472b6 75%,#f472b6 100%); opacity:.9;}
-  .rsi-marker{position:absolute; top:50%; transform:translate(-50%,-50%); width:18px; height:18px;
-    border-radius:50%; background:#fff; border:3px solid #0a0e27; box-shadow:0 0 8px rgba(0,0,0,.6);}
-  .band-labels{display:flex; justify-content:space-between; max-width:460px; margin:0 auto;
-    font-size:11px; color:var(--muted);}
-
-  .grid3{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin:0 0 8px;}
-  @media(max-width:760px){ .grid3{grid-template-columns:1fr;} }
-  .card{background:var(--panel); border:1px solid var(--border); border-radius:14px;
-    padding:20px 22px; backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);}
-  .card h3{margin:0 0 8px; font-size:11px; text-transform:uppercase; letter-spacing:0.11em; color:var(--muted);}
-  .bignum{font-family:ui-monospace,monospace; font-size:26px; font-weight:800; color:#fff;}
-  .bignum small{font-size:13px; color:var(--muted); font-weight:600;}
-  .cap{font-size:13px; color:var(--text-2); margin-top:6px; line-height:1.55;}
-
-  section{margin:40px 0;}
-  .sec-h{font-size:13px; text-transform:uppercase; letter-spacing:0.13em; color:var(--muted); margin:0 0 16px;}
-  .prose{font-size:15px; color:var(--text-2); line-height:1.7; max-width:760px;}
-  .prose b{color:#fff;}
-  .caveat{font-size:12.5px; color:var(--muted); margin-top:12px; font-style:italic;}
-
-  .legend{display:flex; gap:18px; flex-wrap:wrap; font-size:12.5px; color:var(--text-2); margin:12px 2px 0;}
-  .legend .sw{display:inline-block; width:11px; height:11px; border-radius:50%; margin-right:6px; vertical-align:-1px;}
-
-  .chip{display:inline-block; font-size:12.5px; font-family:ui-monospace,monospace;
-    background:var(--panel-2); border:1px solid var(--border); border-radius:7px;
-    padding:4px 10px; margin:4px 6px 0 0; color:var(--text);}
-  .chip a{color:inherit;}
-  .split{display:flex; height:11px; border-radius:6px; overflow:hidden; background:var(--panel-2); margin:10px 0 6px;}
-
-  .final{background:linear-gradient(135deg, rgba(167,139,250,0.22) 0%, rgba(16,217,160,0.13) 100%);
-    border:1px solid var(--border); border-radius:20px; padding:38px 30px; text-align:center; margin:44px 0 0;}
-  .final h2{margin:0 0 8px; font-size:26px; color:#fff; letter-spacing:-0.01em;}
-  .final p{color:var(--text-2); font-size:15px; max-width:560px; margin:0 auto 22px;}
-  .bh-embed{max-width:520px; min-height:64px; margin:0 auto;}
-  .bh-embed iframe{width:100%!important; max-width:520px; border:0;}
-
-  footer{border-top:1px solid var(--border); margin-top:50px; padding:26px 0 40px; color:var(--muted); font-size:12.5px;}
-  footer .disc{max-width:760px; margin-bottom:10px; line-height:1.6;}
-</style>
+<meta property="og:site_name" content="SigTide">
+<meta property="og:title" content="Crypto RSI today: average 37.8 | SigTide">
+<meta property="og:description" content="The average 14-day RSI of the 49 coins we follow is 37.8, on the cold side. Every coin&#x27;s RSI, next to its IN or OUT. Daily prices only. Not financial advice.">
+<meta property="og:url" content="https://sigtide.com/rsi/">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='10' fill='%236c47ff'/%3E%3Cpath d='M6.5 19.6c2.6 0 3.4-4.6 6.2-4.6s3.6 4.6 6.3 4.6 3.5-4.6 6.5-4.6' fill='none' stroke='%23fff' stroke-width='2.7' stroke-linecap='round'/%3E%3Ccircle cx='23.6' cy='8.8' r='3.1' fill='%23ffc542'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=IBM+Plex+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="../assets/site.css?v=c1f1bcdc">
+<script src="../assets/site.js?v=c1f1bcdc" defer></script>
 </head>
-<body>
-<div class="wrap">
-
-  <nav>
-    <a class="brand" href="/">SigTide<span class="dot">.</span></a>
-    <span class="nav-back"><a href="/scores/">Score map</a> &nbsp;&middot;&nbsp; <a href="/flip/">Flip status</a> &nbsp;&middot;&nbsp; <a href="/">&larr; SigTide home</a></span>
-  </nav>
-
-  <div class="hero">
-    <span class="badge"><span class="live-dot"></span>Daily timeframe &middot; updated with every scan</span>
-    <h1>Average crypto RSI today</h1>
-    <div class="answer">37.8</div>
-    <div class="rsi-band"><div class="rsi-marker" style="left:34.8%;"></div></div>
-    <div class="band-labels"><span>Oversold &le;30</span><span>Neutral</span><span>Overbought &ge;70</span></div>
-    <p class="lede">The average 14-day RSI across the 49 crypto majors we score every day is 37.8 — on the cold side — sellers have had the upper hand across most of the market.</p>
-  </div>
-
-  <div class="grid3">
-    <div class="card">
-      <h3>RSI extremes right now</h3>
-      <div class="bignum" style="color:var(--red-2);">0 <small>overbought</small></div>
-      <div class="bignum" style="color:var(--green-2);">6 <small>oversold</small></div>
-      <div class="cap">Of 49 majors on the daily timeframe. More coins washed out than stretched — watch for structure to form before acting.</div>
-    </div>
-    <div class="card">
-      <h3>MACD momentum breadth</h3>
-      <div class="bignum">8 / 49 <small>positive</small></div>
-      <div class="split"><div style="width:16%;background:var(--green-2);"></div><div style="flex:1;background:var(--red-2);opacity:.5;"></div></div>
-      <div class="cap">Coins whose MACD(12,26,9) histogram is above zero &mdash; short-term momentum pointing up.</div>
-    </div>
-    <div class="card">
-      <h3>Average RSI, recent history</h3>
-      <div class="bignum">39.0 <small>yesterday</small></div>
-      <div class="bignum">40.7 <small>7 days ago</small> &nbsp; 53.9 <small>30 days ago</small></div>
-      <div class="cap">Momentum is fading vs a week ago (-2.8 pts).</div>
-    </div>
-  </div>
-
-  <section>
-    <h2 class="sec-h">The RSI heatmap &mdash; colored by structure, not hype</h2>
-    <div class="card" style="padding:18px 14px 12px;">
-      <svg viewBox="0 0 860 430" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;" role="img" aria-label="Crypto RSI heatmap: RSI versus market-cap rank, colored by structure tier"><rect x="52" y="14" width="792" height="94" fill="#f472b6" opacity="0.07"/><rect x="52" y="296" width="792" height="94" fill="#10d9a0" opacity="0.07"/><line x1="52" y1="108" x2="844" y2="108" stroke="#2d3868" stroke-width="1" stroke-dasharray="4 4"/><text x="44" y="112" text-anchor="end" font-size="11" fill="#8088c0">70</text><text x="844" y="102" text-anchor="end" font-size="10" fill="#8088c0" opacity="0.8">Overbought 70</text><line x1="52" y1="202" x2="844" y2="202" stroke="#2d3868" stroke-width="1" stroke-dasharray="4 4"/><text x="44" y="206" text-anchor="end" font-size="11" fill="#8088c0">50</text><text x="844" y="196" text-anchor="end" font-size="10" fill="#8088c0" opacity="0.8">50</text><line x1="52" y1="296" x2="844" y2="296" stroke="#2d3868" stroke-width="1" stroke-dasharray="4 4"/><text x="44" y="300" text-anchor="end" font-size="11" fill="#8088c0">30</text><text x="844" y="290" text-anchor="end" font-size="10" fill="#8088c0" opacity="0.8">Oversold 30</text><text x="52" y="414" text-anchor="middle" font-size="11" fill="#8088c0">#1</text><text x="399" y="414" text-anchor="middle" font-size="11" fill="#8088c0">#10</text><text x="642" y="414" text-anchor="middle" font-size="11" fill="#8088c0">#50</text><text x="746" y="414" text-anchor="middle" font-size="11" fill="#8088c0">#100</text><text x="448" y="428" text-anchor="middle" font-size="10.5" fill="#8088c0">market-cap rank (log) &mdash; biggest coins left</text><a href="/coins/btc/"><circle cx="52.0" cy="277.2" r="7" fill="#f472b6" opacity="0.88" stroke="#0a0e27" stroke-width="1.5"><title>BTC — RSI 34, score 0/20, mcap #1, MACD -</title></circle></a><text x="52.0" y="266.2" text-anchor="middle" font-size="10.5" font-weight="700" fill="#ecedfd">BTC</text><a href="/coins/eth/"><circle cx="156.5" cy="298.1" r="7" fill="#f472b6" opacity="0.88" stroke="#0a0e27" stroke-width="1.5"><title>ETH — RSI 30, score 0/20, mcap #2, MACD -</title></circle></a><text x="156.5" y="287.1" text-anchor="middle" font-size="10.5" font-weight="700" fill="#ecedfd">ETH</text><a href="/coins/bnb/"><circle cx="261.0" cy="259.0" r="7" fill="#f472b6" opacity="0.88" stroke="#0a0e27" stroke-width="1.5"><title>BNB — RSI 38, score 4/20, mcap #4, MACD -</title></circle></a><text x="261.0" y="248.0" text-anchor="middle" font-size="10.5" font-weight="700" fill="#ecedfd">BNB</text><a href="/coins/xrp/"><circle cx="322.2" cy="325.8" r="7" fill="#f472b6" opacity="0.88" stroke="#0a0e27" stroke-width="1.5"><title>XRP — RSI 24, score 0/20, mcap #6, MACD -</title></circle></a><text x="322.2" y="314.8" text-anchor="middle" font-size="10.5" font-weight="700" fill="#ecedfd">XRP</text><a href="/coins/sol/"><circle cx="345.4" cy="324.5" r="7" fill="#f472b6" opacity="0.88" stroke="#0a0e27" stroke-width="1.5"><title>SOL — RSI 24, score 0/20, mcap #7, MACD -</title></circle></a><text x="345.4" y="313.5" text-anchor="middle" font-size="10.5" font-weight="700" fill="#ecedfd">SOL</text><a href="/coins/trx/"><circle cx="365.6" cy="233.1" r="7" fill="#f472b6" opacity="0.88" stroke="#0a0e27" stroke-width="1.5"><title>TRX — RSI 43, score 3/20, mcap #8, MACD -</title></circle></a><text x="365.6" y="222.1" text-anchor="middle" font-size="10.5" font-weight="700" fill="#ecedfd">TRX</text><a href="/coins/hype/"><circle cx="399.2" cy="273.3" r="7" fill="#f472b6" opacity="0.88" stroke="#0a0e27" stroke-width="1.5"><title>HYPE — RSI 35, score 5/20, mcap #10, MACD -</title></circle></a><text x="399.2" y="262.3" text-anchor="middle" font-size="10.5" font-weight="700" fill="#ecedfd">HYPE</text><a href="/coins/zec/"><circle cx="413.6" cy="260.8" r="5" fill="#f472b6" opacity="0.88" stroke="#0a0e27" stroke-width="1.5"><title>ZEC — RSI 37, score 3/20, mcap #11, MACD -</title></circle></a><a href="/coins/doge/"><circle cx="426.7" cy="291.4" r="5" fill="#f472b6" opacity="0.88" stroke="#0a0e27" stroke-width="1.5"><title>DOGE — RSI 31, score 0/20, mcap #12, MACD -</title></circle></a><a href="/coins/link/"><circle cx="503.7" cy="263.4" r="5" fill="#f472b6" opacity="0.88" stroke="#0a0e27" stroke-width="1.5"><title>LINK — RSI 37, score 0/20, mcap #20, MACD -</title></circle></a><a href="/coins/ada/"><circle cx="518.1" cy="293.1" r="5" fill="#f472b6" opacity="0.88" stroke="#0a0e27" stroke-width="1.5"><title>ADA — RSI 31, score 0/20, mcap #22, MACD -</title></circle></a><a href="/coins/xlm/"><circle cx="524.8" cy="300.5" r="7" fill="#f472b6" opacity="0.88" stroke="#0a0e27" stroke-width="1.5"><title>XLM — RSI 29, score 0/20, mcap #23, MACD -</title></circle></a><text x="524.8" y="289.5" text-anchor="middle" font-size="10.5" font-weight="700" fill="#ecedfd">XLM</text><a href="/coins/near/"><circle cx="531.2" cy="259.4" r="5" fill="#f472b6" opacity="0.88" stroke="#0a0e27" stroke-width="1.5"><title>NEAR — RSI 38, score 2/20, mcap #24, MACD -</title></circle></a><a href="/coins/bch/"><circle cx="543.3" cy="293.9" r="5" fill="#f472b6" opacity="0.88" stroke="#0a0e27" stroke-width="1.5"><title>BCH — RSI 30, score 0/20, mcap #26, MACD -</title></circle></a><a href="/coins/uni/"><circle cx="564.9" cy="232.9" r="5" fill="#f472b6" opacity="0.88" stroke="#0a0e27" stroke-width="1.5"><title>UNI — RSI 43, score 2/20, mcap #30, MACD -</title></circle></a><a href="/coins/ltc/"><circle cx="569.8" cy="268.8" r="5" fill="#f472b6" opacity="0.88" stroke="#0a0e27" stroke-width="1.5"><title>LTC — RSI 36, score 0/20, mcap #31, MACD -</title></circle></a><a href="/coins/avax/"><circle cx="579.2" cy="235.1" r="5" fill="#f472b6" opacity="0.88" stroke="#0a0e27" stroke-width="1.5"><title>AVAX — RSI 43, score 6/20, mcap #33, MACD +</title></circle></a><a href="/coins/cc/"><circle cx="583.7" cy="277.0" r="5" fill="#f472b6" opacity="0.88" stroke="#0a0e27" stroke-width="1.5"><title>CC — RSI 34, score 0/20, mcap #34, MACD -</title></circle></a><a href="/coins/sui/"><circle cx="588.1" cy="258.7" r="5" fill="#f472b6" opacity="0.88" stroke="#0a0e27" stroke-width="1.5"><title>SUI — RSI 38, score 2/20, mcap #35, MACD -</title></circle></a><a href="/coins/hbar/"><circle cx="604.4" cy="288.0" r="5" fill="#f472b6" opacity="0.88" stroke="#0a0e27" stroke-width="1.5"><title>HBAR — RSI 32, score 0/20, mcap #39, MACD -</title></circle></a><a href="/coins/shib/"><circle cx="615.6" cy="261.1" r="5" fill="#f472b6" opacity="0.88" stroke="#0a0e27" stroke-width="1.5"><title>SHIB — RSI 37, score 2/20, mcap #42, MACD -</title></circle></a><a href="/coins/tao/"><circle cx="632.6" cy="264.3" r="5" fill="#f472b6" opacity="0.88" stroke="#0a0e27" stroke-width="1.5"><title>TAO — RSI 37, score 0/20, mcap #47, MACD -</title></circle></a><a href="/coins/ena/"><circle cx="635.7" cy="269.7" r="5" fill="#f472b6" opacity="0.88" stroke="#0a0e27" stroke-width="1.5"><title>ENA — RSI 36, score 2/20, mcap #48, MACD -</title></circle></a><a href="/coins/aave/"><circle cx="641.9" cy="254.5" r="5" fill="#f472b6" opacity="0.88" stroke="#0a0e27" stroke-width="1.5"><title>AAVE — RSI 39, score 1/20, mcap #50, MACD +</title></circle></a><a href="/coins/ondo/"><circle cx="653.5" cy="247.1" r="5" fill="#f472b6" opacity="0.88" stroke="#0a0e27" stroke-width="1.5"><title>ONDO — RSI 40, score 0/20, mcap #54, MACD -</title></circle></a><a href="/coins/pump/"><circle cx="656.3" cy="265.8" r="5" fill="#f472b6" opacity="0.88" stroke="#0a0e27" stroke-width="1.5"><title>PUMP — RSI 36, score 0/20, mcap #55, MACD -</title></circle></a><a href="/coins/wlfi/"><circle cx="659.0" cy="269.0" r="5" fill="#f472b6" opacity="0.88" stroke="#0a0e27" stroke-width="1.5"><title>WLFI — RSI 36, score 0/20, mcap #56, MACD -</title></circle></a><a href="/coins/dot/"><circle cx="661.7" cy="301.2" r="7" fill="#f472b6" opacity="0.88" stroke="#0a0e27" stroke-width="1.5"><title>DOT — RSI 29, score 0/20, mcap #57, MACD -</title></circle></a><text x="661.7" y="290.2" text-anchor="middle" font-size="10.5" font-weight="700" fill="#ecedfd">DOT</text><a href="/coins/icp/"><circle cx="666.9" cy="220.7" r="5" fill="#f472b6" opacity="0.88" stroke="#0a0e27" stroke-width="1.5"><title>ICP — RSI 46, score 1/20, mcap #59, MACD +</title></circle></a><a href="/coins/sky/"><circle cx="671.9" cy="275.1" r="5" fill="#f472b6" opacity="0.88" stroke="#0a0e27" stroke-width="1.5"><title>SKY — RSI 34, score 3/20, mcap #61, MACD -</title></circle></a><a href="/coins/wld/"><circle cx="688.3" cy="296.8" r="7" fill="#f472b6" opacity="0.88" stroke="#0a0e27" stroke-width="1.5"><title>WLD — RSI 30, score 0/20, mcap #68, MACD -</title></circle></a><text x="688.3" y="285.8" text-anchor="middle" font-size="10.5" font-weight="700" fill="#ecedfd">WLD</text><a href="/coins/aster/"><circle cx="703.0" cy="284.1" r="5" fill="#f472b6" opacity="0.88" stroke="#0a0e27" stroke-width="1.5"><title>ASTER — RSI 33, score 1/20, mcap #75, MACD -</title></circle></a><a href="/coins/etc/"><circle cx="707.0" cy="263.7" r="5" fill="#f472b6" opacity="0.88" stroke="#0a0e27" stroke-width="1.5"><title>ETC — RSI 37, score 0/20, mcap #77, MACD -</title></circle></a><a href="/coins/pol/"><circle cx="718.3" cy="235.7" r="5" fill="#f472b6" opacity="0.88" stroke="#0a0e27" stroke-width="1.5"><title>POL — RSI 43, score 2/20, mcap #83, MACD +</title></circle></a><a href="/coins/jup/"><circle cx="725.4" cy="229.0" r="5" fill="#f472b6" opacity="0.88" stroke="#0a0e27" stroke-width="1.5"><title>JUP — RSI 44, score 3/20, mcap #87, MACD +</title></circle></a><a href="/coins/kas/"><circle cx="730.5" cy="269.4" r="5" fill="#f472b6" opacity="0.88" stroke="#0a0e27" stroke-width="1.5"><title>KAS — RSI 36, score 0/20, mcap #90, MACD -</title></circle></a><a href="/coins/render/"><circle cx="733.8" cy="216.3" r="5" fill="#f472b6" opacity="0.88" stroke="#0a0e27" stroke-width="1.5"><title>RENDER — RSI 47, score 5/20, mcap #92, MACD +</title></circle></a><a href="/coins/algo/"><circle cx="735.5" cy="261.6" r="5" fill="#f472b6" opacity="0.88" stroke="#0a0e27" stroke-width="1.5"><title>ALGO — RSI 37, score 0/20, mcap #93, MACD -</title></circle></a><a href="/coins/fil/"><circle cx="744.9" cy="278.2" r="5" fill="#f472b6" opacity="0.88" stroke="#0a0e27" stroke-width="1.5"><title>FIL — RSI 34, score 0/20, mcap #99, MACD -</title></circle></a><a href="/coins/atom/"><circle cx="756.6" cy="250.5" r="5" fill="#f472b6" opacity="0.88" stroke="#0a0e27" stroke-width="1.5"><title>ATOM — RSI 40, score 0/20, mcap #107, MACD -</title></circle></a><a href="/coins/pengu/"><circle cx="782.5" cy="275.2" r="5" fill="#f472b6" opacity="0.88" stroke="#0a0e27" stroke-width="1.5"><title>PENGU — RSI 34, score 0/20, mcap #127, MACD -</title></circle></a><a href="/coins/ton/"><circle cx="795.0" cy="235.6" r="5" fill="#f472b6" opacity="0.88" stroke="#0a0e27" stroke-width="1.5"><title>TON — RSI 43, score 2/20, mcap #138, MACD -</title></circle></a><a href="/coins/bonk/"><circle cx="819.2" cy="227.7" r="5" fill="#f472b6" opacity="0.88" stroke="#0a0e27" stroke-width="1.5"><title>BONK — RSI 45, score 2/20, mcap #162, MACD -</title></circle></a><a href="/coins/aero/"><circle cx="843.2" cy="283.5" r="5" fill="#f472b6" opacity="0.88" stroke="#0a0e27" stroke-width="1.5"><title>AERO — RSI 33, score 0/20, mcap #190, MACD -</title></circle></a><a href="/coins/xmr/"><circle cx="438.8" cy="243.0" r="5" fill="#fbbf24" opacity="0.88" stroke="#0a0e27" stroke-width="1.5"><title>XMR — RSI 41, score 10/20, mcap #13, MACD -</title></circle></a><a href="/coins/qnt/"><circle cx="629.3" cy="231.6" r="5" fill="#fbbf24" opacity="0.88" stroke="#0a0e27" stroke-width="1.5"><title>QNT — RSI 44, score 8/20, mcap #46, MACD -</title></circle></a><a href="/coins/pepe/"><circle cx="626.0" cy="132.8" r="7" fill="#10d9a0" opacity="0.88" stroke="#0a0e27" stroke-width="1.5"><title>PEPE — RSI 65, score 17/20, mcap #45, MACD +</title></circle></a><text x="626.0" y="121.8" text-anchor="middle" font-size="10.5" font-weight="700" fill="#ecedfd">PEPE</text><a href="/coins/jst/"><circle cx="664.3" cy="159.7" r="7" fill="#10d9a0" opacity="0.88" stroke="#0a0e27" stroke-width="1.5"><title>JST — RSI 59, score 20/20, mcap #58, MACD +</title></circle></a><text x="664.3" y="148.7" text-anchor="middle" font-size="10.5" font-weight="700" fill="#ecedfd">JST</text><a href="/coins/night/"><circle cx="738.7" cy="183.3" r="7" fill="#10d9a0" opacity="0.88" stroke="#0a0e27" stroke-width="1.5"><title>NIGHT — RSI 54, score 18/20, mcap #95, MACD -</title></circle></a><text x="738.7" y="172.3" text-anchor="middle" font-size="10.5" font-weight="700" fill="#ecedfd">NIGHT</text></svg>
-      <div class="legend">
-        <span><span class="sw" style="background:#10d9a0;"></span>Strong structure (16&ndash;20)</span>
-        <span><span class="sw" style="background:#60a5fa;"></span>Mid (12&ndash;15)</span>
-        <span><span class="sw" style="background:#fbbf24;"></span>Weak (8&ndash;11)</span>
-        <span><span class="sw" style="background:#f472b6;"></span>Poor (0&ndash;7)</span>
-      </div>
-    </div>
-    <p class="prose" style="margin-top:14px;">Every dot is one of the 49 majors we score daily &mdash; hover for the numbers, click through for the full coin page. The color is the part other RSI heatmaps can't show you: it's our <b>20-point trend-structure score</b>, not the RSI itself. That contrast is the whole point &mdash; <b>a high RSI on a low-scoring coin is a pump without structure</b> (a bounce to fade, not a base), while a warm RSI on a Strong-tier coin is momentum with a foundation under it. Today's cleanest read: <b>JST</b> — RSI 59 with a 20/20 structure under it.</p>
-  </section>
-
-  <section>
-    <h2 class="sec-h">Who's at the extremes</h2>
-    <div class="card">
-      <h3>Highest RSI (overbought first)</h3>
-      <span class="chip"><a href="/coins/pepe/">PEPE</a> RSI 65 &middot; 17/20</span><span class="chip"><a href="/coins/jst/">JST</a> RSI 59 &middot; 20/20</span><span class="chip"><a href="/coins/night/">NIGHT</a> RSI 54 &middot; 18/20</span><span class="chip"><a href="/coins/render/">RENDER</a> RSI 47 &middot; 5/20</span><span class="chip"><a href="/coins/icp/">ICP</a> RSI 46 &middot; 1/20</span>
-      <h3 style="margin-top:18px;">Lowest RSI (most oversold first)</h3>
-      <span class="chip"><a href="/coins/xrp/">XRP</a> RSI 24 &middot; 0/20</span><span class="chip"><a href="/coins/sol/">SOL</a> RSI 24 &middot; 0/20</span><span class="chip"><a href="/coins/dot/">DOT</a> RSI 29 &middot; 0/20</span><span class="chip"><a href="/coins/xlm/">XLM</a> RSI 29 &middot; 0/20</span><span class="chip"><a href="/coins/eth/">ETH</a> RSI 30 &middot; 0/20</span>
-    </div>
-    <p class="caveat">Overbought is not a sell signal and oversold is not a buy signal &mdash; strong trends stay overbought for weeks, and broken coins stay oversold all the way down. Always read RSI against structure; that's why the dots are colored.</p>
-  </section>
-
-  <section>
-    <h2 class="sec-h">Why daily-only, and how to read this honestly</h2>
-    <p class="prose">Other sites publish 15-minute and hourly RSI. We deliberately don't: this page regenerates <b>once per day</b> with the daily scan, so an intraday number here would be stale within hours &mdash; and a stale number presented as live is worse than no number. Daily RSI is the timeframe our scoring, backtests and <a href="/flip/">regime work</a> actually run on, so everything on this page is measured the same way, on the same bars, every day. <b>Right now the regime is RISK-ON</b> &mdash; before 2023 this was the regime where the score paid off; since 2023 that edge has tested as noise, so warm RSI on Strong-tier coins is a watchlist, not a signal.</p>
-  </section>
-
-  <div class="final">
-    <h2>The Monday letter</h2>
-    <p>This page is one slice of the daily scan. The free Monday letter shows what the 10/44 rule did on every coin that week, next to Bitcoin and the average coin, plus an email the day your coin switches.</p>
-    <div class="st-join" style="margin:18px 0 6px;"><a href="/#join" style="display:inline-block;padding:13px 22px;border-radius:12px;background:#6c47ff;color:#ffffff;font-weight:700;font-size:16px;text-decoration:none;">Get the free Monday letter &rarr;</a></div>
-  </div>
-
-  <footer>
-    <div class="disc"><b>SigTide is educational, not financial advice.</b> RSI and MACD are descriptive statistics of past prices, not predictions. Markets carry risk; nothing here is a recommendation to buy or sell.</div>
-    <div>Updated November 11, 2026 &middot; regenerated automatically from the daily scan &middot; <a href="/">SigTide home</a> &middot; <a href="/coins/">all coins</a></div>
-  </footer>
-
+<body data-page="rsi" data-root="../" data-v="c1f1bcdc" data-signup="https://sigtide-signup.sigtide.workers.dev" data-ts="0x4AAAAAAF78MM8cGD1vx2C4">
+<header class="top"><div class="wrap top-in">
+  <a class="logo" href="../index.html" aria-label="SigTide home"><svg class="logo-mark" viewBox="0 0 32 32" width="30" height="30" aria-hidden="true"><rect width="32" height="32" rx="10" fill="#6c47ff"/><path d="M6.5 19.6c2.6 0 3.4-4.6 6.2-4.6s3.6 4.6 6.3 4.6 3.5-4.6 6.5-4.6" fill="none" stroke="#fff" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="23.6" cy="8.8" r="3.1" fill="#ffc542"/></svg><span>SigTide</span></a>
+  <nav class="nav" aria-label="Main"><a href="../board/index.html">All 49 coins</a><a href="../record/index.html">Our record</a></nav>
+  <details class="menu"><summary aria-label="Menu"><svg class="ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary><nav class="menu-pop" aria-label="Main"><a href="../board/index.html">All 49 coins</a><a href="../record/index.html">Our record</a></nav></details>
+  <a class="btn btn-sm top-cta" href="#join">Free email</a>
+</div></header>
+<main id="main">
+<section id="top" class="sec sec-first fl-hero"><div class="fl-in">
+<p class="plain-kicker"><svg class="ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h14l-3.5-3.5M20 16H6l3.5 3.5"/></svg>Daily RSI, updated every day</p>
+<h1>Crypto RSI today</h1>
+<p class="fl-answer rs-avg">37.8</p>
+<div class="rs-gauge" role="img" aria-label="Average RSI 37.8 on a scale from 0 to 100">
+<span class="rs-z rs-z-cold"></span><span class="rs-z rs-z-mid"></span><span class="rs-z rs-z-hot"></span><i style="left:37.8%"></i></div>
+<p class="rs-scale"><span>0</span><span>30: cold</span><span>70: hot</span><span>100</span></p>
+<p class="fl-lead">The average 14-day RSI of the 49 coins we follow is <b>37.8</b>, on the cold side.</p>
+</div></section>
+<section id="breadth" class="sec sec-band"><div class="fl-wrap">
+<h2 class="h2">Across the 49 coins</h2>
+<div class="fl-tiles">
+<div class="fl-tile"><p class="fl-t-h">At the ends</p><p class="fl-t-big">0 <small>at 70 or above</small></p>
+<p class="fl-t-big">7 <small>at 30 or below</small></p></div>
+<div class="fl-tile"><p class="fl-t-h">The average before</p><p class="fl-t-line rs-past">39.0 yesterday · 40.7 a week ago · 53.9 a month ago</p></div>
+<div class="fl-tile"><p class="fl-t-h">Momentum (MACD)</p><p class="fl-t-big">8 <small>of 49 pointing up</small></p>
+<p class="fl-t-line">Coins whose MACD (12, 26, 9) histogram is above zero.</p></div>
+</div></div></section>
+<section id="coins" class="sec"><div class="fl-wrap">
+<h2 class="h2">Every coin's RSI</h2>
+<p class="sub">Highest first. <span class="rs-key is-in">IN</span> or <span class="rs-key is-out">OUT</span> under the 10/44 rule.</p>
+<div class="rs-grid"><a class="rs-chip is-in" href="../coins/pepe/index.html"><img class="coin-ic" src="../assets/icons/pepe.svg" alt="" width="24" height="24" loading="lazy" decoding="async"><span class="rs-sym">PEPE</span><b>65</b></a><a class="rs-chip is-in" href="../coins/jst/index.html"><img class="coin-ic" src="../assets/icons/jst.svg" alt="" width="24" height="24" loading="lazy" decoding="async"><span class="rs-sym">JST</span><b>59</b></a><a class="rs-chip is-out" href="../coins/night/index.html"><img class="coin-ic" src="../assets/icons/night.svg" alt="" width="24" height="24" loading="lazy" decoding="async"><span class="rs-sym">NIGHT</span><b>54</b></a><a class="rs-chip is-out" href="../coins/render/index.html"><img class="coin-ic" src="../assets/icons/render.svg" alt="" width="24" height="24" loading="lazy" decoding="async"><span class="rs-sym">RENDER</span><b>47</b></a><a class="rs-chip is-out" href="../coins/icp/index.html"><img class="coin-ic" src="../assets/icons/icp.svg" alt="" width="24" height="24" loading="lazy" decoding="async"><span class="rs-sym">ICP</span><b>46</b></a><a class="rs-chip is-out" href="../coins/bonk/index.html"><img class="coin-ic" src="../assets/icons/bonk.svg" alt="" width="24" height="24" loading="lazy" decoding="async"><span class="rs-sym">BONK</span><b>45</b></a><a class="rs-chip is-out" href="../coins/jup/index.html"><img class="coin-ic" src="../assets/icons/jup.svg" alt="" width="24" height="24" loading="lazy" decoding="async"><span class="rs-sym">JUP</span><b>44</b></a><a class="rs-chip is-out" href="../coins/qnt/index.html"><img class="coin-ic" src="../assets/icons/qnt.svg" alt="" width="24" height="24" loading="lazy" decoding="async"><span class="rs-sym">QNT</span><b>44</b></a><a class="rs-chip is-out" href="../coins/uni/index.html"><img class="coin-ic" src="../assets/icons/uni.svg" alt="" width="24" height="24" loading="lazy" decoding="async"><span class="rs-sym">UNI</span><b>43</b></a><a class="rs-chip is-out" href="../coins/trx/index.html"><img class="coin-ic" src="../assets/icons/trx.svg" alt="" width="24" height="24" loading="lazy" decoding="async"><span class="rs-sym">TRX</span><b>43</b></a><a class="rs-chip is-out" href="../coins/avax/index.html"><img class="coin-ic" src="../assets/icons/avax.svg" alt="" width="24" height="24" loading="lazy" decoding="async"><span class="rs-sym">AVAX</span><b>43</b></a><a class="rs-chip is-out" href="../coins/ton/index.html"><img class="coin-ic" src="../assets/icons/ton.svg" alt="" width="24" height="24" loading="lazy" decoding="async"><span class="rs-sym">TON</span><b>43</b></a><a class="rs-chip is-out" href="../coins/pol/index.html"><img class="coin-ic" src="../assets/icons/pol.svg" alt="" width="24" height="24" loading="lazy" decoding="async"><span class="rs-sym">POL</span><b>43</b></a><a class="rs-chip is-in" href="../coins/xmr/index.html"><img class="coin-ic" src="../assets/icons/xmr.svg" alt="" width="24" height="24" loading="lazy" decoding="async"><span class="rs-sym">XMR</span><b>41</b></a><a class="rs-chip is-out" href="../coins/ondo/index.html"><img class="coin-ic" src="../assets/icons/ondo.svg" alt="" width="24" height="24" loading="lazy" decoding="async"><span class="rs-sym">ONDO</span><b>40</b></a><a class="rs-chip is-out" href="../coins/atom/index.html"><img class="coin-ic" src="../assets/icons/atom.svg" alt="" width="24" height="24" loading="lazy" decoding="async"><span class="rs-sym">ATOM</span><b>40</b></a><a class="rs-chip is-out" href="../coins/aave/index.html"><img class="coin-ic" src="../assets/icons/aave.svg" alt="" width="24" height="24" loading="lazy" decoding="async"><span class="rs-sym">AAVE</span><b>39</b></a><a class="rs-chip is-out" href="../coins/sui/index.html"><img class="coin-ic" src="../assets/icons/sui.svg" alt="" width="24" height="24" loading="lazy" decoding="async"><span class="rs-sym">SUI</span><b>38</b></a><a class="rs-chip is-out" href="../coins/bnb/index.html"><img class="coin-ic" src="../assets/icons/bnb.svg" alt="" width="24" height="24" loading="lazy" decoding="async"><span class="rs-sym">BNB</span><b>38</b></a><a class="rs-chip is-out" href="../coins/near/index.html"><img class="coin-ic" src="../assets/icons/near.svg" alt="" width="24" height="24" loading="lazy" decoding="async"><span class="rs-sym">NEAR</span><b>38</b></a><a class="rs-chip is-out" href="../coins/zec/index.html"><img class="coin-ic" src="../assets/icons/zec.svg" alt="" width="24" height="24" loading="lazy" decoding="async"><span class="rs-sym">ZEC</span><b>37</b></a><a class="rs-chip is-out" href="../coins/shib/index.html"><img class="coin-ic" src="../assets/icons/shib.svg" alt="" width="24" height="24" loading="lazy" decoding="async"><span class="rs-sym">SHIB</span><b>37</b></a><a class="rs-chip is-out" href="../coins/algo/index.html"><img class="coin-ic" src="../assets/icons/algo.svg" alt="" width="24" height="24" loading="lazy" decoding="async"><span class="rs-sym">ALGO</span><b>37</b></a><a class="rs-chip is-out" href="../coins/link/index.html"><img class="coin-ic" src="../assets/icons/link.svg" alt="" width="24" height="24" loading="lazy" decoding="async"><span class="rs-sym">LINK</span><b>37</b></a><a class="rs-chip is-out" href="../coins/etc/index.html"><img class="coin-ic" src="../assets/icons/etc.svg" alt="" width="24" height="24" loading="lazy" decoding="async"><span class="rs-sym">ETC</span><b>37</b></a><a class="rs-chip is-out" href="../coins/tao/index.html"><img class="coin-ic" src="../assets/icons/tao.svg" alt="" width="24" height="24" loading="lazy" decoding="async"><span class="rs-sym">TAO</span><b>37</b></a><a class="rs-chip is-out" href="../coins/pump/index.html"><img class="coin-ic" src="../assets/icons/pump.svg" alt="" width="24" height="24" loading="lazy" decoding="async"><span class="rs-sym">PUMP</span><b>36</b></a><a class="rs-chip is-out" href="../coins/ltc/index.html"><img class="coin-ic" src="../assets/icons/ltc.svg" alt="" width="24" height="24" loading="lazy" decoding="async"><span class="rs-sym">LTC</span><b>36</b></a><a class="rs-chip is-out" href="../coins/wlfi/index.html"><img class="coin-ic" src="../assets/icons/wlfi.svg" alt="" width="24" height="24" loading="lazy" decoding="async"><span class="rs-sym">WLFI</span><b>36</b></a><a class="rs-chip is-out" href="../coins/kas/index.html"><img class="coin-ic" src="../assets/icons/kas.svg" alt="" width="24" height="24" loading="lazy" decoding="async"><span class="rs-sym">KAS</span><b>36</b></a><a class="rs-chip is-out" href="../coins/ena/index.html"><img class="coin-ic" src="../assets/icons/ena.svg" alt="" width="24" height="24" loading="lazy" decoding="async"><span class="rs-sym">ENA</span><b>36</b></a><a class="rs-chip is-out" href="../coins/hype/index.html"><img class="coin-ic" src="../assets/icons/hype.svg" alt="" width="24" height="24" loading="lazy" decoding="async"><span class="rs-sym">HYPE</span><b>35</b></a><a class="rs-chip is-out" href="../coins/sky/index.html"><img class="coin-ic" src="../assets/icons/sky.svg" alt="" width="24" height="24" loading="lazy" decoding="async"><span class="rs-sym">SKY</span><b>34</b></a><a class="rs-chip is-out" href="../coins/pengu/index.html"><img class="coin-ic" src="../assets/icons/pengu.svg" alt="" width="24" height="24" loading="lazy" decoding="async"><span class="rs-sym">PENGU</span><b>34</b></a><a class="rs-chip is-out" href="../coins/cc/index.html"><img class="coin-ic" src="../assets/icons/cc.svg" alt="" width="24" height="24" loading="lazy" decoding="async"><span class="rs-sym">CC</span><b>34</b></a><a class="rs-chip is-out" href="../coins/btc/index.html"><img class="coin-ic" src="../assets/icons/btc.svg" alt="" width="24" height="24" loading="lazy" decoding="async"><span class="rs-sym">BTC</span><b>34</b></a><a class="rs-chip is-out" href="../coins/fil/index.html"><img class="coin-ic" src="../assets/icons/fil.svg" alt="" width="24" height="24" loading="lazy" decoding="async"><span class="rs-sym">FIL</span><b>34</b></a><a class="rs-chip is-out" href="../coins/aero/index.html"><img class="coin-ic" src="../assets/icons/aero.svg" alt="" width="24" height="24" loading="lazy" decoding="async"><span class="rs-sym">AERO</span><b>33</b></a><a class="rs-chip is-out" href="../coins/aster/index.html"><img class="coin-ic" src="../assets/icons/aster.svg" alt="" width="24" height="24" loading="lazy" decoding="async"><span class="rs-sym">ASTER</span><b>33</b></a><a class="rs-chip is-out" href="../coins/hbar/index.html"><img class="coin-ic" src="../assets/icons/hbar.svg" alt="" width="24" height="24" loading="lazy" decoding="async"><span class="rs-sym">HBAR</span><b>32</b></a><a class="rs-chip is-out" href="../coins/doge/index.html"><img class="coin-ic" src="../assets/icons/doge.svg" alt="" width="24" height="24" loading="lazy" decoding="async"><span class="rs-sym">DOGE</span><b>31</b></a><a class="rs-chip is-out" href="../coins/ada/index.html"><img class="coin-ic" src="../assets/icons/ada.svg" alt="" width="24" height="24" loading="lazy" decoding="async"><span class="rs-sym">ADA</span><b>31</b></a><a class="rs-chip is-out at-cold" href="../coins/bch/index.html"><img class="coin-ic" src="../assets/icons/bch.svg" alt="" width="24" height="24" loading="lazy" decoding="async"><span class="rs-sym">BCH</span><b>30</b></a><a class="rs-chip is-out at-cold" href="../coins/wld/index.html"><img class="coin-ic" src="../assets/icons/wld.svg" alt="" width="24" height="24" loading="lazy" decoding="async"><span class="rs-sym">WLD</span><b>30</b></a><a class="rs-chip is-out at-cold" href="../coins/eth/index.html"><img class="coin-ic" src="../assets/icons/eth.svg" alt="" width="24" height="24" loading="lazy" decoding="async"><span class="rs-sym">ETH</span><b>30</b></a><a class="rs-chip is-out at-cold" href="../coins/xlm/index.html"><img class="coin-ic" src="../assets/icons/xlm.svg" alt="" width="24" height="24" loading="lazy" decoding="async"><span class="rs-sym">XLM</span><b>29</b></a><a class="rs-chip is-out at-cold" href="../coins/dot/index.html"><img class="coin-ic" src="../assets/icons/dot.svg" alt="" width="24" height="24" loading="lazy" decoding="async"><span class="rs-sym">DOT</span><b>29</b></a><a class="rs-chip is-out at-cold" href="../coins/sol/index.html"><img class="coin-ic" src="../assets/icons/sol.svg" alt="" width="24" height="24" loading="lazy" decoding="async"><span class="rs-sym">SOL</span><b>24</b></a><a class="rs-chip is-out at-cold" href="../coins/xrp/index.html"><img class="coin-ic" src="../assets/icons/xrp.svg" alt="" width="24" height="24" loading="lazy" decoding="async"><span class="rs-sym">XRP</span><b>24</b></a></div>
+</div></section>
+<section id="read" class="sec sec-band"><div class="fl-wrap">
+<h2 class="h2">How to read it</h2>
+<p class="fl-p">RSI compares the last 14 days of rises with the falls, on a scale from 0 to 100. It describes the past. It does not
+forecast: strong coins can stay above 70 for weeks, and weak ones can stay below 30 on the way down.</p>
+<p class="fl-p">We show daily RSI only, from the same daily closing prices the rule uses. An hourly number would be out of date
+within hours on a page that updates once a day.</p>
+</div></section>
+<section id="join" class="sec-join"><div class="wrap join-in">
+<div class="join-copy">
+<h2 class="h2">Get the Monday letter</h2>
+<p class="sub">Free. Every Monday: what the rule did on every coin, next to Bitcoin and the average coin.</p>
+<form class="join-form " action="#" method="post"><div class="jf-row"><input id="em-join" type="email" name="email" placeholder="you@email.com" autocomplete="email" required aria-label="Email address"><button class="btn" type="submit">Join free</button></div><label class="jf-coin" for="cn-join"><span>Your coin, for an email the day it switches</span><select id="cn-join" name="coin"><option value="">None, just the Monday letter</option><option value="BTC">BTC (Bitcoin)</option><option value="ETH">ETH (Ethereum)</option><option value="BNB">BNB</option><option value="XRP">XRP</option><option value="SOL">SOL (Solana)</option><option value="TRX">TRX (TRON)</option><option value="HYPE">HYPE (Hyperliquid)</option><option value="ZEC">ZEC (Zcash)</option><option value="DOGE">DOGE (Dogecoin)</option><option value="XMR">XMR (Monero)</option><option value="LINK">LINK (Chainlink)</option><option value="ADA">ADA (Cardano)</option><option value="XLM">XLM (Stellar)</option><option value="NEAR">NEAR (NEAR Protocol)</option><option value="BCH">BCH (Bitcoin Cash)</option><option value="UNI">UNI (Uniswap)</option><option value="LTC">LTC (Litecoin)</option><option value="CC">CC</option><option value="AVAX">AVAX (Avalanche)</option><option value="SUI">SUI</option><option value="HBAR">HBAR (Hedera)</option><option value="SHIB">SHIB (Shiba Inu)</option><option value="QNT">QNT (Quant)</option><option value="TAO">TAO (Bittensor)</option><option value="PEPE">PEPE</option><option value="ENA">ENA (Ethena)</option><option value="AAVE">AAVE</option><option value="ONDO">ONDO</option><option value="PUMP">PUMP (Pump.fun)</option><option value="WLFI">WLFI (World Liberty Financial)</option><option value="DOT">DOT (Polkadot)</option><option value="JST">JST (JUST)</option><option value="ICP">ICP (Internet Computer)</option><option value="SKY">SKY</option><option value="WLD">WLD (Worldcoin)</option><option value="ASTER">ASTER</option><option value="ETC">ETC (Ethereum Classic)</option><option value="POL">POL (Polygon)</option><option value="JUP">JUP (Jupiter)</option><option value="RENDER">RENDER</option><option value="ALGO">ALGO (Algorand)</option><option value="KAS">KAS (Kaspa)</option><option value="NIGHT">NIGHT (Midnight)</option><option value="FIL">FIL (Filecoin)</option><option value="ATOM">ATOM (Cosmos)</option><option value="PENGU">PENGU (Pudgy Penguins)</option><option value="TON">TON (Toncoin)</option><option value="BONK">BONK</option><option value="AERO">AERO (Aerodrome)</option></select></label><div class="jf-hp" aria-hidden="true"><label for="hp-join">Leave this empty</label><input id="hp-join" type="text" name="website" tabindex="-1" autocomplete="off"></div><div class="jf-ts"></div><p class="jf-note" role="status" aria-live="polite" hidden></p><noscript><p class="jf-note is-err">Signing up needs JavaScript for a quick bot check. Or write to hello@sigtide.com.</p></noscript></form>
 </div>
+<div class="rcpt-wrap" role="img" aria-label="What the rule says at the Nov 10 close"><div class="rcpt"><div class="rcpt-h"><b>SIGTIDE</b><span>At the Nov 10 close</span></div><div class="rs"><div class="t"><span>IN today</span><span>3 of 49</span></div><div class="rl"><span>XMR  PEPE  JST</span></div></div><div class="rs"><div class="rl "><span>OUT, in cash</span><span>46 coins</span></div><div class="rl "><span>Switched</span><span>none</span></div></div><div class="rs"><div class="t"><span>Next in line</span><span></span></div><div class="rl "><span>XMR → OUT</span><span>about 5 days</span></div></div><div class="rcpt-f"><i class="barcode"></i></div></div></div>
+</div></section>
+</main>
+<footer class="foot"><div class="wrap">
+  <p class="f-warn">Educational only. Not financial advice.</p>
+  <p class="f-method">Daily closing prices, 0.15% cost per switch, no future data used.</p>
+  <nav class="f-links" aria-label="More from SigTide"><a href="../board/index.html">Who&#x27;s IN right now</a><a href="../record/index.html#practice">Practice test (no real money)</a><a href="../flip/index.html">Bitcoin&#x27;s long trend</a><a href="../rsi/index.html">RSI map</a><a href="../research/no-edge-in-risk-off/index.html">What failed</a><a href="../privacy/index.html">Privacy</a></nav>
+  <p class="f-contact"><a href="mailto:hello@sigtide.com"><svg class="ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4.5 7.5 7.5 5.6 7.5-5.6"/></svg>hello@sigtide.com</a><a href="https://www.youtube.com/@SigTide" rel="noopener"><svg class="ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="4"/><path d="m10 9 5 3-5 3V9Z"/></svg>YouTube</a></p>
+</div></footer>
 <!-- sigtide:analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "42f28562915645ab9f6fd61e6a1b6806"}'></script><!-- /sigtide:analytics -->
 </body>
 </html>

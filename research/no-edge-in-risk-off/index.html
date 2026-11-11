@@ -1,72 +1,34 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Negative results: we found no tradeable long edge in crypto risk-off | SigTide</title>
-<meta name="description" content="We tested four strategy families — trend-following, relative-strength rotation, short-horizon reversal and oversold mean-reversion — on 49 liquid crypto majors with pre-declared primaries and block-bootstrap confidence intervals. In risk-off, nothing survived. Full numbers, including our own strategy's failures.">
+<meta name="description" content="We tested four strategy families — trend-following, relative-strength rotation, short-horizon reversal and oversold mean-reversion — on 49 liquid crypto majors with pre-declared primaries and block-bootstrap confidence intervals. In risk-off, nothing survived. Full numbers, including our own strategy&#x27;s failures.">
 <link rel="canonical" href="https://sigtide.com/research/no-edge-in-risk-off/">
-<meta property="og:title" content="Negative results: no tradeable long edge in crypto risk-off">
-<meta property="og:description" content="Four strategy families, pre-declared tests, block-bootstrap CIs. Everything we tried in bear regimes failed the gate — including the tempting stuff. Full numbers published.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="SigTide">
+<meta property="og:title" content="Negative results: we found no tradeable long edge in crypto risk-off | SigTide">
+<meta property="og:description" content="We tested four strategy families — trend-following, relative-strength rotation, short-horizon reversal and oversold mean-reversion — on 49 liquid crypto majors with pre-declared primaries and block-bootstrap confidence intervals. In risk-off, nothing survived. Full numbers, including our own strategy&#x27;s failures.">
 <meta property="og:url" content="https://sigtide.com/research/no-edge-in-risk-off/">
-<meta property="og:type" content="article">
-<meta name="twitter:card" content="summary">
-<style>
-  :root{
-    --bg:#0a0e27; --panel:rgba(20,26,58,0.88); --border:#2d3868;
-    --text:#ecedfd; --text-2:#b8bce0; --muted:#8088c0;
-    --accent:#a78bfa; --green-2:#10d9a0; --red-2:#f472b6; --amber:#fbbf24;
-  }
-  *{box-sizing:border-box;}
-  body{margin:0; padding:0; min-height:100vh; color:var(--text); line-height:1.7;
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
-    background:linear-gradient(180deg,#0a0e27 0%,#0d1339 100%);}
-  .wrap{max-width:760px; margin:0 auto; padding:0 22px;}
-  a{color:var(--accent); text-decoration:none;}
-  a:hover{text-decoration:underline;}
-  nav{display:flex; align-items:center; justify-content:space-between; padding:22px 0;}
-  .brand{font-weight:800; font-size:19px; color:var(--text);}
-  .brand .dot{color:var(--green-2);}
-  .nav-links{display:flex; gap:18px; font-size:13px;}
-  .nav-links a{color:var(--text-2);}
-  article{padding:20px 0 40px;}
-  h1{font-size:32px; line-height:1.2; letter-spacing:-0.01em; color:#fff; margin:10px 0 8px;}
-  .dateline{font-size:13.5px; color:var(--muted); margin-bottom:28px;}
-  h2{font-size:21px; color:#fff; margin:38px 0 10px; letter-spacing:-0.01em;}
-  p{font-size:16px; color:var(--text-2); margin:14px 0;}
-  b, strong{color:#fff;}
-  li{font-size:15.5px; color:var(--text-2); margin:6px 0;}
-  table{width:100%; border-collapse:collapse; font-size:13.5px; margin:16px 0;}
-  th{text-align:left; font-size:10.5px; text-transform:uppercase; letter-spacing:0.08em;
-    color:var(--muted); padding:8px 9px; border-bottom:1px solid var(--border);}
-  td{padding:8px 9px; border-bottom:1px solid rgba(45,56,104,0.5); color:var(--text-2);}
-  td.mono{font-family:ui-monospace,monospace;}
-  .verdict-no{color:var(--red-2); font-weight:700;}
-  .verdict-yes{color:var(--green-2); font-weight:700;}
-  .callout{background:var(--panel); border:1px solid var(--border); border-left:3px solid var(--accent);
-    border-radius:10px; padding:16px 20px; margin:22px 0; font-size:15px; color:var(--text-2);}
-  .tablewrap{overflow-x:auto;}
-  code{font-family:ui-monospace,monospace; font-size:14px; color:var(--amber); background:rgba(28,35,80,0.7);
-    padding:1px 6px; border-radius:5px;}
-  footer{border-top:1px solid var(--border); margin-top:40px; padding:24px 0 40px; color:var(--muted); font-size:13px;}
-  .end-note{background:var(--panel); border:1px solid var(--border); border-radius:12px;
-    padding:18px 22px; margin:34px 0 0; font-size:14.5px; color:var(--text-2);}
-</style>
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='10' fill='%236c47ff'/%3E%3Cpath d='M6.5 19.6c2.6 0 3.4-4.6 6.2-4.6s3.6 4.6 6.3 4.6 3.5-4.6 6.5-4.6' fill='none' stroke='%23fff' stroke-width='2.7' stroke-linecap='round'/%3E%3Ccircle cx='23.6' cy='8.8' r='3.1' fill='%23ffc542'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=IBM+Plex+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="../../assets/site.css?v=c1f1bcdc">
+<script src="../../assets/site.js?v=c1f1bcdc" defer></script>
 </head>
-<body>
-<div class="wrap">
-
-  <nav>
-    <a class="brand" href="/">SigTide<span class="dot">.</span></a>
-    <div class="nav-links">
-      <a href="/coins/">Coin scores</a>
-      <a href="/flip/">Flip status</a>
-      <a href="/">Daily read</a>
-    </div>
-  </nav>
-
-  <article>
-    <h1>Negative results: we found no tradeable long edge in crypto risk-off</h1>
+<body data-page="note" data-root="../../" data-v="c1f1bcdc" data-signup="https://sigtide-signup.sigtide.workers.dev" data-ts="0x4AAAAAAF78MM8cGD1vx2C4">
+<header class="top"><div class="wrap top-in">
+  <a class="logo" href="../../index.html" aria-label="SigTide home"><svg class="logo-mark" viewBox="0 0 32 32" width="30" height="30" aria-hidden="true"><rect width="32" height="32" rx="10" fill="#6c47ff"/><path d="M6.5 19.6c2.6 0 3.4-4.6 6.2-4.6s3.6 4.6 6.3 4.6 3.5-4.6 6.5-4.6" fill="none" stroke="#fff" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="23.6" cy="8.8" r="3.1" fill="#ffc542"/></svg><span>SigTide</span></a>
+  <nav class="nav" aria-label="Main"><a href="../../board/index.html">All 49 coins</a><a href="../../record/index.html">Our record</a></nav>
+  <details class="menu"><summary aria-label="Menu"><svg class="ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary><nav class="menu-pop" aria-label="Main"><a href="../../board/index.html">All 49 coins</a><a href="../../record/index.html">Our record</a></nav></details>
+  <a class="btn btn-sm top-cta" href="#join">Free email</a>
+</div></header>
+<main id="main">
+<article id="note" class="sec sec-first note"><div class="note-in">
+<h1>Negative results: we found no tradeable long edge in crypto risk-off</h1>
     <div class="dateline">Research note &middot; July 2026 &middot; updated October 2026 &middot; ~8 minute read</div>
 
     <div class="callout"><b>Update, August&ndash;October 2026: the one edge this note found
@@ -231,26 +193,33 @@
     is that it tells people <i>not</i> to trade for months at a time &mdash; a claim that's
     easy to dismiss as marketing until you see the graveyard of alternatives we tested
     against it.</p>
-    <p>Everything here accrues into a public <a href="/#track-record">forward
+    <p>Everything here accrues into a public <a href="../../record/index.html">forward
     log</a> &mdash; one timestamped row per daily run. A same-day re-run replaces that day's
     row, and rows before 31 July 2026 are flagged as suspect because of a data-cache bug
     fixed that day. If the mean-reversion lean is
     real, the forward data will eventually say so out-of-sample, and we'll upgrade it from
     lean to edge in public. The live regime
-    status is at <a href="/flip/">sigtide.com/flip</a>.</p>
+    status is at <a href="../../flip/index.html">sigtide.com/flip</a>.</p>
 
     <div class="end-note"><b>Educational use only &mdash; not financial advice.</b> All
-    results are backtests with the limitations listed above. SigTide publishes a free daily
-    trend-structure read of 49 crypto majors and one email the day the Bitcoin regime
-    flips. No paid tier was harmed in the making of these negative results.</div>
-  </article>
-
-  <footer>
-    <div>SigTide &middot; <a href="/">home</a> &middot; <a href="/coins/">coin scores</a>
-    &middot; <a href="/flip/">flip status</a> &middot; <a href="/research/no-edge-in-risk-off/">this note</a></div>
-  </footer>
-
+    results are backtests with the limitations listed above. SigTide shows one simple rule on 49 crypto coins every day, with a free letter every
+    Monday. No paid tier was harmed in the making of these negative results.</div>
+</div></article>
+<section id="join" class="sec-join"><div class="wrap join-in">
+<div class="join-copy">
+<h2 class="h2">Get the Monday letter</h2>
+<p class="sub">Free. Every Monday: what the rule did on every coin, next to Bitcoin and the average coin.</p>
+<form class="join-form " action="#" method="post"><div class="jf-row"><input id="em-join" type="email" name="email" placeholder="you@email.com" autocomplete="email" required aria-label="Email address"><button class="btn" type="submit">Join free</button></div><label class="jf-coin" for="cn-join"><span>Your coin, for an email the day it switches</span><select id="cn-join" name="coin"><option value="">None, just the Monday letter</option><option value="BTC">BTC (Bitcoin)</option><option value="ETH">ETH (Ethereum)</option><option value="BNB">BNB</option><option value="XRP">XRP</option><option value="SOL">SOL (Solana)</option><option value="TRX">TRX (TRON)</option><option value="HYPE">HYPE (Hyperliquid)</option><option value="ZEC">ZEC (Zcash)</option><option value="DOGE">DOGE (Dogecoin)</option><option value="XMR">XMR (Monero)</option><option value="LINK">LINK (Chainlink)</option><option value="ADA">ADA (Cardano)</option><option value="XLM">XLM (Stellar)</option><option value="NEAR">NEAR (NEAR Protocol)</option><option value="BCH">BCH (Bitcoin Cash)</option><option value="UNI">UNI (Uniswap)</option><option value="LTC">LTC (Litecoin)</option><option value="CC">CC</option><option value="AVAX">AVAX (Avalanche)</option><option value="SUI">SUI</option><option value="HBAR">HBAR (Hedera)</option><option value="SHIB">SHIB (Shiba Inu)</option><option value="QNT">QNT (Quant)</option><option value="TAO">TAO (Bittensor)</option><option value="PEPE">PEPE</option><option value="ENA">ENA (Ethena)</option><option value="AAVE">AAVE</option><option value="ONDO">ONDO</option><option value="PUMP">PUMP (Pump.fun)</option><option value="WLFI">WLFI (World Liberty Financial)</option><option value="DOT">DOT (Polkadot)</option><option value="JST">JST (JUST)</option><option value="ICP">ICP (Internet Computer)</option><option value="SKY">SKY</option><option value="WLD">WLD (Worldcoin)</option><option value="ASTER">ASTER</option><option value="ETC">ETC (Ethereum Classic)</option><option value="POL">POL (Polygon)</option><option value="JUP">JUP (Jupiter)</option><option value="RENDER">RENDER</option><option value="ALGO">ALGO (Algorand)</option><option value="KAS">KAS (Kaspa)</option><option value="NIGHT">NIGHT (Midnight)</option><option value="FIL">FIL (Filecoin)</option><option value="ATOM">ATOM (Cosmos)</option><option value="PENGU">PENGU (Pudgy Penguins)</option><option value="TON">TON (Toncoin)</option><option value="BONK">BONK</option><option value="AERO">AERO (Aerodrome)</option></select></label><div class="jf-hp" aria-hidden="true"><label for="hp-join">Leave this empty</label><input id="hp-join" type="text" name="website" tabindex="-1" autocomplete="off"></div><div class="jf-ts"></div><p class="jf-note" role="status" aria-live="polite" hidden></p><noscript><p class="jf-note is-err">Signing up needs JavaScript for a quick bot check. Or write to hello@sigtide.com.</p></noscript></form>
 </div>
+<div class="rcpt-wrap" role="img" aria-label="What the rule says at the Nov 10 close"><div class="rcpt"><div class="rcpt-h"><b>SIGTIDE</b><span>At the Nov 10 close</span></div><div class="rs"><div class="t"><span>IN today</span><span>3 of 49</span></div><div class="rl"><span>XMR  PEPE  JST</span></div></div><div class="rs"><div class="rl "><span>OUT, in cash</span><span>46 coins</span></div><div class="rl "><span>Switched</span><span>none</span></div></div><div class="rs"><div class="t"><span>Next in line</span><span></span></div><div class="rl "><span>XMR → OUT</span><span>about 5 days</span></div></div><div class="rcpt-f"><i class="barcode"></i></div></div></div>
+</div></section>
+</main>
+<footer class="foot"><div class="wrap">
+  <p class="f-warn">Educational only. Not financial advice.</p>
+  <p class="f-method">Daily closing prices, 0.15% cost per switch, no future data used.</p>
+  <nav class="f-links" aria-label="More from SigTide"><a href="../../board/index.html">Who&#x27;s IN right now</a><a href="../../record/index.html#practice">Practice test (no real money)</a><a href="../../flip/index.html">Bitcoin&#x27;s long trend</a><a href="../../rsi/index.html">RSI map</a><a href="../../research/no-edge-in-risk-off/index.html">What failed</a><a href="../../privacy/index.html">Privacy</a></nav>
+  <p class="f-contact"><a href="mailto:hello@sigtide.com"><svg class="ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4.5 7.5 7.5 5.6 7.5-5.6"/></svg>hello@sigtide.com</a><a href="https://www.youtube.com/@SigTide" rel="noopener"><svg class="ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="4"/><path d="m10 9 5 3-5 3V9Z"/></svg>YouTube</a></p>
+</div></footer>
 <!-- sigtide:analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "42f28562915645ab9f6fd61e6a1b6806"}'></script><!-- /sigtide:analytics -->
 </body>
 </html>
