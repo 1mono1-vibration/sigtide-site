@@ -1,6 +1,6 @@
 # SigTide
 
-> One simple rule, checked every day on the 49 largest crypto coins: a coin is IN while its 10-day average price is above its 44-day average, and OUT (in cash) when it is below. The site shows what that rule did next to just holding Bitcoin and the average coin, each with its worst fall. Free, updated every day. Not financial advice.
+> One simple rule, checked every day on 49 large crypto coins (no stablecoins or wrapped tokens): a coin is IN while its 10-day average price is above its 44-day average, and OUT (in cash) when it is below. The site shows what that rule did next to just holding Bitcoin and the average coin, each with its worst fall. Free, updated every day. Not financial advice.
 
 SigTide publishes the rule's state for every coin, the past results after costs, a live practice test with no real money (started 2026-10-08), and every test it ran, including the ones that failed. Since 2023 Bitcoin alone made more than the rule; the rule's case is the smaller fall.
 
@@ -15,7 +15,7 @@ SigTide publishes the rule's state for every coin, the past results after costs,
 
 ## Email
 
-- A free letter every Monday, and an email the day a reader's chosen coin switches IN or OUT. Nothing is sent before the reader confirms. [Privacy](https://sigtide.com/privacy/).
+- A free letter every Monday, and an email the day a reader's chosen coin switches IN or OUT. Sending starts soon. Nothing is sent before the reader confirms. [Privacy](https://sigtide.com/privacy/).
 
 ## Methodology and honesty
 
